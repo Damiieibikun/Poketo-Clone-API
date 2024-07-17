@@ -1,3 +1,7 @@
+@font-face {
+    font-family: heading p22Mackia;
+    src: url(fonts/Demo_Fonts/Fontspring-DEMO-P22Mackinac-Medium.otf);
+  }
 #d-hero-slider {
     grid-template-columns: repeat(2, 1fr);
     height: 100vh;
@@ -21,11 +25,18 @@
 .d-hero5-grid button {
     font-size: 16px;
     border: none;
-    padding: 16px 33px;
+    padding: 20px 33px;
     border-radius: 30px;
-    width: 50%;
+    width: 40%;
 }
 
+/* .d-hero3-grid button {
+    width: 40%;
+} */
+
+.d-hero3-grid button {
+    width: 50%;
+}
 .d-hero4-grid button {
     width: 70%;
 }
@@ -82,8 +93,20 @@
 }
 
 .d-hero2-5-txt {
-    width: 80%;
+    /* width: 80%; */
     margin: auto;
+}
+
+.d-hero2-5-txt h1{
+    /* width: 80%; */
+    margin: 0;
+    font-weight: 800;
+}
+
+.d-hero2-5-txt p{
+    width: 85%;
+    line-height: 1.5;
+    
 }
 
 .d-hero2-grid,
@@ -97,12 +120,25 @@
     padding: 50px 0;
 }
 
+
+.d-hero5-grid {
+   padding: 0; 
+}
 .d-hero2-grid h1,
 .d-hero3-grid h1,
 .d-hero4-grid h1,
 .d-hero5-grid h1 {
     font-size: 38px;
 }
+
+.d-hero5-grid h1{
+    font-size: 48px; 
+    font-weight: 800;
+ }
+
+ .d-hero5-grid p{
+   width: 102%;
+ }
 
 .d-hero2-grid button,
 .d-hero3-grid button,
@@ -137,6 +173,9 @@
     background-size: cover;
     height: 600px;
 }
+#d-hero2-img{
+    height: 500px;
+}
 
 #d-hero2-img {
     background-image: url('https://www.poketo.com/cdn/shop/files/pk_5050_6_4.webp?v=1717159237&width=1500');
@@ -154,7 +193,7 @@
 #d-hero5-img {
     background-image: url('https://www.poketo.com/cdn/shop/files/XPB-M-Home-5050-Media-PatternFamily-01-2x.jpg?v=1679056208&width=1070');
     background-size: contain;
-    height: 450px;
+    height: 400px;
 }
 /*slider slick */
 
@@ -174,7 +213,7 @@
 }
 
 .slick-prev {
-    left: 92%;
+    left: 91%;
 }
 
 .slick-next:hover,
@@ -291,7 +330,7 @@
 .d-item-tag {
     position: absolute;
     top: 10px;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Sofia Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;
@@ -322,7 +361,7 @@
 
 .d-slider-product-rating,
 .d-slider-product-price {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Sofia Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 500;

@@ -6,17 +6,24 @@
                 width: 80%;
                 margin: auto;
             }
+
+            .d-shopAll-hero-txt p{
+                line-height: 1.5;
+                width: 103%;
+            }
             
             .d-shopAll-hero-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
             .d-shopAll-hero-grid h1 {
-                font-size: 38px;
+                font-size: 48px;
+                font-weight: 800;
+                margin: 0;
             }
             
             #d-shopAll-hero-img {
-                height: 420px;
+                height: 350px;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
