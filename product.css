@@ -10,7 +10,7 @@ body{
     margin: auto; 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    /* height: 650px; */
+    height: 100vh;
 }
 
 
@@ -28,9 +28,37 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    overflow-y: auto;
     /* padding-left: 20px; */
     
 
+}
+
+.none  {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    display: none;
+    
+    
+}
+
+.none p {
+    margin: 0;
+}
+
+.none2{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-bottom: .5px solid #6392f0;
+    z-index: 12;
+    display: none;
+    
+}
+
+.none2 p{
+    margin: 0;
 }
 
 .mustard {

@@ -85,4 +85,17 @@ $(document).ready(()=>{
 
         window.location.href = 'product.html'
     })
+
+    $("#add1").click(function(){
+        $(".none").toggle();
+    });
+
+    $("#add2").click(function(){
+        $('.none2').toggle();
+    })
+
+    $("#add2").click(function(){
+        $(".butter2").css("border-bottom", "none");
+    });
+
 })
