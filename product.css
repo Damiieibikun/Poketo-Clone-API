@@ -2,7 +2,7 @@ body{
     /* margin: 0;
     padding: 0; */
     box-sizing: border-box;
-    font-family: 'Sofia Sans', sans-serif;
+    font-family: sofia proRegular;
 }
 
 .jenny-grid{
@@ -33,6 +33,19 @@ body{
     
 
 }
+#add1:hover, #add2:hover, #minus1:hover, #minus2:hover{
+    cursor: pointer;
+}
+     /* Hide scrollbar for Chrome, Safari and Opera */
+     .jenny-items::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .jenny-items  {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
 
 .none  {
     display: flex;
@@ -175,9 +188,14 @@ justify-content: space-between;
     margin: auto;
     width: 90%;
 }
+#j-selectedProduct-info h1{
+    font-weight: 28px;
+    font-family: sofia proBold;
+}
 
 .jenyb-container h1{
-    font-size: 45px;
+    font-size: 46px;
+    font-family: sofia proBold;
 }
 
 .grid-2jen {
@@ -526,13 +544,13 @@ justify-content: space-between;
     
     
     
+    
 }
 
 .Ej-boxitems {
     display: flex;
     flex-direction: column;
-    
-    
+ 
 }
 
 .Ej-content {
@@ -546,7 +564,7 @@ justify-content: space-between;
 }
 
 .Ej-content p {
-    color: #0085ca;
+    color: #2F84ED;
     
 }
 
@@ -557,7 +575,7 @@ justify-content: space-between;
 }
 
 .Ej-btn1 button {
-    background-color: #0085ca;
+    background-color: #2F84ED;
     border: none;
     width: 170px;
     height: 5px;
@@ -566,7 +584,7 @@ justify-content: space-between;
 }
 
 .Ej-btn2 button {
-    background-color: #0085ca;
+    background-color: #2F84ED;
     border: none;
     width: 170px;
     height: 5px;
@@ -593,7 +611,7 @@ justify-content: space-between;
 }
 
 .JE-griditem button {
-    background-color: #0085ca;
+    background-color: #2F84ED;
     border: none;
     color: white;
     padding: 10px 30px;

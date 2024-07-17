@@ -87,12 +87,33 @@ $(document).ready(()=>{
     })
 
     $("#add1").click(function(){
-        $(".none").toggle();
+        $(".none").show();
+        $('#minus1').show()
+        $(this).hide()
+       
     });
 
     $("#add2").click(function(){
-        $('.none2').toggle();
+       
+        $(".none").show();
+        $('#minus2').show()
+        $(this).hide()
     })
+
+    $("#minus1").click(function(){
+        $(".none").hide();
+        $('#add1').show()
+        $(this).hide()
+       
+    });
+
+    $("#minus2").click(function(){
+       
+        $(".none").hide();
+        $('#add2').show()
+        $(this).hide()
+    })
+
 
     $("#add2").click(function(){
         $(".butter2").css("border-bottom", "none");
