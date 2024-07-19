@@ -1,14 +1,35 @@
 $(document).ready(() => {
+    // get endpoint
+    const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+    // get logged in merchant
+    let merchant = JSON.parse(localStorage.getItem('Merchant-Poketo'))
+    $('#admin-icon-sm').css('background-image', `url(${merchant.icon})`)
+    $('#admin-icon-lg').css('background-image', `url(${merchant.icon})`)
+    $('.admin-Name').text(`${merchant.first_name}`)
+
+
+    //admin popup
+    $('#d-modaladmin-fname').text(`${merchant.first_name}`)
+    $('#d-modaladmin-lname').text(`${merchant.last_name}`)
+    $('#d-modaladmin-email').text(`${merchant.email}`)
+    $('#d-modaladmin-shopName').text(`${merchant.store_name}`)
+    $('#d-modaladmin-Desc').text(`${merchant.descp}`)
+  
+
     // create categories and products
     $('#d-add-products-admin').click(function() {
         $('#d-addProducts-list').slideToggle()
     })
 
-    //GET /categories?merchant_id=111
-    // change this
-    let allCat = JSON.parse(localStorage.getItem('testing-cat')) || []
-    allCat.forEach((item, i) => {
-        $('#d-category-list').append(`<li class="d-dashboard-item" id=${i}>
+    //GET categories
+    $.ajax({
+        url: `${endPoint}/categories?merchant_id=${merchant.id}`,
+        method: 'GET',
+        success: function(data) {
+            let allCat = data
+            console.log(allCat)
+             allCat.forEach((item) => {
+        $('#d-category-list').append(`<li class="d-dashboard-item" id=${item.id}>
             <a href="#" class="d-flex d-gap-10 d-align-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
                 <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
@@ -26,11 +47,12 @@ $(document).ready(() => {
             </a>
         </li>`)
 
-        $('#selectCategory').append(`<option value="bags">${item.name}</option>`)
+        $('#selectCategory').append(`<option value="bags" data-id=${item.id}>${item.name}</option>`)
 
     })
-
-
+        },
+        error: function(err) {}
+    })
 
     // show all categories
     $('#d-dashboard-categories').click(function() {
@@ -62,10 +84,6 @@ $(document).ready(() => {
     })
 
 
-    // // edit admin-- redirected to edit page
-    // $('#d-edit-admin-btn').click(function() {
-    //         $('#d-modal-Admin').addClass('d-display-none')
-    //     })
         // close admin
     $('#d-close-editAdmin').click(function() {
         $('#d-modal-Admin').addClass('d-display-none')
@@ -113,7 +131,7 @@ $(document).ready(() => {
     $('#d-admin-form').submit(function(e) {
       e.preventDefault()
         if (validateCategories()) {
-            let adminId = 123
+            let adminId = merchant.id
             let imageCat = $('#categoryImage').val()
             let catName = $('#categoryName').val()
 
@@ -123,10 +141,17 @@ $(document).ready(() => {
                 name: catName,
                 image: imageCat
             }
-            let cat = JSON.parse(localStorage.getItem('testing-cat')) || [];
-            cat.push(data)
-            localStorage.setItem('testing-cat', JSON.stringify(cat))
-            // $('#d-modal-cat').addClass('d-display-none')
+
+            $.ajax({
+                url: `${endPoint}/categories`,
+                data: data,
+                method: 'POST',
+                success: function(res) {
+                    console.log(res)
+                },
+                error: function(res){}
+            })
+           
             $(this)[0].reset()
             window.location.reload(true)
         }
@@ -203,7 +228,16 @@ $(document).ready(() => {
     //GET /products?merchant_id=123&category_id=321
     //DESCP: Get all product for a particular merchant and belonging to a particular category
 
+//open add images modal
 
+$('#add-Images').click(function(){
+    $('#d-modal-addImages').removeClass('d-display-none')
+})
+// close add images modal
+
+$('#d-close-addImages').click(function(){
+    $('#d-modal-addImages').addClass('d-display-none')
+})
     // get images array
     let imagesArray = []
 
@@ -211,7 +245,7 @@ $(document).ready(() => {
         const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
         if(!urlPattern.test($('#productImg').val())){
             $('#productImg').addClass('wrong-format');
-            $('#add-input-error-product').text('Wrong Format');
+            $('#img-input-error').text('Wrong Format');
         }
         else{
             $('#productImg').removeClass('wrong-format');
@@ -313,8 +347,13 @@ $(document).ready(() => {
     $('#d-close-Selectcat').click(function(){
         $('#d-modal-chooseCat').addClass('d-display-none')
     })
-    // open product modal
-    $('#d-add-product').click(function() {
+
+
+   // select category for product
+    $('#d-chooseCat-form').submit(function(e){
+        e.preventDefault()
+        let catId = $('#selectCategory option').data('id');
+        localStorage.setItem('ChosenCategory-product', catId)
         $('#d-modal-product').removeClass('d-display-none')
     })
 
@@ -355,6 +394,9 @@ $(document).ready(() => {
     $('#productVariations').click(function() {
         if (this.checked) {
             $('#show-variations').removeClass('d-display-none')
+        }
+        else{
+            $('#show-variations').addClass('d-display-none')
         }
     })
 
@@ -410,4 +452,8 @@ $(document).ready(() => {
     //         }]
     //     }
     // ],
+
+    $('#logout-admin').click(function(){
+        localStorage.removeItem('Merchant-Poketo')
+    })
 })

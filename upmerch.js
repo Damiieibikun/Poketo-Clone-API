@@ -1,5 +1,6 @@
 $(document).ready(function(){
     const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+    let merchant = JSON.parse(localStorage.getItem('Merchant-Poketo'))
 
     $("#RegFormS3, #RegFormS4").submit(function(event) {
         event.preventDefault();
@@ -27,7 +28,7 @@ $(document).ready(function(){
         let valid = validate(formData);
         if (valid) {
             $.ajax({
-                url: `${endPoint}/merchants/669a43e46996967a7dad94a3`,
+                url: `${endPoint}/merchants/${merchant.id}`,
                 method: "PUT",
                 data: formData,
                 success: function(res) {

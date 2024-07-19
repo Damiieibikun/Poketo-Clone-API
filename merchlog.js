@@ -29,14 +29,14 @@ $(document).ready(function(){
             method: 'POST',
             data: formData,
             success: function (res) {
-                console.log("login", res);
-                console.log('success');
+                // console.log("login", res);
+                // console.log('success');
                 if (res.code === 404) {
                     $('#err11').show();
                     $("#err11").text("invalid email or password");
                 } else {
-                    localStorage.setItem('user', JSON.stringify(res));
-                    // location.href = 'index.html'
+                    localStorage.setItem('Merchant-Poketo', JSON.stringify(res));
+                    location.href = 'Merchant/admin.html'
                 }
             },
             error: function (error) {

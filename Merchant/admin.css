@@ -73,12 +73,17 @@ select {
 }
 
 select {
-    height: 40px;
+    height: 32px;
+    padding: 0;
 }
 
 label {
     font-weight: bold;
     color: rgb(25, 25, 25);
+}
+
+option{
+    text-transform: capitalize;
 }
 
 .custom-upload {
@@ -320,7 +325,7 @@ li#d-dashboard-heading a {
 #d-close-cat:hover,
 #d-close-product:hover,
 #d-close-variations:hover, 
-#d-close-Selectcat:hover {
+#d-close-Selectcat:hover,#d-close-addImages:hover {
     cursor: pointer;
 }
 
@@ -366,4 +371,22 @@ li#d-dashboard-heading a {
 
 #d-add-variation-btn {
     align-self: center;
+}
+#d-modal-addImages-details{
+    position: relative;
+}
+#img-input-error{position: absolute;
+top: 20px;}
+#add-Images{
+    min-width: 0px;
+    padding: 5px;
+    border-radius: 0%;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    -ms-border-radius: 0%;
+    -o-border-radius: 0%;
+}
+
+select#variation-type{
+    width: 100%;
 }

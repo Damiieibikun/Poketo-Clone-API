@@ -1,5 +1,6 @@
 $(document).ready(function(){
     const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+    let merchant = JSON.parse(localStorage.getItem('Merchant-Poketo'))
 
     $("#UpdatePass").submit(function(event){
         event.preventDefault();
@@ -34,7 +35,7 @@ $(document).ready(function(){
 
         if (valid) {
             $.ajax({
-                url: `${endPoint}/merchants/669a43e46996967a7dad94a3/change-passwd`,
+                url: `${endPoint}/merchants/${merchant.id}/change-passwd`,
                 method: "PUT",
                 data: formData,
                 success: function(res) {
