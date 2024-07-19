@@ -97,6 +97,10 @@ $(document).ready(() => {
 
   $("#d-close-cat").click(function () {
     $("#d-modal-cat").addClass("d-display-none");
+    $("#categoryName").removeClass("wrong-format");
+      $("#categoryImage").removeClass("wrong-format");
+      $("#add-input-error").addClass("d-display-none");
+      $('#d-admin-form')[0].reset()
   });
 
   function validateCategories() {
@@ -349,6 +353,7 @@ $(document).ready(() => {
     $("#d-modal-chooseCat").addClass("d-display-none");
     $("#select-input-error").addClass("d-display-none");
     $("#selectCategory").removeClass("wrong-format");
+    $('#d-chooseCat-form')[0].reset()
   });
 
   // select category for product
@@ -359,9 +364,13 @@ $(document).ready(() => {
       $("#selectCategory").addClass("wrong-format");
       $("#select-input-error").text("Select a category");
     } else {
+        $("#select-input-error").addClass("d-display-none");
+      $("#selectCategory").removeClass("wrong-format");
       let catId = $("#selectCategory option").data("id");
       localStorage.setItem("ChosenCategory-product", catId);
       $("#d-modal-product").removeClass("d-display-none");
+      $('#d-modal-chooseCat').addClass('d-display-none')
+      $(this)[0].reset()
     }
   });
 
