@@ -1,0 +1,86 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Sofia Sans', sans-serif;
+}
+
+
+.cardi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 50%;
+    margin: auto;
+    /* border-radius: 10px;
+    border: .5px solid rgba(128, 128, 128, 0.384);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.508);  */
+}
+
+.loginform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loginform h1 {
+    margin: 0;
+}
+
+.inputs {
+    /* width: 100%; */
+    width: 500px;
+    /* padding: 10px 20px; */
+    height: 35px;
+    border: none;
+    margin-top: 30px;
+    background: #ddd;
+    color: #000;
+
+}
+
+
+.btn4{
+    margin-top: 25px;
+    width: 60%;
+    height: 40px;
+    color: white;
+    background-color: #2b6df0;
+    border-radius: 30px;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    transition: .3s ease;
+}
+
+.btn4:hover {
+    background-color: #6392f0;
+}
+
+.error{
+    border-color: red;
+}
+
+.error-message{
+    color: red;
+    display: none;
+    margin: 0;
+    font-size: 12px;
+    margin-top: -4px;  
+}
+
+.exta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exta a {
+    margin-top: 15px;
+    text-decoration: none;
+    color: black;
+    font-family: 'Sofia Sans', sans-serif; 
+}

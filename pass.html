@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./pass.css">
+    <title>Password Update</title>
+</head>
+<body>
+
+    <div class="biggy-cont">
+        <h1>Merchant Password Update </h1>
+    </div>
+        
+       <div class="Kard">
+           <form class="update" id="UpdatePass">
+            <input class="inputs" id="pass1" type="password"  placeholder="Enter Old Password" type="password">
+               <p class="error-message" id="er1">This field cant be blank</p>
+               <p class="error-message" id="er2">Password must be 8 characters long</p>
+
+               <input class="inputs" id="pass2" placeholder="Enter New Password" type="password" >
+               <p class="error-message" id="newpass">This field cant be blank</p>
+               <p class="error-message" id="newpass2">Password must be 8 characters long</p>
+  
+                  <button class="btn6" type="submit">Update</button>
+           </form>
+       </div>
+
+    <script src="./pass.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Sofia Sans', sans-serif;
+}
+
+/* .ancestoR-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1000px;
+} */
+
+.biggy-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+    font-weight: 600;
+    
+}
+
+.pinkey-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* background-color: palegreen; */
+    height: 580px;
+    margin: auto;
+    width: 90%;
+    gap: 5px;
+    /* border: .5px solid rgba(128, 128, 128, 0.384);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.508); 
+    border-radius: 10px; */
+}
+
+.pink-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 20px;
+    /* background-color: #6392f0;
+    margin: auto; */   
+}
+
+.pink-boxy {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  
+    /* margin-left: 20px; */
+}
+
+.pink-1 h1{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputt {
+    /* width: 100%; */
+    width: 500px;
+    /* padding: 10px 20px; */
+    height: 35px;
+    border: none;
+    margin-top: 30px;
+    background: #ddd;
+    color: #000;
+
+}
+
+.inputt2 {
+    /* width: 100%; */
+    width: 500px;
+    /* padding: 10px 20px; */
+    height: 100px;
+    border: none;
+    margin-top: 30px;
+    background: #ddd;
+    color: #000;
+}
+
+.btn3 {
+    margin-top: 70px;
+    width: 50%;
+    height: 40px;
+    color: white;
+    background-color: #2b6df0;
+    margin-left: 100px;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    transition: .3s ease;
+    border-radius: 30px;
+}
+
+
+.btn3:hover {
+    background-color: #6392f0;
+    cursor: pointer;
+}
+
+.error{
+    border-color: red;
+}
+
+.error-message{
+    color: red;
+    display: none;
+    margin: 0;
+    font-size: 12px;
+    margin-top: -2px;
+    
+}
