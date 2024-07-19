@@ -92,13 +92,25 @@ label {
 #d-side-nav {
     background-color: white;
     width: fit-content;
-    height: 100vh;
+    height: 90vh;
     padding: 30px 50px;
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
     z-index: 20;
+    overflow-y: scroll;
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ #d-side-nav::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#d-side-nav {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 #d-dashboard-heading {
@@ -137,7 +149,7 @@ li#d-dashboard-heading a {
 #d-dashboard-summary {
     gap: 30px;
     background-color: white;
-    width: 70%;
+    width: 75%;
     min-width: fit-content;
     padding: 30px;
 }
@@ -179,8 +191,9 @@ li#d-dashboard-heading a {
 }
 
 #d-dashboard-main {
-    width: 55%;
+    width: 70%;
     margin: auto;
+    margin-left: 25%;
 }
 
 .d-dashboard-items {
@@ -193,11 +206,11 @@ li#d-dashboard-heading a {
 
 #d-dashboard-title {
     position: fixed;
-    top: 0;
-    left: 19%;
+    top: -19px;
+    left: 10%;
     background-color: #efefef;
     z-index: 5;
-    width: 75%;
+    width: 100%;
     padding-top: 20px;
     padding-bottom: 10px;
 }
@@ -211,7 +224,7 @@ li#d-dashboard-heading a {
 }
 
 #d-dashboard-all {
-    margin-top: 250px
+    margin-top: 220px
 }
 
 .admin-icon {
@@ -288,7 +301,7 @@ li#d-dashboard-heading a {
     border-radius: 49px;
     color: white;
     min-width: 130px;
-    padding: 10px 0;
+    padding: 12px 0;
 }
 
 .modal-details button:hover {
@@ -306,7 +319,8 @@ li#d-dashboard-heading a {
 #d-close-editAdmin:hover,
 #d-close-cat:hover,
 #d-close-product:hover,
-#d-close-variations:hover {
+#d-close-variations:hover, 
+#d-close-Selectcat:hover {
     cursor: pointer;
 }
 
@@ -325,6 +339,9 @@ li#d-dashboard-heading a {
 #add-input-error-product {
     position: absolute;
     top: 0;
+}
+#add-input-error-product{
+    top: -20px;
 }
 
 #d-modal-product-grid {

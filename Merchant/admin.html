@@ -37,7 +37,7 @@
                           </svg>Catgeory
                         </a>
                     </li>
-                    <li class="d-dashboard-item" id="d-add-product">
+                    <li class="d-dashboard-item" id="d-select-cat">
                         <a href="#" class="d-flex d-gap-10 d-align-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                           </svg>Product
@@ -83,8 +83,8 @@
             <div id="d-dashboard-title" class="d-flex d-align-center d-justify-around">
 
                 <div id="d-dashboard-summary">
+                    
                     <div class="d-flex d-gap-20 d-align-center d-justify-evenly">
-
                         <div id="d-totalSales">
                             <p class="d-flex d-align-center d-gap-10"> <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
@@ -114,15 +114,15 @@
                                 350
                             </h2>
                         </div>
+                        <div class="d-flex d-align-center d-justify-center d-gap-10">
+                            <div id="admin-icon-sm" class="admin-icon" style="background-image: url('https://cdn.pixabay.com/photo/2019/10/23/08/03/woman-4570763_1280.jpg');">
+                                </div>
+                            <p style="font-size: 20px;">Dami</p>
+                        </div>
                     </div>
 
                 </div>
-                <div class="d-flex d-align-center d-justify-center d-gap-10">
-                    <div id="admin-icon-sm" class="admin-icon" style="background-image: url('https://cdn.pixabay.com/photo/2019/10/23/08/03/woman-4570763_1280.jpg');">
-
-                    </div>
-                    <p style="font-size: 20px;">Dami</p>
-                </div>
+                
             </div>
 
 
@@ -169,8 +169,12 @@
                 <div><b>Description:</b> <span id="d-modaladmin-name">Poketo</span></div>
                 <div><b>Other Numbers:</b> <span id="d-modaladmin-name"></span></div>
 
-                <a href="#"><button type="button" id="d-edit-admin-btn">Edit Info</button></a>
+                <div class="d-flex d-justify-between">
+                    <a href="upmerch.html"><button type="button" id="d-edit-admin-btn">Edit Info</button></a>
 
+                <a href="pass.html"><button type="button" id="d-passwordChange-btn">Change Password</button></a>
+
+                </div>
             </div>
         </div>
 
@@ -192,8 +196,27 @@
             </div>
         </div>
 
+        <!-- //Choose a category -->
+        <div id="d-modal-chooseCat" class="modals-admin d-flex d-align-center d-display-none">
+            <div id="d-modal-chooseCat-details" class=" modal-details d-flex-col d-gap-20">
+                <form action="" id="d-chooseCat-form" class="d-flex-col d-justify-center d-gap-20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" id="d-close-Selectcat" style="align-self: end;">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                      </svg>
+                    <p class="error-msg d-display-none" id="add-input-error"></p>
+                    <label for="selectCategory">Select Category</label>
+                    <select name="" id="selectCategory">
+                        <!-- //start template -->
+                        <option value="bags">Bags</option>
+                    </select>
+                    <button id="d-add-product" type="submit ">Ok</button>
+                </form>
+
+            </div>
+        </div>
+
         <!-- //Add and edit a Product -->
-        <div id="d-modal-product" class="modals-admin d-flex d-align-center">
+        <div id="d-modal-product" class="modals-admin d-flex d-align-center d-display-none">
             <div id="d-modal-product-details" class=" modal-details d-flex-col d-gap-20">
                 <form action="" id="d-product-form" class="d-flex-col d-justify-center d-gap-20">
                     
@@ -270,7 +293,7 @@
 
 
                             </div>
-                            <div>
+                            <div class="d-flex-col d-gap-10">
                                 <div>
                                     <label for="productShippingLoc">Shipping Locations</label> <button id="add-shiping-location" type="button">Add</button>
                                 </div>

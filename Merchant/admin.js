@@ -26,6 +26,8 @@ $(document).ready(() => {
             </a>
         </li>`)
 
+        $('#selectCategory').append(`<option value="bags">${item.name}</option>`)
+
     })
 
 
@@ -60,10 +62,10 @@ $(document).ready(() => {
     })
 
 
-    // edit admin-- redirected to edit page
-    $('#d-edit-admin-btn').click(function() {
-            $('#d-modal-Admin').addClass('d-display-none')
-        })
+    // // edit admin-- redirected to edit page
+    // $('#d-edit-admin-btn').click(function() {
+    //         $('#d-modal-Admin').addClass('d-display-none')
+    //     })
         // close admin
     $('#d-close-editAdmin').click(function() {
         $('#d-modal-Admin').addClass('d-display-none')
@@ -109,7 +111,7 @@ $(document).ready(() => {
 
     // create category
     $('#d-admin-form').submit(function(e) {
-        e.preventDefault()
+      e.preventDefault()
         if (validateCategories()) {
             let adminId = 123
             let imageCat = $('#categoryImage').val()
@@ -124,11 +126,10 @@ $(document).ready(() => {
             let cat = JSON.parse(localStorage.getItem('testing-cat')) || [];
             cat.push(data)
             localStorage.setItem('testing-cat', JSON.stringify(cat))
-            $('#d-modal-cat').addClass('d-display-none')
+            // $('#d-modal-cat').addClass('d-display-none')
             $(this)[0].reset()
+            window.location.reload(true)
         }
-
-
     })
 
     //edit a category
@@ -207,8 +208,18 @@ $(document).ready(() => {
     let imagesArray = []
 
     $('#add-product-img').click(function() {
-        imagesArray.push($('#productImg').val())
-        $('#productImg').val('')
+        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+        if(!urlPattern.test($('#productImg').val())){
+            $('#productImg').addClass('wrong-format');
+            $('#add-input-error-product').text('Wrong Format');
+        }
+        else{
+            $('#productImg').removeClass('wrong-format');
+            imagesArray.push($('#productImg').val())
+            $('#productImg').val('')
+        }
+
+     
     })
 
     function validateProducts() {
@@ -277,7 +288,7 @@ $(document).ready(() => {
                 $('#productDiscount').removeClass('wrong-format');
 
             }
-
+                       
             if (allValid && imagesArray.length > 0) {
                 validated = true;
                 $('#add-input-error-product').addClass('d-display-none');
@@ -293,6 +304,15 @@ $(document).ready(() => {
         $('#d-modal-product').addClass('d-display-none')
     })
 
+    // open select product
+    $('#d-select-cat').click(function(){
+        $('#d-modal-chooseCat').removeClass('d-display-none')
+    })
+
+    // close select product
+    $('#d-close-Selectcat').click(function(){
+        $('#d-modal-chooseCat').addClass('d-display-none')
+    })
     // open product modal
     $('#d-add-product').click(function() {
         $('#d-modal-product').removeClass('d-display-none')
