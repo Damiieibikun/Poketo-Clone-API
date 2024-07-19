@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:ital,wght@0,1..1000;1,1..1000&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./upmerch.css" >
+    <title>Update Merchant Information</title>
+</head>
+<body>
+
+
+    <div class="biggy-cont">
+        <h1> Update Merchant Registration</h1>
+    </div>
+
+    <div class="pinkey-grid">
+        <div class="pink-card">
+            <form id="RegFormS3">
+                <div class="pink-1">
+                    <h1>Account Details</h1>
+                </div> 
+                
+                <!-- input 1 -->
+                <input class="inputt" id="fnam" placeholder="First Name">
+                <p class="error-message" id="err1">This field can't be blank</p>
+
+                <!-- input 2 -->
+                <input class="inputt" id="lnam" placeholder="Last Name" >
+                <p class="error-message" id="err2">This field can't be blank</p>
+
+                <!-- input 3 -->
+                <input class="inputt" id="email3" placeholder="Enter Email">
+                <p class="error-message" id="err3">This field can't be blank</p>
+                <p class="error-message" id="err4">Invalid Email</p>
+
+                <!-- input 4  -->
+                <input class="inputt" id="phone1" placeholder="Enter Mobile Number" type="tel" >
+                <p class="error-message" id="err5">This field can't be blank</p>
+                <p class="error-message" id="phonelengtherror">Must be 11 digits</p>
+                <p class="error-message" id="err6">Put in a valid phone number</p>
+
+                <!-- input 5  -->
+                <input class="inputt" id="storename" placeholder="Enter Store Name" >
+                <p class="error-message" id="err7" >This field can't be blank</p>
+
+                <!-- input 6 -->
+                <input class="inputt2" id="descript" placeholder="Enter Store Description" >
+                <p class="error-message" id="err8">This field can't be empty</p>
+
+                <!-- input 7 -->
+                <input class="inputt" id="iconic" placeholder="Enter Icon" >
+                <p class="error-message" id="err9">This field can't be blank</p>
+
+              
+
+
+                
+
+            </form>
+        </div>
+        
+        <div class="pink-boxy">
+            <form id="RegFormS4">
+                <div class="pink-1">
+                    <h1>Account Details</h1>
+                </div> 
+
+                 <!-- input 8 -->
+               <input class="inputt" id="banner" placeholder="Enter Banner" >
+               <p class="error-message" id="err10">This field can't be blank</p>
+               
+
+                  
+                <!-- input 9 -->
+                <input class="inputt" id="state" placeholder="Enter State" >
+                <p class="error-message" id="err15">This field can't be blank</p>
+
+                <!-- input 10 -->
+                <input class="inputt" id="district" placeholder="Enter District" >
+                <p class="error-message" id="err16">This field can't be blank</p>
+
+                <!-- input 11 -->
+               <!-- <div class="form-groupie" >
+                <label for="SocialMediaType">Social Media:</label>
+                <select id="SocialMedia" name="socialMedia" >
+                    <option value="twitter">X</option>
+                    <option value="face_book">Facebook</option>
+                    <option value="instagram">Instagram</option>
+                </select> -->
+                <label for="media">Social media:</label>
+                <!-- <input class="inputt" id="socialMedia" placeholder="social media" > -->
+                <!-- <p class="error-message" id="err17">This field can't be blank</p> -->
+               
+                <!-- input 12 -->
+                 <input style="margin-top: 8px;" class="inputt" id="twitter" placeholder="X" type="text" >
+                 <p class="error-message" id="err18">This field can't be blank</p>
+
+                 <!--input 13  -->
+                 <input class="inputt" id="facebook" placeholder="Facebook" type="text" >
+                 <p class="error-message" id="err19">This field can't be blank</p>
+
+                 <!-- input 14 -->
+                  <input class="inputt" id="instagram" placeholder="Instagram" type="text" >
+                  <p class="error-message" id="err20">This field can't be blank</p>
+                
+
+                <!-- input 12  -->
+                <input class="inputt" id="phone2" placeholder="Enter Phone Number (optional)" type="tel" >
+
+                
+
+                <!-- input 11 -->
+                <!-- <input class="inputt" id="repass" placeholder="Re-type Password" type="password" >
+                <p class="error-message" id="re_typeerror">Passwords do not match</p> -->
+
+                <button class="btn4" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+    
+
+
+
+
+    <script src="./upmerch.js" ></script>
+</body>
+</html>
