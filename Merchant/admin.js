@@ -237,19 +237,26 @@ $('#add-Images').click(function(){
 
 $('#d-close-addImages').click(function(){
     $('#d-modal-addImages').addClass('d-display-none')
+    $('#productImg').removeClass('wrong-format');
+    $('#img-input-error').addClass('d-display-none');
 })
-    // get images array
-    let imagesArray = []
+
 
     $('#add-product-img').click(function() {
         const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
         if(!urlPattern.test($('#productImg').val())){
             $('#productImg').addClass('wrong-format');
+            $('#img-input-error').removeClass('d-display-none');
             $('#img-input-error').text('Wrong Format');
         }
         else{
             $('#productImg').removeClass('wrong-format');
+            $('#img-input-error').addClass('d-display-none');
+    // get images array
+    let imagesArray = JSON.parse(localStorage.getItem('imagesArr')) || []
+
             imagesArray.push($('#productImg').val())
+            localStorage.setItem('imagesArr', JSON.stringify(imagesArray))
             $('#productImg').val('')
         }
 
@@ -336,6 +343,8 @@ $('#d-close-addImages').click(function(){
     // close a product
     $('#d-close-product').click(function() {
         $('#d-modal-product').addClass('d-display-none')
+        $('#d-product-form input').removeClass('wrong-format')
+        $('#add-input-error-product').addClass('d-display-none');
     })
 
     // open select product
@@ -346,23 +355,34 @@ $('#d-close-addImages').click(function(){
     // close select product
     $('#d-close-Selectcat').click(function(){
         $('#d-modal-chooseCat').addClass('d-display-none')
+        $('#select-input-error').addClass('d-display-none')
+            $('#selectCategory').removeClass('wrong-format')
     })
 
 
    // select category for product
     $('#d-chooseCat-form').submit(function(e){
         e.preventDefault()
-        let catId = $('#selectCategory option').data('id');
-        localStorage.setItem('ChosenCategory-product', catId)
-        $('#d-modal-product').removeClass('d-display-none')
+        if($('#selectCategory').val()=== ''){
+            $('#select-input-error').removeClass('d-display-none')
+            $('#selectCategory').addClass('wrong-format')
+            $('#select-input-error').text('Select a category')
+        }
+        else{
+            let catId = $('#selectCategory option').data('id');
+            localStorage.setItem('ChosenCategory-product', catId)
+            $('#d-modal-product').removeClass('d-display-none')
+        }
+       
     })
 
-    // create variations data for local stroage
-
-    let contentsArr = []
+    
 
     // push each variation created to content
     $('#d-add-variation-btn').click(function() {
+        // create variations data for local stroage
+        let contentsArr = JSON.parse(localStorage.getItem('Contents-Array')) || []
+
         let contentObj = {
             display: [{
                 type: $('#variation-display').val(),
@@ -372,12 +392,15 @@ $('#d-close-addImages').click(function(){
         }
 
         contentsArr.push(contentObj)
+        localStorage.setItem('Contents-Array', JSON.stringify(contentsArr))
     })
 
     // close a variation
     $('#d-close-variations').click(function() {
         $('#d-modal-variations').addClass('d-display-none')
         let variationArr = JSON.parse(localStorage.getItem('createdVariations')) || [];
+        let contentsArr = JSON.parse(localStorage.getItem('Contents-Array')) || [];
+
         let variationObjItem = {
             type: $('#variation-type').val(),
             text: $('#variation-type').val(),
@@ -410,17 +433,14 @@ $('#d-close-addImages').click(function(){
         e.preventDefault()
         console.log(validateProducts())
         if (validateProducts()) {
+            // get array for images
+           
             console.log(imagesArray)
                 // get variations
-                // do something
-        }
 
+                // make api call
 
-
-    })
-
-    // create a category
-    // "attrib": [{
+                    // "attrib": [{
     //         "type": "Other",
     //         "content": [{
     //                 "name": "Place of Origin",
@@ -452,6 +472,47 @@ $('#d-close-addImages').click(function(){
     //         }]
     //     }
     // ],
+
+     // clear images array
+     // clear variations local storage
+// clear created variations
+
+// clear category id
+// localStorage.removeItem('ChosenCategory-product')
+
+        }
+
+    })
+
+    // open shipping locations
+    $('#add-shiping-location').click(function(){
+    $('#d-modal-shippingLoc').removeClass('d-display-none')
+    })
+
+    // close shipping locations
+     $('#d-close-shipping').click(function(){
+        
+        $('#ship-input-error').addClass('d-display-none')
+        $('#add-productShippingLoc').removeClass('wrong-format')
+        $('#d-modal-shippingLoc').addClass('d-display-none')
+    })
+
+    // add shipping locations
+    
+    $('#add-location').click(function(){
+        if($('#add-productShippingLoc').val()===''){
+            $('#ship-input-error').removeClass('d-display-none')
+            $('#ship-input-error').text('Enter a Loaction')
+            $('#add-productShippingLoc').addClass('wrong-format')
+        }
+        else{
+            $('#ship-input-error').addClass('d-display-none')
+            $('#add-productShippingLoc').removeClass('wrong-format')
+            // do something
+        }
+    })
+   
+
 
     $('#logout-admin').click(function(){
         localStorage.removeItem('Merchant-Poketo')

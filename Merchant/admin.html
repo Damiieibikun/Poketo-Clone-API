@@ -393,15 +393,20 @@
                 d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
               />
             </svg>
-            <p class="error-msg d-display-none" id="add-input-error"></p>
+            <p class="error-msg d-display-none" id="select-input-error"></p>
             <label for="selectCategory">Select Category</label>
-            <select name="" id="selectCategory">
+            <select name="" id="selectCategory" class="right-format">
               <!-- //start template -->
+               <option value=""></option>
             </select>
             <button id="d-add-product" type="submit ">Ok</button>
           </form>
         </div>
       </div>
+
+
+
+
 
       <!-- //Add and edit a Product -->
       <div id="d-modal-product" class="modals-admin d-flex d-align-center">
@@ -567,16 +572,22 @@
                   </div>
                 </div>
                 <div class="d-flex-col d-gap-10">
-                  <div>
-                    <label for="productShippingLoc">Shipping Locations</label>
-                    <button id="add-shiping-location" type="button">Add</button>
-                  </div>
-
-                  <input
-                    type="text"
-                    id="productShippingLoc"
-                    class="right-format"
-                  />
+                    <div class="d-flex d-gap-10">
+                        <label for="">Shipping Locations</label>
+                        <button id="add-shiping-location" type="button">
+                            <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-plus"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                  /></svg
+                        </button>
+                    </div>
                 </div>
               </div>
             </div>
@@ -631,18 +642,38 @@
       </div>
 
       <!-- //Add product image modal -->
-      <div id="d-modal-addImages" class="modals-admin d-flex d-align-center">
+      <div id="d-modal-addImages" class="modals-admin d-flex d-align-center d-display-none">
         <div
           id="d-modal-addImages-details"
           class="modal-details d-flex-col d-gap-20"
         >
-        <p id="img-input-error" class="error-msg"></p>
+        <p id="img-input-error" class="error-msg d-display-none"></p>
           <span id="d-close-addImages" style="align-self: end">Done</span>
 
           <label for="productImg">Images</label>
 
           <input type="text" id="productImg" class="right-format" placeholder="https://www."/>
           <button id="add-product-img" type="button">Add</button>
+        </div>
+      </div>
+
+      <!-- //Add shipping locations modal -->
+      <div id="d-modal-shippingLoc" class="modals-admin d-flex d-align-center">
+        <div
+          id="d-modal-shippingLoc-details"
+          class="modal-details d-flex-col d-gap-20"
+        >
+        <p id="ship-input-error" class="error-msg d-display-none"></p>
+          <span id="d-close-shipping" style="align-self: end">Done</span>
+
+          <label for="add-productShippingLoc">Add Location</label>
+          
+          <input
+          type="text"
+          id="add-productShippingLoc"
+          class="right-format"
+        />
+          <button id="add-location" type="button">Add</button>
         </div>
       </div>
     </section>
