@@ -1,35 +1,34 @@
 $(document).ready(() => {
-    // get endpoint
-    const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
-    // get logged in merchant
-    let merchant = JSON.parse(localStorage.getItem('Merchant-Poketo'))
-    $('#admin-icon-sm').css('background-image', `url(${merchant.icon})`)
-    $('#admin-icon-lg').css('background-image', `url(${merchant.icon})`)
-    $('.admin-Name').text(`${merchant.first_name}`)
+  // get endpoint
+  const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+  // get logged in merchant
+  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
+  $("#admin-icon-sm").css("background-image", `url(${merchant.icon})`);
+  $("#admin-icon-lg").css("background-image", `url(${merchant.icon})`);
+  $(".admin-Name").text(`${merchant.first_name}`);
 
+  //admin popup
+  $("#d-modaladmin-fname").text(`${merchant.first_name}`);
+  $("#d-modaladmin-lname").text(`${merchant.last_name}`);
+  $("#d-modaladmin-email").text(`${merchant.email}`);
+  $("#d-modaladmin-shopName").text(`${merchant.store_name}`);
+  $("#d-modaladmin-Desc").text(`${merchant.descp}`);
 
-    //admin popup
-    $('#d-modaladmin-fname').text(`${merchant.first_name}`)
-    $('#d-modaladmin-lname').text(`${merchant.last_name}`)
-    $('#d-modaladmin-email').text(`${merchant.email}`)
-    $('#d-modaladmin-shopName').text(`${merchant.store_name}`)
-    $('#d-modaladmin-Desc').text(`${merchant.descp}`)
-  
+  // create categories and products
+  $("#d-add-products-admin").click(function () {
+    $("#d-addProducts-list").slideToggle();
+  });
 
-    // create categories and products
-    $('#d-add-products-admin').click(function() {
-        $('#d-addProducts-list').slideToggle()
-    })
-
-    //GET categories
-    $.ajax({
-        url: `${endPoint}/categories?merchant_id=${merchant.id}`,
-        method: 'GET',
-        success: function(data) {
-            let allCat = data
-            console.log(allCat)
-             allCat.forEach((item) => {
-        $('#d-category-list').append(`<li class="d-dashboard-item" id=${item.id}>
+  //GET categories
+  $.ajax({
+    url: `${endPoint}/categories?merchant_id=${merchant.id}`,
+    method: "GET",
+    success: function (data) {
+      let allCat = data;
+      console.log(allCat);
+      allCat.forEach((item) => {
+        $("#d-category-list")
+          .append(`<li class="d-dashboard-item" data-id=${item.id}>
             <a href="#" class="d-flex d-gap-10 d-align-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
                 <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
@@ -45,170 +44,172 @@ $(document).ready(() => {
                       </svg>
                 </div>
             </a>
-        </li>`)
+        </li>`);
 
-        $('#selectCategory').append(`<option value="bags" data-id=${item.id}>${item.name}</option>`)
+        $("#selectCategory").append(
+          `<option value="bags" data-id=${item.id}>${item.name}</option>`
+        );
+      });
+    },
+    error: function (err) {},
+  });
 
-    })
-        },
-        error: function(err) {}
-    })
+  // show all categories
+  $("#d-dashboard-categories").click(function () {
+    $("#d-category-list").slideToggle();
+  });
 
-    // show all categories
-    $('#d-dashboard-categories').click(function() {
-        $('#d-category-list').slideToggle()
-    })
+  // add styles to selected items
+  $(".d-dashboard-item").click(function () {
+    $(this).css("background-color", "#0085CA");
+    $(this).children().css("color", "white");
+    $(this).siblings().css("background-color", "white");
+    $(this).siblings().children().css("color", "black");
+  });
 
+  // refresh current page when selecting dashboard
+  $("#d-dashboard-heading").click(function () {
+    location.reload(true);
+  });
 
-    // add styles to selected items
-    $('.d-dashboard-item').click(function() {
-        $(this).css('background-color', '#0085CA')
-        $(this).children().css('color', 'white')
-        $(this).siblings().css('background-color', 'white')
-        $(this).siblings().children().css('color', 'black')
-    })
+  // show edit and delete categories
+  $(document).on("click", ".bi-three-dots", function () {
+    $(this).next().toggle();
+    console.log("clicked");
+  });
 
-    // refresh current page when selecting dashboard
-    $('#d-dashboard-heading').click(function() {
-        location.reload(true)
-    })
+  // show edit admin modal
+  $("#admin-icon-sm").click(function () {
+    $("#d-modal-Admin").removeClass("d-display-none");
+  });
 
-    // show edit and delete categories
-    $('.bi-three-dots').click(function() {
-        $(this).next().toggle()
-    })
+  // close admin
+  $("#d-close-editAdmin").click(function () {
+    $("#d-modal-Admin").addClass("d-display-none");
+  });
 
-    // show edit admin modal
-    $('#admin-icon-sm').click(function() {
-        $('#d-modal-Admin').removeClass('d-display-none')
-    })
+  // show add category
+  $("#d-add-cat").click(function () {
+    $("#d-modal-cat").removeClass("d-display-none");
+  });
 
+  // close categry
 
-        // close admin
-    $('#d-close-editAdmin').click(function() {
-        $('#d-modal-Admin').addClass('d-display-none')
-    })
+  $("#d-close-cat").click(function () {
+    $("#d-modal-cat").addClass("d-display-none");
+  });
 
-    // show add category
-    $('#d-add-cat').click(function() {
-        $('#d-modal-cat').removeClass('d-display-none')
-    })
-
-    // close categry
-
-    $('#d-close-cat').click(function() {
-        $('#d-modal-cat').addClass('d-display-none')
-    })
-
-    function validateCategories() {
-        let validated = false
-        if ($('#categoryName').val() === "") {
-            $('#categoryName').addClass('wrong-format')
-            $('#categoryImage').removeClass('wrong-format')
-            $('#add-input-error').removeClass('d-display-none')
-            $('#add-input-error').text('Empty Fields')
-
-        } else if ($('#categoryImage').val() === "") {
-            $('#categoryImage').addClass('wrong-format')
-            $('#categoryName').removeClass('wrong-format')
-            $('#add-input-error').removeClass('d-display-none')
-            $('#add-input-error').text('Empty Fields')
-        } else {
-            const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
-            urlPattern.test($('#categoryImage').val()) ?
-                ($('#add-input-error').addClass('d-display-none'),
-                    $('#categoryName').removeClass('wrong-format'),
-                    $('#categoryImage').removeClass('wrong-format'),
-                    validated = true) :
-                $('#categoryImage').addClass('wrong-format'),
-                $('#add-input-error').removeClass('d-display-none'),
-                $('#add-input-error').text('Wrong URL format')
-        }
-        return validated
+  function validateCategories() {
+    let validated = false;
+    if ($("#categoryName").val() === "") {
+      $("#categoryName").addClass("wrong-format");
+      $("#categoryImage").removeClass("wrong-format");
+      $("#add-input-error").removeClass("d-display-none");
+      $("#add-input-error").text("Empty Fields");
+    } else if ($("#categoryImage").val() === "") {
+      $("#categoryImage").addClass("wrong-format");
+      $("#categoryName").removeClass("wrong-format");
+      $("#add-input-error").removeClass("d-display-none");
+      $("#add-input-error").text("Empty Fields");
+    } else {
+      const urlPattern =
+        /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+      urlPattern.test($("#categoryImage").val())
+        ? ($("#add-input-error").addClass("d-display-none"),
+          $("#categoryName").removeClass("wrong-format"),
+          $("#categoryImage").removeClass("wrong-format"),
+          (validated = true))
+        : $("#categoryImage").addClass("wrong-format"),
+        $("#add-input-error").removeClass("d-display-none"),
+        $("#add-input-error").text("Wrong URL format");
     }
+    return validated;
+  }
 
-    // create category
-    $('#d-admin-form').submit(function(e) {
-      e.preventDefault()
-        if (validateCategories()) {
-            let adminId = merchant.id
-            let imageCat = $('#categoryImage').val()
-            let catName = $('#categoryName').val()
+  // create category
+  $("#d-admin-form").submit(function (e) {
+    e.preventDefault();
+    if (validateCategories()) {
+      let adminId = merchant.id;
+      let imageCat = $("#categoryImage").val();
+      let catName = $("#categoryName").val();
 
-            //make post request
-            let data = {
-                merchant_id: adminId,
-                name: catName,
-                image: imageCat
-            }
+      //make post request
+      let data = {
+        merchant_id: adminId,
+        name: catName,
+        image: imageCat,
+      };
 
-            $.ajax({
-                url: `${endPoint}/categories`,
-                data: data,
-                method: 'POST',
-                success: function(res) {
-                    console.log(res)
-                },
-                error: function(res){}
-            })
-           
-            $(this)[0].reset()
-            window.location.reload(true)
-        }
-    })
+      $.ajax({
+        url: `${endPoint}/categories`,
+        data: data,
+        method: "POST",
+        success: function (res) {
+          console.log(res);
+        },
+        error: function (res) {},
+      });
 
-    //edit a category
+      $(this)[0].reset();
+      window.location.reload(true);
+    }
+  });
 
-    $('.bi-pen-fill').click(function() {
-        $('#d-modal-cat').removeClass('d-display-none')
-        $('#create-cat').text('Edit Category')
+  //edit a category
 
+  $(document).on("click", ".bi-pen-fill", function () {
+    $("#d-modal-cat").removeClass("d-display-none");
+    $("#create-cat").text("Edit Category");
+    let catID = $(this).parents("li").data("id");
+    // $('#categoryImage').val()
 
-        // $('#categoryImage').val()
-        // $('#categoryName').val()
+    $("#d-admin-form").unbind();
+    $("#d-admin-form").submit(function (e) {
+      e.preventDefault();
 
+      if (validateCategories()) {
+        let imageCat = $("#categoryImage").val();
+        let catName = $("#categoryName").val();
 
-        $('#d-admin-form').unbind()
-        $('#d-admin-form').submit(function() {
+        let data = {
+          name: catName,
+          image: imageCat,
+        };
 
-            if (validateCategories()) {
-                // let adminId = 123
-                let imageCat = $('#categoryImage').val()
-                let catName = $('#categoryName').val()
+        $.ajax({
+          url: `${endPoint}/categories/${catID}`,
+          data: data,
+          method: "PUT",
+          success: function (res) {
+            location.reload(true);
+          },
+          error: function (res) {},
+        });
 
-                //make post request
-                let data = {
-                    name: catName,
-                    image: imageCat
-                }
-                console.log(data)
-                $('#d-modal-cat').addClass('d-display-none')
-                $(this)[0].reset()
-            }
+        $(this)[0].reset();
+      }
+    });
+  });
 
+  // test for all prodcuts added after api call
+  //GET /products?merchant_id=123
+  // DESCP: Get all product for a particular merchant
+  $("#d-all-products-admin").click(function () {
+    $("#d-dashboard-all").removeClass("d-display-none");
 
-        })
-    })
-
-
-
-    // test for all prodcuts added after api call
-    //GET /products?merchant_id=123
-    // DESCP: Get all product for a particular merchant
-    $('#d-all-products-admin').click(function() {
-
-        $('#d-dashboard-all').removeClass('d-display-none')
-
-        // replace with api
-        let allProducts = JSON.parse(localStorage.getItem('Poketo-Products')) || []
-        allProducts.forEach((item, i) => {
-            $('#d-dashboard-all-items').append(
-                `<div class="all-products-grid">
+    // replace with api
+    let allProducts = JSON.parse(localStorage.getItem("Poketo-Products")) || [];
+    allProducts.forEach((item, i) => {
+      $("#d-dashboard-all-items").append(
+        `<div class="all-products-grid">
                 <div>
-                    <span>${i+1}</span>
+                    <span>${i + 1}</span>
                 </div>
                 <div class="d-flex d-gap-10">
-                    <div class="product-img" style="background-image: url(${item.img});"></div>
+                    <div class="product-img" style="background-image: url(${
+                      item.img
+                    });"></div>
                     <p class="product-name">${item.productName}</p>
                 </div>
                 <div>
@@ -219,302 +220,283 @@ $(document).ready(() => {
                 </div>
                 
             </div>`
-            )
-        });
+      );
+    });
+  });
 
-    })
+  // SAME AS ABOVE
+  //GET /products?merchant_id=123&category_id=321
+  //DESCP: Get all product for a particular merchant and belonging to a particular category
 
-    // SAME AS ABOVE
-    //GET /products?merchant_id=123&category_id=321
-    //DESCP: Get all product for a particular merchant and belonging to a particular category
+  //open add images modal
 
-//open add images modal
+  $("#add-Images").click(function () {
+    $("#d-modal-addImages").removeClass("d-display-none");
+  });
+  // close add images modal
 
-$('#add-Images').click(function(){
-    $('#d-modal-addImages').removeClass('d-display-none')
-})
-// close add images modal
+  $("#d-close-addImages").click(function () {
+    $("#d-modal-addImages").addClass("d-display-none");
+    $("#productImg").removeClass("wrong-format");
+    $("#img-input-error").addClass("d-display-none");
+  });
 
-$('#d-close-addImages').click(function(){
-    $('#d-modal-addImages').addClass('d-display-none')
-    $('#productImg').removeClass('wrong-format');
-    $('#img-input-error').addClass('d-display-none');
-})
+  $("#add-product-img").click(function () {
+    const urlPattern =
+      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+    if (!urlPattern.test($("#productImg").val())) {
+      $("#productImg").addClass("wrong-format");
+      $("#img-input-error").removeClass("d-display-none");
+      $("#img-input-error").text("Wrong Format");
+    } else {
+      $("#productImg").removeClass("wrong-format");
+      $("#img-input-error").addClass("d-display-none");
+      // get images array
+      let imagesArray = JSON.parse(localStorage.getItem("imagesArr")) || [];
 
+      imagesArray.push($("#productImg").val());
+      localStorage.setItem("imagesArr", JSON.stringify(imagesArray));
+      $("#productImg").val("");
+    }
+  });
 
-    $('#add-product-img').click(function() {
-        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
-        if(!urlPattern.test($('#productImg').val())){
-            $('#productImg').addClass('wrong-format');
-            $('#img-input-error').removeClass('d-display-none');
-            $('#img-input-error').text('Wrong Format');
+  function validateProducts() {
+    let validated = false;
+    let emptyVal = 0;
+
+    $("#d-product-form")
+      .find("input")
+      .each((index, input) => {
+        if ($(input).val() === "" && $(input).attr("id") !== "productImg") {
+          $(input).addClass("wrong-format");
+          $("#add-input-error-product").removeClass("d-display-none");
+          $("#add-input-error-product").text("Empty Field");
+          emptyVal++;
+        } else {
+          $(input).removeClass("wrong-format");
         }
-        else{
-            $('#productImg').removeClass('wrong-format');
-            $('#img-input-error').addClass('d-display-none');
-    // get images array
-    let imagesArray = JSON.parse(localStorage.getItem('imagesArr')) || []
+      });
 
-            imagesArray.push($('#productImg').val())
-            localStorage.setItem('imagesArr', JSON.stringify(imagesArray))
-            $('#productImg').val('')
-        }
+    if (emptyVal === 0) {
+      const checkInt = /^-?\d+$/;
+      const checkFloat = /^-?\d+(\.\d+)?$/;
 
-     
-    })
+      let allValid = true;
 
-    function validateProducts() {
+      if (!checkFloat.test($("#productPrice").val())) {
+        $("#productPrice").addClass("wrong-format");
+        $("#add-input-error-product").text("Wrong Format");
+        allValid = false;
+      } else {
+        $("#productPrice").removeClass("wrong-format");
+      }
 
-        let validated = false;
-        let emptyVal = 0;
+      if (!checkInt.test($("#productQTY").val())) {
+        $("#productQTY").addClass("wrong-format");
+        $("#add-input-error-product").text("Wrong Format");
+        allValid = false;
+      } else {
+        $("#productQTY").removeClass("wrong-format");
+      }
 
-        $('#d-product-form').find('input').each((index, input) => {
-            if ($(input).val() === '' && $(input).attr('id') !== 'productImg') {
-                $(input).addClass('wrong-format');
-                $('#add-input-error-product').removeClass('d-display-none');
-                $('#add-input-error-product').text('Empty Field');
-                emptyVal++;
-            } else {
-                $(input).removeClass('wrong-format');
-            }
-        });
+      if (!checkInt.test($("#min-qty").val())) {
+        $("#min-qty").addClass("wrong-format");
+        $("#add-input-error-product").text("Wrong Format");
+        allValid = false;
+      } else {
+        $("#min-qty").removeClass("wrong-format");
+      }
 
-        if (emptyVal === 0) {
-            const checkInt = /^-?\d+$/;
-            const checkFloat = /^-?\d+(\.\d+)?$/;
+      if (!checkInt.test($("#max-qty").val())) {
+        $("#max-qty").addClass("wrong-format");
+        $("#add-input-error-product").text("Wrong Format");
+        allValid = false;
+      } else {
+        $("#max-qty").removeClass("wrong-format");
+      }
 
-            let allValid = true;
+      if (!checkFloat.test($("#productDiscount").val())) {
+        $("#productDiscount").addClass("wrong-format");
+        $("#add-input-error-product").text("Wrong Format");
+        allValid = false;
+      } else {
+        $("#productDiscount").removeClass("wrong-format");
+      }
 
-            if (!checkFloat.test($('#productPrice').val())) {
-                $('#productPrice').addClass('wrong-format');
-                $('#add-input-error-product').text('Wrong Format');
-                allValid = false;
-            } else {
-                $('#productPrice').removeClass('wrong-format');
-
-            }
-
-            if (!checkInt.test($('#productQTY').val())) {
-                $('#productQTY').addClass('wrong-format');
-                $('#add-input-error-product').text('Wrong Format');
-                allValid = false;
-            } else {
-                $('#productQTY').removeClass('wrong-format');
-
-            }
-
-            if (!checkInt.test($('#min-qty').val())) {
-                $('#min-qty').addClass('wrong-format');
-                $('#add-input-error-product').text('Wrong Format');
-                allValid = false;
-            } else {
-                $('#min-qty').removeClass('wrong-format');
-
-            }
-
-            if (!checkInt.test($('#max-qty').val())) {
-                $('#max-qty').addClass('wrong-format');
-                $('#add-input-error-product').text('Wrong Format');
-                allValid = false;
-            } else {
-                $('#max-qty').removeClass('wrong-format');
-
-            }
-
-            if (!checkFloat.test($('#productDiscount').val())) {
-                $('#productDiscount').addClass('wrong-format');
-                $('#add-input-error-product').text('Wrong Format');
-                allValid = false;
-            } else {
-                $('#productDiscount').removeClass('wrong-format');
-
-            }
-                       
-            if (allValid && imagesArray.length > 0) {
-                validated = true;
-                $('#add-input-error-product').addClass('d-display-none');
-            }
-        }
-
-        return validated;
-
+      if (allValid && imagesArray.length > 0) {
+        validated = true;
+        $("#add-input-error-product").addClass("d-display-none");
+      }
     }
 
-    // close a product
-    $('#d-close-product').click(function() {
-        $('#d-modal-product').addClass('d-display-none')
-        $('#d-product-form input').removeClass('wrong-format')
-        $('#add-input-error-product').addClass('d-display-none');
-    })
+    return validated;
+  }
 
-    // open select product
-    $('#d-select-cat').click(function(){
-        $('#d-modal-chooseCat').removeClass('d-display-none')
-    })
+  // close a product
+  $("#d-close-product").click(function () {
+    $("#d-modal-product").addClass("d-display-none");
+    $("#d-product-form input").removeClass("wrong-format");
+    $("#add-input-error-product").addClass("d-display-none");
+  });
 
-    // close select product
-    $('#d-close-Selectcat').click(function(){
-        $('#d-modal-chooseCat').addClass('d-display-none')
-        $('#select-input-error').addClass('d-display-none')
-            $('#selectCategory').removeClass('wrong-format')
-    })
+  // open select product
+  $("#d-select-cat").click(function () {
+    $("#d-modal-chooseCat").removeClass("d-display-none");
+  });
 
+  // close select product
+  $("#d-close-Selectcat").click(function () {
+    $("#d-modal-chooseCat").addClass("d-display-none");
+    $("#select-input-error").addClass("d-display-none");
+    $("#selectCategory").removeClass("wrong-format");
+  });
 
-   // select category for product
-    $('#d-chooseCat-form').submit(function(e){
-        e.preventDefault()
-        if($('#selectCategory').val()=== ''){
-            $('#select-input-error').removeClass('d-display-none')
-            $('#selectCategory').addClass('wrong-format')
-            $('#select-input-error').text('Select a category')
-        }
-        else{
-            let catId = $('#selectCategory option').data('id');
-            localStorage.setItem('ChosenCategory-product', catId)
-            $('#d-modal-product').removeClass('d-display-none')
-        }
-       
-    })
+  // select category for product
+  $("#d-chooseCat-form").submit(function (e) {
+    e.preventDefault();
+    if ($("#selectCategory").val() === "") {
+      $("#select-input-error").removeClass("d-display-none");
+      $("#selectCategory").addClass("wrong-format");
+      $("#select-input-error").text("Select a category");
+    } else {
+      let catId = $("#selectCategory option").data("id");
+      localStorage.setItem("ChosenCategory-product", catId);
+      $("#d-modal-product").removeClass("d-display-none");
+    }
+  });
 
-    
+  // push each variation created to content
+  $("#d-add-variation-btn").click(function () {
+    // create variations data for local stroage
+    let contentsArr = JSON.parse(localStorage.getItem("Contents-Array")) || [];
 
-    // push each variation created to content
-    $('#d-add-variation-btn').click(function() {
-        // create variations data for local stroage
-        let contentsArr = JSON.parse(localStorage.getItem('Contents-Array')) || []
+    let contentObj = {
+      display: [
+        {
+          type: $("#variation-display").val(),
+          value: $("#variation-entry").val(),
+        },
+      ],
+      text: $("#variation-text").val(),
+    };
 
-        let contentObj = {
-            display: [{
-                type: $('#variation-display').val(),
-                value: $('#variation-entry').val()
-            }],
-            text: $('#variation-text').val()
-        }
+    contentsArr.push(contentObj);
+    localStorage.setItem("Contents-Array", JSON.stringify(contentsArr));
+  });
 
-        contentsArr.push(contentObj)
-        localStorage.setItem('Contents-Array', JSON.stringify(contentsArr))
-    })
+  // close a variation
+  $("#d-close-variations").click(function () {
+    $("#d-modal-variations").addClass("d-display-none");
+    let variationArr =
+      JSON.parse(localStorage.getItem("createdVariations")) || [];
+    let contentsArr = JSON.parse(localStorage.getItem("Contents-Array")) || [];
 
-    // close a variation
-    $('#d-close-variations').click(function() {
-        $('#d-modal-variations').addClass('d-display-none')
-        let variationArr = JSON.parse(localStorage.getItem('createdVariations')) || [];
-        let contentsArr = JSON.parse(localStorage.getItem('Contents-Array')) || [];
+    let variationObjItem = {
+      type: $("#variation-type").val(),
+      text: $("#variation-type").val(),
+      content: contentsArr,
+    };
 
-        let variationObjItem = {
-            type: $('#variation-type').val(),
-            text: $('#variation-type').val(),
-            content: contentsArr
-        }
+    variationArr.push(variationObjItem);
+    console.log(variationArr);
+    localStorage.setItem("createdVariations", JSON.stringify(variationArr));
+    // location.reload(true)
+  });
 
-        variationArr.push(variationObjItem)
-        console.log(variationArr)
-        localStorage.setItem('createdVariations', JSON.stringify(variationArr))
-            // location.reload(true)
-    })
+  //show variation options
+  $("#productVariations").click(function () {
+    if (this.checked) {
+      $("#show-variations").removeClass("d-display-none");
+    } else {
+      $("#show-variations").addClass("d-display-none");
+    }
+  });
 
-    //show variation options
-    $('#productVariations').click(function() {
-        if (this.checked) {
-            $('#show-variations').removeClass('d-display-none')
-        }
-        else{
-            $('#show-variations').addClass('d-display-none')
-        }
-    })
+  $("#variation-type").change(function () {
+    console.log($(this).val());
+    $("#d-modal-variations").removeClass("d-display-none");
+  });
 
-    $('#variation-type').change(function() {
-        console.log($(this).val())
-        $('#d-modal-variations').removeClass('d-display-none')
-    })
+  $("#d-product-form").submit(function (e) {
+    e.preventDefault();
+    console.log(validateProducts());
+    if (validateProducts()) {
+      // get array for images
 
+      console.log(imagesArray);
+      // get variations
 
-    $('#d-product-form').submit(function(e) {
-        e.preventDefault()
-        console.log(validateProducts())
-        if (validateProducts()) {
-            // get array for images
-           
-            console.log(imagesArray)
-                // get variations
+      // make api call
 
-                // make api call
+      // "attrib": [{
+      //         "type": "Other",
+      //         "content": [{
+      //                 "name": "Place of Origin",
+      //                 "value": "Fujian, China"
+      //             },
+      //             {
+      //                 "name": "Brand Name",
+      //                 "value": "Ts-013"
+      //             },
+      //             {
+      //                 "name": "Midsole Material",
+      //                 "value": "PVC"
+      //             },
+      //             {
+      //                 "name": "Season",
+      //                 "value": "Winter, Summer, Spring, Autumm"
+      //             },
+      //             {
+      //                 "name": "Gender",
+      //                 "value": "Men"
+      //             }
+      //         ]
+      //     },
+      //     {
+      //         "type": "Supply Ability",
+      //         "content": [{
+      //             "name": "Supply Ability",
+      //             "value": "1000 Box/Boxes per Month"
+      //         }]
+      //     }
+      // ],
 
-                    // "attrib": [{
-    //         "type": "Other",
-    //         "content": [{
-    //                 "name": "Place of Origin",
-    //                 "value": "Fujian, China"
-    //             },
-    //             {
-    //                 "name": "Brand Name",
-    //                 "value": "Ts-013"
-    //             },
-    //             {
-    //                 "name": "Midsole Material",
-    //                 "value": "PVC"
-    //             },
-    //             {
-    //                 "name": "Season",
-    //                 "value": "Winter, Summer, Spring, Autumm"
-    //             },
-    //             {
-    //                 "name": "Gender",
-    //                 "value": "Men"
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         "type": "Supply Ability",
-    //         "content": [{
-    //             "name": "Supply Ability",
-    //             "value": "1000 Box/Boxes per Month"
-    //         }]
-    //     }
-    // ],
+      // clear images array
+      // clear variations local storage
+      // clear created variations
 
-     // clear images array
-     // clear variations local storage
-// clear created variations
+      // clear category id
+      // localStorage.removeItem('ChosenCategory-product')
+    }
+  });
 
-// clear category id
-// localStorage.removeItem('ChosenCategory-product')
+  // open shipping locations
+  $("#add-shiping-location").click(function () {
+    $("#d-modal-shippingLoc").removeClass("d-display-none");
+  });
 
-        }
+  // close shipping locations
+  $("#d-close-shipping").click(function () {
+    $("#ship-input-error").addClass("d-display-none");
+    $("#add-productShippingLoc").removeClass("wrong-format");
+    $("#d-modal-shippingLoc").addClass("d-display-none");
+  });
 
-    })
+  // add shipping locations
 
-    // open shipping locations
-    $('#add-shiping-location').click(function(){
-    $('#d-modal-shippingLoc').removeClass('d-display-none')
-    })
+  $("#add-location").click(function () {
+    if ($("#add-productShippingLoc").val() === "") {
+      $("#ship-input-error").removeClass("d-display-none");
+      $("#ship-input-error").text("Enter a Loaction");
+      $("#add-productShippingLoc").addClass("wrong-format");
+    } else {
+      $("#ship-input-error").addClass("d-display-none");
+      $("#add-productShippingLoc").removeClass("wrong-format");
+      // do something
+    }
+  });
 
-    // close shipping locations
-     $('#d-close-shipping').click(function(){
-        
-        $('#ship-input-error').addClass('d-display-none')
-        $('#add-productShippingLoc').removeClass('wrong-format')
-        $('#d-modal-shippingLoc').addClass('d-display-none')
-    })
-
-    // add shipping locations
-    
-    $('#add-location').click(function(){
-        if($('#add-productShippingLoc').val()===''){
-            $('#ship-input-error').removeClass('d-display-none')
-            $('#ship-input-error').text('Enter a Loaction')
-            $('#add-productShippingLoc').addClass('wrong-format')
-        }
-        else{
-            $('#ship-input-error').addClass('d-display-none')
-            $('#add-productShippingLoc').removeClass('wrong-format')
-            // do something
-        }
-    })
-   
-
-
-    $('#logout-admin').click(function(){
-        localStorage.removeItem('Merchant-Poketo')
-    })
-})
+  $("#logout-admin").click(function () {
+    localStorage.removeItem("Merchant-Poketo");
+  });
+});

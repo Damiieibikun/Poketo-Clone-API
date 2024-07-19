@@ -52,6 +52,7 @@ $(document).ready(function(){
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneNumberPattern = /^\d+$/;
+        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
 
         if (formData.first_name === '') {
             $("#err1").show();
@@ -88,6 +89,11 @@ $(document).ready(function(){
         }
         if (formData.icon === '') {
             $("#err9").show();
+            valid = false;
+        }
+        else if(!urlPattern.test(formData.icon)){
+            $("#err9_1").show();
+            console.log('false')
             valid = false;
         }
         if (formData.banner === '') {
