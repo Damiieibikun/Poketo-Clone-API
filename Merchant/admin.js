@@ -47,7 +47,7 @@ $(document).ready(() => {
         </li>`);
 
         $("#selectCategory").append(
-          `<option value="bags" data-id=${item.id}>${item.name}</option>`
+          `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`
         );
       });
     },
@@ -98,9 +98,9 @@ $(document).ready(() => {
   $("#d-close-cat").click(function () {
     $("#d-modal-cat").addClass("d-display-none");
     $("#categoryName").removeClass("wrong-format");
-      $("#categoryImage").removeClass("wrong-format");
-      $("#add-input-error").addClass("d-display-none");
-      $('#d-admin-form')[0].reset()
+    $("#categoryImage").removeClass("wrong-format");
+    $("#add-input-error").addClass("d-display-none");
+    $("#d-admin-form")[0].reset();
   });
 
   function validateCategories() {
@@ -261,10 +261,13 @@ $(document).ready(() => {
       imagesArray.push($("#productImg").val());
       localStorage.setItem("imagesArr", JSON.stringify(imagesArray));
       $("#productImg").val("");
+      $("#images-input-success").show().delay(2000).fadeOut();
+      $("#images-input-success").text("Image Added Successfully!");
     }
   });
 
   function validateProducts() {
+    let imagesArray = JSON.parse(localStorage.getItem('imagesArr')) || []
     let validated = false;
     let emptyVal = 0;
 
@@ -353,7 +356,7 @@ $(document).ready(() => {
     $("#d-modal-chooseCat").addClass("d-display-none");
     $("#select-input-error").addClass("d-display-none");
     $("#selectCategory").removeClass("wrong-format");
-    $('#d-chooseCat-form')[0].reset()
+    $("#d-chooseCat-form")[0].reset();
   });
 
   // select category for product
@@ -364,52 +367,131 @@ $(document).ready(() => {
       $("#selectCategory").addClass("wrong-format");
       $("#select-input-error").text("Select a category");
     } else {
-        $("#select-input-error").addClass("d-display-none");
+      $("#select-input-error").addClass("d-display-none");
       $("#selectCategory").removeClass("wrong-format");
-      let catId = $("#selectCategory option").data("id");
+      let catId = $("#selectCategory").children(":selected").data("id");
       localStorage.setItem("ChosenCategory-product", catId);
       $("#d-modal-product").removeClass("d-display-none");
-      $('#d-modal-chooseCat').addClass('d-display-none')
-      $(this)[0].reset()
+      $("#d-modal-chooseCat").addClass("d-display-none");
+      $(this)[0].reset();
     }
   });
 
-  // push each variation created to content
-  $("#d-add-variation-btn").click(function () {
-    // create variations data for local stroage
-    let contentsArr = JSON.parse(localStorage.getItem("Contents-Array")) || [];
+  // add event listener to variation display selection
 
-    let contentObj = {
-      display: [
-        {
-          type: $("#variation-display").val(),
-          value: $("#variation-entry").val(),
-        },
-      ],
-      text: $("#variation-text").val(),
-    };
-
-    contentsArr.push(contentObj);
-    localStorage.setItem("Contents-Array", JSON.stringify(contentsArr));
+  $("#variation-display").change(function () {
+    if ($(this).val() === "text") {
+      $("#variation-entryID").text("Choose a Color");
+      $("#variation-entry")
+        .attr({ type: "color", value: "#000000" })
+        .css("width", "60px");
+    } else if ($(this).val() === "image") {
+      $("#variation-entryID").text("Enter Image URL");
+      $("#variation-entry")
+        .attr({ type: "text", placeholder: "https://www." })
+        .css("width", "100%");
+      $("#variation-entry").val("");
+    } else {
+      $("#variation-entryID").text("");
+      $("#variation-entry")
+        .attr({ type: "text", placeholder: "" })
+        .css("width", "0%");
+    }
   });
 
-  // close a variation
+//exit variation modal
+$('#exit-variation-modal').click(function(){
+  $("#d-modal-variations").addClass("d-display-none");
+})
+
+
+  // push each variation created to content
+  $("#d-add-variation-btn").click(function () {
+    const urlPattern =
+      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+
+    $("#variation-display").removeClass("wrong-format");
+    $("#variation-entry").removeClass("wrong-format");
+    $("#variation-text").removeClass("wrong-format");
+    $("#variations-input-error").addClass("d-display-none");
+
+    if ($("#variation-display").val() === "") {
+      $("#variation-display").addClass("wrong-format");
+      $("#variations-input-error").removeClass("d-display-none");
+      $("#variations-input-error").text("Empty Field");
+    } else if ($("#variation-entry").val() === "") {
+      $("#variation-entry").addClass("wrong-format");
+      $("#variations-input-error").removeClass("d-display-none");
+      $("#variations-input-error").text("Empty Field");
+    } else if ($("#variation-text").val() === "") {
+      $("#variation-text").addClass("wrong-format");
+      $("#variations-input-error").removeClass("d-display-none");
+      $("#variations-input-error").text("Empty Field");
+    } else if (
+      $("#variation-display").val() === "image" &&
+      !urlPattern.test($("#variation-entry").val())
+    ) {
+      console.log(true);
+      $("#variation-entry").addClass("wrong-format");
+      $("#variations-input-error").removeClass("d-display-none");
+      $("#variations-input-error").text("Invalid URL Format");
+    } else {
+      console.log("im here");
+      $("#variation-entry").removeClass("wrong-format");
+      $("#variations-input-error").addClass("d-display-none");
+      $("#variations-input-error").text("");
+
+      // create variations data for local stroage
+      let contentsArr =
+        JSON.parse(localStorage.getItem("Contents-Array")) || [];
+
+      let contentObj = {
+        display: [
+          {
+            type: $("#variation-display").val(),
+            value: $("#variation-entry").val(),
+          },
+        ],
+        text: $("#variation-text").val(),
+      };
+
+      contentsArr.push(contentObj);
+      localStorage.setItem("Contents-Array", JSON.stringify(contentsArr));
+      $("#variations-input-success").show().delay(2000).fadeOut();
+      $("#variations-input-success").text("Variation Added Successfully!");
+      $("#variation-entry").val("");
+      $("#variation-text").val("");
+    }
+  });
+
+  // upload a variation
   $("#d-close-variations").click(function () {
-    $("#d-modal-variations").addClass("d-display-none");
+    console.log("clicked");
     let variationArr =
       JSON.parse(localStorage.getItem("createdVariations")) || [];
     let contentsArr = JSON.parse(localStorage.getItem("Contents-Array")) || [];
+    console.log(contentsArr)
 
-    let variationObjItem = {
-      type: $("#variation-type").val(),
-      text: $("#variation-type").val(),
-      content: contentsArr,
-    };
+    if (contentsArr.length === 0) {
+      console.log('yes')
+      $("#variations-input-error").removeClass('d-display-none')
+      $("#variations-input-error").text(
+        "Please fill all required fields properly and add variation"
+      );
+    } else {
+      let variationObjItem = {
+        type: $("#variation-type").val(),
+        text: $("#variation-type").val(),
+        content: contentsArr,
+      };
 
-    variationArr.push(variationObjItem);
-    console.log(variationArr);
-    localStorage.setItem("createdVariations", JSON.stringify(variationArr));
-    // location.reload(true)
+      variationArr.push(variationObjItem);
+      console.log(variationArr);
+      localStorage.setItem("createdVariations", JSON.stringify(variationArr));
+
+      // location.reload(true)
+      $("#d-modal-variations").addClass("d-display-none");
+    }
   });
 
   //show variation options
@@ -430,52 +512,69 @@ $(document).ready(() => {
     e.preventDefault();
     console.log(validateProducts());
     if (validateProducts()) {
+      let chosenCatId = localStorage.getItem('ChosenCategory-product')
+      let title = $("#productTitle").val();
+      let desc = $("#productDesc").val();
+      let price = $("#productPrice").val();
+      let brand = $("#productBrand").val();
+      let quantity = $("#productQTY").val();
       // get array for images
+      let images = JSON.parse(localStorage.getItem("imagesArr")) || [];
+      let currency = $("#productCurrency").val();
+      let minQty = $("#min-qty").val();
+      let maxQty = $("#max-qty").val();
+      let discount = $("#productDiscount").val();
+      let discountExp = $("#productDiscountEx").val();
+      let refund = $("#productRefund").checked;
+      let discountAvail = $("#productDiscounted").checked;
+      let shiping = $("#productShipment").checked;
+      let variations = $("#productVariations").checked;
+      // get shipping locations
+      let shippingLoc = JSON.parse(localStorage.getItem('locationArray')) || []
+      let attr = [];
+      // get variations info
+      let variationInfo =
+        JSON.parse(localStorage.getItem("createdVariations")) || [];
 
-      console.log(imagesArray);
-      // get variations
 
-      // make api call
+      let productData = {
+        title: title,
+    descp: desc,
+    price: price,
+    brand: brand,
+    quantity: quantity,
+    images: images,
+    currency: currency,
+    min_qty: minQty,
+    max_qty: maxQty,
+    discount: discount,
+    discount_expiration: discountExp,
+    has_refund_policy: refund,
+  has_discount: discountAvail,
+    has_shipment: shiping,
+    has_variation: variations,
+    shipping_locations: shippingLoc,
+    attrib: attr,    
+    category_id: chosenCatId,
+    merchant_id: merchant.id
+}
 
-      // "attrib": [{
-      //         "type": "Other",
-      //         "content": [{
-      //                 "name": "Place of Origin",
-      //                 "value": "Fujian, China"
-      //             },
-      //             {
-      //                 "name": "Brand Name",
-      //                 "value": "Ts-013"
-      //             },
-      //             {
-      //                 "name": "Midsole Material",
-      //                 "value": "PVC"
-      //             },
-      //             {
-      //                 "name": "Season",
-      //                 "value": "Winter, Summer, Spring, Autumm"
-      //             },
-      //             {
-      //                 "name": "Gender",
-      //                 "value": "Men"
-      //             }
-      //         ]
-      //     },
-      //     {
-      //         "type": "Supply Ability",
-      //         "content": [{
-      //             "name": "Supply Ability",
-      //             "value": "1000 Box/Boxes per Month"
-      //         }]
-      //     }
-      // ],
+if(variations){
+  productData.variations = variationInfo;
+}
 
+
+console.log(productData)
+
+
+      
       // clear images array
       // clear variations local storage
-      // clear created variations
+      // clear locations
 
       // clear category id
       // localStorage.removeItem('ChosenCategory-product')
+      // location.reload(true)
     }
   });
 
@@ -501,7 +600,14 @@ $(document).ready(() => {
     } else {
       $("#ship-input-error").addClass("d-display-none");
       $("#add-productShippingLoc").removeClass("wrong-format");
-      // do something
+
+      // get locations array
+       let locationArray = JSON.parse(localStorage.getItem("locationArray")) || [];
+       locationArray.push($("#add-productShippingLoc").val());
+       localStorage.setItem("locationArray", JSON.stringify(locationArray));
+       $("#add-productShippingLoc").val("");
+      $("#shipping-input-success").show().delay(2000).fadeOut();
+      $("#shipping-input-success").text("Location Added Successfully!");
     }
   });
 

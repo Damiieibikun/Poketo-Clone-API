@@ -318,16 +318,14 @@ li#d-dashboard-heading a {
   font-size: 18px;
 }
 
-#d-close-variations {
-  align-self: end;
-}
-
 #d-close-editAdmin:hover,
 #d-close-cat:hover,
 #d-close-product:hover,
 #d-close-variations:hover,
 #d-close-Selectcat:hover,
-#d-close-addImages:hover, #d-close-shipping {
+#d-close-addImages:hover,
+#d-close-shipping,
+.bi-x-circle-fill {
   cursor: pointer;
 }
 
@@ -338,12 +336,15 @@ li#d-dashboard-heading a {
 }
 
 #d-admin-form,
-#d-product-form, #d-chooseCat-form, #d-modal-shippingLoc-details {
+#d-product-form,
+#d-chooseCat-form,
+#d-modal-shippingLoc-details {
   position: relative;
 }
 
 #add-input-error,
-#add-input-error-product, #select-input-error{
+#add-input-error-product,
+#select-input-error {
   position: absolute;
   top: 0;
 }
@@ -374,14 +375,21 @@ li#d-dashboard-heading a {
 #d-add-variation-btn {
   align-self: center;
 }
-#d-modal-addImages-details {
+#d-modal-addImages-details,
+#d-modal-variations-details {
   position: relative;
 }
-#img-input-error,  #ship-input-error {
+#img-input-error,
+#ship-input-error,
+#variations-input-error,
+#variations-input-success,
+#images-input-success,#shipping-input-success {
   position: absolute;
   top: 20px;
 }
-#add-Images,#add-shiping-location {
+#add-Images,
+#add-shiping-location,
+#d-add-variation-btn {
   min-width: 0px;
   padding: 5px;
   border-radius: 0%;
