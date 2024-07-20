@@ -330,7 +330,7 @@ $(document).ready(() => {
         $("#productDiscount").removeClass("wrong-format");
       }
 
-      if (allValid && imagesArray.length > 0) {
+      if (allValid) {
         validated = true;
         $("#add-input-error-product").addClass("d-display-none");
       }
@@ -525,10 +525,10 @@ $('#exit-variation-modal').click(function(){
       let maxQty = $("#max-qty").val();
       let discount = $("#productDiscount").val();
       let discountExp = $("#productDiscountEx").val();
-      let refund = $("#productRefund").checked;
-      let discountAvail = $("#productDiscounted").checked;
-      let shiping = $("#productShipment").checked;
-      let variations = $("#productVariations").checked;
+      let refund = $("#productRefund")[0].checked;
+      let discountAvail = $("#productDiscounted")[0].checked;
+      let shiping = $("#productShipment")[0].checked;
+      let variations = $("#productVariations")[0].checked;
       // get shipping locations
       let shippingLoc = JSON.parse(localStorage.getItem('locationArray')) || []
       let attr = [];
