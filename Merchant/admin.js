@@ -75,7 +75,6 @@ $(document).ready(() => {
   // show edit and delete categories
   $(document).on("click", ".bi-three-dots", function () {
     $(this).next().toggle();
-    console.log("clicked");
   });
 
   // show edit admin modal
@@ -431,12 +430,11 @@ $('#exit-variation-modal').click(function(){
       $("#variation-display").val() === "image" &&
       !urlPattern.test($("#variation-entry").val())
     ) {
-      console.log(true);
+     
       $("#variation-entry").addClass("wrong-format");
       $("#variations-input-error").removeClass("d-display-none");
       $("#variations-input-error").text("Invalid URL Format");
     } else {
-      console.log("im here");
       $("#variation-entry").removeClass("wrong-format");
       $("#variations-input-error").addClass("d-display-none");
       $("#variations-input-error").text("");
@@ -466,14 +464,14 @@ $('#exit-variation-modal').click(function(){
 
   // upload a variation
   $("#d-close-variations").click(function () {
-    console.log("clicked");
+  
     let variationArr =
       JSON.parse(localStorage.getItem("createdVariations")) || [];
     let contentsArr = JSON.parse(localStorage.getItem("Contents-Array")) || [];
-    console.log(contentsArr)
+    
 
     if (contentsArr.length === 0) {
-      console.log('yes')
+      
       $("#variations-input-error").removeClass('d-display-none')
       $("#variations-input-error").text(
         "Please fill all required fields properly and add variation"
@@ -486,7 +484,7 @@ $('#exit-variation-modal').click(function(){
       };
 
       variationArr.push(variationObjItem);
-      console.log(variationArr);
+      
       localStorage.setItem("createdVariations", JSON.stringify(variationArr));
 
       // location.reload(true)
@@ -504,7 +502,7 @@ $('#exit-variation-modal').click(function(){
   });
 
   $("#variation-type").change(function () {
-    console.log($(this).val());
+
     $("#d-modal-variations").removeClass("d-display-none");
   });
 
