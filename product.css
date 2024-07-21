@@ -704,6 +704,10 @@ body {
     margin-top: 50px;
 }
 
+.liked-product{
+    fill: red;
+}
+
 
 /* media query starts here */
 

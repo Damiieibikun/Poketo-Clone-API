@@ -538,7 +538,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.d-slider-product-item', function() {
         let selectedId = $(this).data('id');
-        console.log(selectedId)
+       
         $.ajax({
             url: `${endPoint}/products/${selectedId}`,
             method: 'GET',

@@ -3,7 +3,7 @@ $(document).ready(() => {
   let allproducts = JSON.parse(localStorage.getItem("Poketo-Products"));
   let usersItems =
     JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
-  let currentUser = localStorage.getItem("CurrentUser");
+  let currentUser = localStorage.getItem("LoggedUser");
 
   // fixed nav functionality
   let sticky = $("#d-fixedNav").get(0).offsetTop;
@@ -71,9 +71,11 @@ $(document).ready(() => {
     window.location.href = "login.html";
   });
   $("#d-account-logout, #d-login-hamburger").click(function () {
-    localStorage.removeItem("CurrentUser");
-    localStorage.removeItem('Selected-Product')
-    window.location.href = "login.html";
+    // localStorage.removeItem("CurrentUser");
+    // localStorage.removeItem('Selected-Product')
+    // window.location.href = "login.html";
+
+    // redirect to account details info
   });
 
   // for empty cart 
