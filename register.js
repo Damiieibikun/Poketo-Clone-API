@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
     // Hide error messages initially
     $(".error-message").hide();
 
@@ -8,10 +9,15 @@ $(document).ready(function() {
         return re.test(email);
     }
 
+    function validateNumber(phone) {
+        const phoneNumberPattern = /^\d+$/;
+        return phoneNumberPattern.test(phone)
+    }
+
     // Form submit event
     $("#RegisterForm").on("submit", function(event) {
         console.log('submit triggered')
-        // Prevent form from submitting
+            // Prevent form from submitting
         event.preventDefault();
 
         // Hide all error messages
@@ -21,6 +27,7 @@ $(document).ready(function() {
         var name = $("#name").val().trim();
         var lastname = $("#lastname").val().trim();
         var email = $("#email").val().trim();
+        var phone = $("#phone").val().trim();
         var password = $("#pass").val().trim();
 
         // Validation flag
@@ -48,46 +55,48 @@ $(document).ready(function() {
             isValid = false;
         }
 
+        // Check if phone is empty
+        else if (phone === "") {
+            $("#Nerror").show();
+            isValid = false;
+        } else if (!validateNumber(phone)) {
+            // Check if phone format is valid
+            $("#invalidNumberError").show();
+            isValid = false;
+        }
+
         // Check if password is empty
         else if (password === "") {
             $("#passerror").show();
             isValid = false;
-        }
-        else if (password.length < 5) { 
+        } else if (password.length < 5) {
             $("#passlengtherror").show();
-            IsVaild = false;
-            }
+            IsVaild  =  false;
+        }
 
         // If form is valid, submit the form
         else {
-            // this.submit();
-            alert('Registration successful')
-
-            // if all is valid
-            let users = JSON.parse (localStorage.getItem('Poketo-users')) || []
-            let usersItems = JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
 
             let usersData = {
-                firstName: $("#name").val(),
-                lastName: $("#lastname").val(),
-                Email: $("#email").val(),
-                password: $("#pass").val() 
+                first_name: $("#name").val(),
+                last_name: $("#lastname").val(),
+                email: $("#email").val(),
+                phone: $('#phone').val(),
+                password: $("#pass").val()
             }
-
-            users.push (usersData)
-            localStorage.setItem ("Poketo-users", JSON.stringify(users))
-
-            let currentUserCart = {
-                name:  usersData.firstName,
-                cartItems : []
-              }
-              usersItems.push(currentUserCart)
-              localStorage.setItem('CurrentUser-cartItems', JSON.stringify(usersItems))
+            console.log(usersData)
+            $.ajax({
+                url: `${endPoint}/users`,
+                method: 'POST',
+                data: usersData,
+                success: function(res) {
+                    console.log(res)
+                },
+                error: function(err) {}
+            })
 
             window.location.href = 'login.html'
         }
-       
+
     });
 });
-
-
