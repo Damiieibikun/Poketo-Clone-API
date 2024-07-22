@@ -329,7 +329,9 @@ $(document).ready(function() {
                     slidesToScroll: 1
                 }
             }
-        ]
+        ],
+        prevArrow: '.d-prev-arrow',
+        nextArrow: '.d-next-arrow',
     });
     $('.slider-nav2').slick({
         infinite: true,
@@ -371,6 +373,7 @@ $(document).ready(function() {
             // get products for each slider
             let products1 = res.data.splice(0, 9)
             let products2 = res.data.splice(9)
+        
 
             products1.forEach((product) => {
                 var itemProduct = {}

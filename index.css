@@ -253,6 +253,28 @@
     width: 50px;
     height: 50px;
 }
+.d-prev-arrow, 
+.d-next-arrow{
+    background-color: #0085CA;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: white;
+    position: absolute;
+}
+
+.d-prev-arrow:hover, 
+.d-next-arrow:hover{
+    cursor: pointer;
+}
+
+.d-next-arrow{
+    right: 40px;
+}
+
+.d-prev-arrow{
+    right: 100px;
+}
 
 .slick-prev {
     left: 91%;
@@ -391,6 +413,7 @@
 #d-first-slider,
 #d-second-slider {
     margin-top: 70px;
+    position: relative;
 }
 
 #d-second-slider {
