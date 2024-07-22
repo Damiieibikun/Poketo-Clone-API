@@ -17,8 +17,7 @@ success: function(res){
         $('#no-likes').addClass('d-display-none')
         res.forEach((element, i) => {
             let productInfo = element.product_id
-            let productID = productInfo._id
-            console.log(productID)
+                     
             $('#user-order-likes').append(`<div class="d-flex d-align-center d-gap-20">
                                 <span>${i+1}</span>
                                 <div class="d-likedProductIMG" style=" background-image: url(${productInfo.images[0]});"></div>
@@ -26,6 +25,10 @@ success: function(res){
                                 <p class="d-numofLikes"></p>
                              </div>`)
         });
+    }
+
+    else{
+        $('#no-likes').removeClass('d-display-none')
     }
   
 },

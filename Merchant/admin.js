@@ -240,6 +240,7 @@ $(document).ready(() => {
 
     $("#d-all-products-admin").click(function() {
         $("#d-dashboard-all").removeClass("d-display-none");
+        $('#d-dashboardTitle').text('All Products')
 
 
         $.ajax({
@@ -290,6 +291,7 @@ $(document).ready(() => {
     $(document).on('click', '.d-category-item', function() {
         let catID = $(this).data('id')
         $("#d-dashboard-all").removeClass("d-display-none");
+        $('#d-dashboardTitle').text(`${$(this).find('a').text()}`)
         $.ajax({
             url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
             method: 'GET',

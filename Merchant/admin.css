@@ -83,7 +83,7 @@ label {
   color: rgb(25, 25, 25);
 }
 
-option {
+option,#d-dashboardTitle {
   text-transform: capitalize;
 }
 
@@ -158,6 +158,8 @@ li#d-dashboard-heading a {
   width: 75%;
   min-width: fit-content;
   padding: 30px;
+  height: 100%;
+  margin-top: 60px;
 }
 
 #d-dashboard-summary h1 {
@@ -207,18 +209,21 @@ li#d-dashboard-heading a {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   padding: 30px;
-  margin-top: 70px;
+  margin-top: 35px;
+  width: 70%;
 }
 
 #d-dashboard-title {
   position: fixed;
   top: -19px;
-  left: 10%;
+  right: 0;
+  /* left: 10%; */
   background-color: #efefef;
   z-index: 5;
-  width: 100%;
+  /* width: 100%; */
   padding-top: 20px;
   padding-bottom: 10px;
+  height: 100%;
 }
 
 #d-dashboard-title h1 {
@@ -229,9 +234,6 @@ li#d-dashboard-heading a {
   margin: 0;
 }
 
-#d-dashboard-all {
-  margin-top: 220px;
-}
 
 .admin-icon {
   width: 50px;
