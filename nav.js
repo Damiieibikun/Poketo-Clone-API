@@ -73,7 +73,7 @@ $(document).ready(() => {
   $("#d-account-logout, #d-login-hamburger").click(function () {
     // localStorage.removeItem("CurrentUser");
     // localStorage.removeItem('Selected-Product')
-    // window.location.href = "login.html";
+    window.location.href = "user.html";
 
     // redirect to account details info
   });

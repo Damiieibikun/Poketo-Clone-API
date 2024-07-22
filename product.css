@@ -1,3 +1,18 @@
+@font-face {
+    font-family: cardiz;
+    src: url(fonts/cadiz-regular.woff2);
+}
+
+@font-face {
+    font-family: sofia proBold;
+    src: url(fonts/SofiaPro-Bold.woff2);
+}
+
+@font-face {
+    font-family: sofia proMedium;
+    src: url(fonts/SofiaProMedium.woff2);
+}
+
 body {
     /* margin: 0;
     padding: 0; */
@@ -14,7 +29,7 @@ body {
 }
 
 .jenny-item {
-    background-image: url(./images/calender.jpeg);
+    /* background-image: url(./images/calender.jpeg); */
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;

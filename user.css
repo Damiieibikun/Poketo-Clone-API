@@ -1,0 +1,77 @@
+@font-face {
+    font-family: cardiz;
+    src: url(fonts/cadiz-regular.woff2);
+}
+
+@font-face {
+    font-family: sofia proBold;
+    src: url(fonts/SofiaPro-Bold.woff2);
+}
+
+@font-face {
+    font-family: sofia proMedium;
+    src: url(fonts/SofiaProMedium.woff2);
+}
+
+#d-userDetails{
+    margin-bottom: 50px;
+    min-height: 50vh;
+}
+#d-userDetailsInfo{
+    grid-template-columns: repeat(2, 1fr);
+    margin: auto;
+    width: 90%;
+    margin: auto;
+}
+
+#d-userDetailsInfo-items{
+    grid-template-rows: auto;
+
+}
+
+.d-userDetailsH1{
+    font-family: sofia proBold;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.d-userDetailsH2{
+    font-family: sofia proBold;
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 32px;
+}
+
+#d-userslogout-link{
+    color: black;
+    font-size: 16px;
+}
+
+button{
+    font-size: 14px;
+    border: none;
+    padding: 10px;
+    border-radius: 49px;
+    min-width: 80px;
+    font-family: sofia proRegular;
+    background-color: #0085CA;
+    color: white;
+    -webkit-border-radius: 49px;
+    -moz-border-radius: 49px;
+    -ms-border-radius: 49px;
+    -o-border-radius: 49px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.d-likedProductIMG{
+   
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+}

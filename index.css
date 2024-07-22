@@ -342,6 +342,7 @@
     background-size: cover;
     height: 400px;
     transition: .3s ease-in-out;
+    justify-content: center;
 }
 
 .d-slider-product-item:hover {
