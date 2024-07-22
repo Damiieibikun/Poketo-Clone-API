@@ -13,16 +13,21 @@ $.ajax({
 url:`${endPoint}/users/likes?user_id=${userDetails.id}`,
 method: 'GET',
 success: function(res){
-    res.forEach((element, i) => {
-        let productInfo = element.product_id
-        console.log(productInfo)
-        $('#user-order-likes').append(`<div class="d-flex d-align-center d-gap-20">
-                            <span>${i+1}</span>
-                            <div class="d-likedProductIMG" style=" background-image: url(${productInfo.images[0]});"></div>
-                            <p class="d-likedProductName">${productInfo.title}</p>
-                            <p class="d-numofLikes"></p>
-                         </div>`)
-    });
+    if(res.length > 0){
+        $('#no-likes').addClass('d-display-none')
+        res.forEach((element, i) => {
+            let productInfo = element.product_id
+            let productID = productInfo._id
+            console.log(productID)
+            $('#user-order-likes').append(`<div class="d-flex d-align-center d-gap-20">
+                                <span>${i+1}</span>
+                                <div class="d-likedProductIMG" style=" background-image: url(${productInfo.images[0]});"></div>
+                                <p class="d-likedProductName">${productInfo.title}</p>
+                                <p class="d-numofLikes"></p>
+                             </div>`)
+        });
+    }
+  
 },
 error: function(err){
     console.log(err)
@@ -33,7 +38,8 @@ error: function(err){
 
 
     //remove logged users details
-    $('#d-account-LogOutICON').click(function(){
+    $('#d-userslogout-link').click(function(){
         localStorage.removeItem('LoggedUser')
+        localStorage.removeItem('Selected-Product')
     })
 })

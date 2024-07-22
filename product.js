@@ -72,6 +72,7 @@ $(document).ready(() => {
         url: `${endPoint}/products/${selectedProduct.id}`,
         method: 'GET',
         success: function(res) {
+            console.log(res)
             let showStars = 'flex'
             if (res.quantity === null) {
                 showStars = 'none'
@@ -94,11 +95,7 @@ $(document).ready(() => {
                 }
             }
         
-            let likedItem = null
-            if(res.has_like){
-                likedItem = 'liked-product'
-            }
-        
+                 
             $('#j-selectedProduct-info').html(
                 ` <div data-id = ${res.id}>
                 <div class="mustard d-align-center" style="background-color: ${selectedProductTag.tagColor};">
@@ -107,7 +104,7 @@ $(document).ready(() => {
               </div>
               <div class= "d-flex d-gap-10 d-align-center d-justify-between">
               <h1>${res.title}</h1> 
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#dedede" class="bi bi-heart-fill ${likedItem}" viewBox="0 0 16 16" id= "like-Product" data-id = ${res.id}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#dedede" class="bi bi-heart-fill" viewBox="0 0 16 16"  id="like-Product" data-id = ${res.id}>
           <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
         </svg>
         
@@ -212,6 +209,31 @@ $(document).ready(() => {
             console.log(err)
         }
     })
+
+    // get all products liked by a user and compare
+
+    $.ajax({
+        url:`${endPoint}/users/likes?user_id=${loggedUser.id}`,
+        method: 'GET',
+        success: function(res){
+  
+                res.forEach((element) => {
+                    // let productInfo = element.product_id
+                    // if(productInfo._id === $('#like-Product').data('id')){
+                    //     console.log(true)
+                    //     $('#like-Product').addClass('liked-product')
+                    // }   
+                    
+                    const productId = element.product_id._id;
+                        $(`[data-id='${productId}'] #like-Product`).addClass('liked-product');
+                });
+            
+          
+        },
+        error: function(err){
+            console.log(err)
+        }
+        })
    
 
     $(document).on('click', '.d-slider-product-item', function() {
@@ -240,7 +262,7 @@ $(document).ready(() => {
     // like a product
     $(document).on('click', '#like-Product', function(){
         let selectedId = $(this).data('id');
-        $('#like-Product').toggleClass('liked-product')
+        $(this).toggleClass('liked-product')
         if($(this).hasClass('liked-product')){
             $.ajax({
                 url: `${endPoint}/likes`,
@@ -315,3 +337,4 @@ $(document).ready(() => {
     });
 
 })
+
