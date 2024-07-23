@@ -72,6 +72,14 @@ button:hover{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
+}
+
+.customerReview{
+    margin: 0;
+}
+
+.d-customer-reviewItems-grid{
+    grid-template-columns: repeat(3,1fr);
 }
