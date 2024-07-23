@@ -472,6 +472,7 @@ $(document).ready(() => {
     $("#d-createReview-Modal").addClass("d-display-none");
   });
 
+  // display product reviews
   $.ajax({
     url: `${endPoint}/reviews?product_id=${selectedProduct.id}`,
     method: "GET",
