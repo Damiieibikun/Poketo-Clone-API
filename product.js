@@ -127,10 +127,12 @@ $(document).ready(() => {
       //   console.log(res);
       let avgRating = 0;
       let totalRating = 0;
+      let numRating = 0;
       $.ajax({
         url: `${endPoint}/ratings?product_id=${selectedProduct.id}`,
         method: "GET",
         success: function (rating) {
+          numRating = rating.length;
           if (rating.length > 0) {
             rating.forEach((item) => {
               totalRating += item.value;
@@ -300,6 +302,8 @@ $(document).ready(() => {
                            /div>`);
             });
           }
+          $("#reviewScore").text(avgRating);
+          $("#numReviewers").text(`Based on ${numRating} reviews`);
         },
         error: function (err) {
           console.log(err);
@@ -466,5 +470,93 @@ $(document).ready(() => {
 
     $(this)[0].reset();
     $("#d-createReview-Modal").addClass("d-display-none");
+  });
+
+  $.ajax({
+    url: `${endPoint}/reviews?product_id=${selectedProduct.id}`,
+    method: "GET",
+    success: function (res) {
+      res.forEach((review) => {
+        $.ajax({
+          url: `${endPoint}/ratings?product_id=${selectedProduct.id}`,
+          method: "GET",
+          success: function (rating) {
+            rating.forEach((item) => {
+              if (item.user.id === review.user.id) {
+                let productReview = $(`
+                                <div class="grid-star">
+                                    <div class="grid-starbox">
+                                        <div class="grid-starb">
+                                            <p class='d-reviewer' style="margin: 0;">${
+                                              review.user.first_name
+                                            }. ${review.user.last_name[0]}</p>
+                                        </div>
+                                        <div class="grid-starb2">
+                                            <img style="height: 15px;" src="./images/check.png">
+                                            <p style="margin: 0; color: #2b6df0;">Verified Reviewer</p>
+                                        </div>
+                                    </div>
+                                    <!-- second part -->
+                                    <div class="grid-staritems">
+                                        <div class="grid-staritem1">
+                                            <div id='d-item-review-stars'>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                                                </svg>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                                                </svg>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                                                </svg>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                                                </svg>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                                                </svg>
+                                            </div>
+                                            <p style="margin: 0; align-items: center;">${
+                                              review.created_at.split("T")[0]
+                                            }</p>
+                                        </div>
+                                        <div>
+                                            <p>${review.text}</p>
+                                        </div>
+                                        <div class="star-icons">
+                                            <p>Was this helpful?</p>
+                                            <img style="height: 15px; align-items: center; padding-top: 20px;" src="./images/like.png">
+                                            <p>0</p>
+                                            <img style="height: 15px; align-items: center; padding-top: 20px;" src="./images/negative-vote.png">
+                                            <p>0</p>
+                                        </div>
+                                    </div>
+                                </div>`);
+
+                // Fill the stars based on the rating
+                let productRating = productReview
+                  .find("#d-item-review-stars")
+                  .find("svg");
+                if (item.value > 0) {
+                  productRating.each((i, svg) => {
+                    $(svg).find("path").css("fill", "#ef4043");
+                    if (i === Math.round(item.value) - 1) {
+                      return false;
+                    }
+                  });
+                }
+                $("#d-AllProductReviews").append(productReview);
+              }
+            });
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      });
+    },
+    error: function (err) {
+      console.log(err);
+    },
   });
 });

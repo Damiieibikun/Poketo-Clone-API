@@ -793,6 +793,9 @@ body {
 .fillRed{
     fill: #EF4043
 }
+.d-reviewer{
+    text-transform: capitalize;
+}
 
 /* media query starts here */
 
