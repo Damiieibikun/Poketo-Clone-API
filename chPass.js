@@ -1,5 +1,6 @@
 $(document).ready(function(){
     const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+    let loggedUser = JSON.parse(localStorage.getItem('LoggedUser'))
 
     $("#PasswordForm").submit(function(event){
         event.preventDefault();
@@ -22,7 +23,6 @@ $(document).ready(function(){
             $("#er34").show();
             valid = false;
         }
-
         
         if (formData.new_password === '') {
             $("#newerror").show();
@@ -33,8 +33,9 @@ $(document).ready(function(){
         }
 
         if (valid) {
+            console.log(formData)
             $.ajax({
-                url: `${endPoint}/users/669a43e46996967a7dad94a3/change-passwd`,
+                url: `${endPoint}/users/${loggedUser.id}/change-passwd`,
                 method: "PUT",
                 data: formData,
                 success: function(res) {
@@ -42,7 +43,7 @@ $(document).ready(function(){
                         alert("Update Successful");
                         console.log(res);
                     }
-                    //  window.location.href = 'merchlog.html'
+                     window.location.href = 'login.html'
                 },
                 error: function(err) {
                     console.log('error', err);

@@ -1,5 +1,6 @@
 $(document).ready(function() {
     const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+    let loggedUser = JSON.parse(localStorage.getItem('LoggedUser'))
   
 
     // Form submit event
@@ -20,15 +21,16 @@ $(document).ready(function() {
 
         if (valid) {
             $.ajax({
-                url: `${endPoint}/users/:user_id`,
+                url: `${endPoint}/users/${loggedUser.id}`,
                 method: "PUT",
                 data: formData,
                 success: function(res) {
                     if(res) {
                         alert("Update Successful")
                         console.log (res)
+                        localStorage.setItem('LoggedUser', JSON.stringify(res))
                     }
-                    // window.location.href = "login.html"
+                    window.location.href = "user.html"
                 },
                 error: function(err) {
                     console.log('error', err);
