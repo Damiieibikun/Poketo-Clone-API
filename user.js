@@ -154,6 +154,7 @@ $(document).on("click", ".bi-pen-fill", function() {
       data: data,
       success: function (res) {
         console.log(res);
+        location.reload(true)
       },
       error: function (err) {
         console.log(err);
@@ -177,7 +178,7 @@ $(document).on("click", ".bi-pen-fill", function() {
           data: data,
           success: function (res) {
             console.log(res);
-            // location.reload(true)
+            location.reload(true)
           },
           error: function (err) {
             console.log(err);
@@ -189,11 +190,66 @@ $(document).on("click", ".bi-pen-fill", function() {
       });
 })
 
-
   // close reviews modal
   $("#d-closeReviews").click(function () {
     $("#d-createReview-Modal").addClass("d-display-none");
   });
+
+
+// delete reviews and ratings
+
+$(document).on("click", ".bi-trash2-fill", function() {
+    $("#d-deleteReview-Modal").removeClass("d-display-none");
+    let productID = $(this).data('id')
+    let reviewID = $(this).parent().data('id')
+    $('#d-deleteCustomerRating').click(function(){
+        let data = {
+            product_id: productID,
+            user_id: userDetails.id            
+          }; 
+          $.ajax({
+            url: `${endPoint}/ratings`,
+            method: 'DELETE',
+            data: data,
+            success: function (res) {
+                console.log(res)
+                alert('Rating Deleted Successfully')
+                location.reload(true)
+            },
+            error: function (err) {
+                console.log(err)
+            }
+          })
+    })
+
+    $('#d-deleteCustomerReview').click(function(){
+        let data = {
+            review_id: reviewID,
+            user_id: userDetails.id            
+          }; 
+          $.ajax({
+            url: `${endPoint}/reviews`,
+            method: 'DELETE',
+            data: data,
+            success: function (res) {
+                console.log(res)
+                alert('Review Deleted Successfully')
+                location.reload(true)
+            },
+            error: function (err) {
+                console.log(err)
+            }
+          })
+    })
+})
+
+  // close delete reviews modal
+  $("#d-closedeleteReviews").click(function () {
+    $("#d-deleteReview-Modal").addClass("d-display-none");
+  });
+
+
+
 
 
 

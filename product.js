@@ -461,7 +461,7 @@ $(document).ready(() => {
       data: data,
       success: function (res) {
         console.log(res);
-        // location.reload(true)
+        location.reload(true)
       },
       error: function (err) {
         console.log(err);

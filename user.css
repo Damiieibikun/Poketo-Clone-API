@@ -86,7 +86,7 @@ button:hover{
 
 
 
-#d-createReview-Modal{
+#d-createReview-Modal, #d-deleteReview-Modal{
     position: fixed;
     z-index: 20;
     left: 0;
@@ -96,7 +96,7 @@ button:hover{
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
-#d-review-From{
+#d-review-From, #d-deleteReview-details{
     width: 500px;
   max-width: 500px;
   min-width: fit-content;
@@ -149,10 +149,16 @@ button:hover{
 #d-review-From button:hover{
     cursor: pointer;
 }
-#d-closeReviews:hover{
+#d-closeReviews:hover, #d-closedeleteReviews:hover{
     cursor: pointer;
 }
 
 .fillRed{
     fill: #EF4043
+}
+
+
+.bi-trash2-fill:hover, 
+.bi-pen-fill:hover{
+    cursor: pointer;
 }
