@@ -486,28 +486,51 @@ $(document).ready(() => {
     // add event listener to variation display selection
 
     $("#variation-display").change(function() {
-        if ($(this).val() === "text") {
-            $("#variation-entryID").text("Choose a Color");
-            $("#variation-entry")
-                .attr({ type: "color", value: "#000000" })
-                .css("width", "60px");
-        } else if ($(this).val() === "image") {
-            $("#variation-entryID").text("Enter Image URL");
-            $("#variation-entry")
-                .attr({ type: "text", placeholder: "https://www." })
-                .css("width", "100%");
-            $("#variation-entry").val("");
-        } else {
-            $("#variation-entryID").text("");
-            $("#variation-entry")
-                .attr({ type: "text", placeholder: "" })
-                .css("width", "0%");
+
+        if ($('#variation-type').val() === 'color') {
+            if ($(this).val() === "text") {
+                $("#variation-entryID").text("Choose a Color");
+                $("#variation-entry")
+                    .attr({ type: "color", value: "#000000" })
+                    .css("width", "60px");
+            } else if ($(this).val() === "image") {
+                $("#variation-entryID").text("Enter Image URL");
+                $("#variation-entry")
+                    .attr({ type: "text", placeholder: "https://www." })
+                    .css("width", "100%");
+                $("#variation-entry").val("");
+            } else {
+                $("#variation-entryID").text("");
+                $("#variation-entry")
+                    .attr({ type: "text", placeholder: "" })
+                    .css("width", "0%");
+            }
+        } else if ($('#variation-type').val() === 'size') {
+            if ($(this).val() === "text") {
+                $("#variation-entryID").text("Enter a Size");
+                $("#variation-entry")
+                    .attr({ type: "text", placeholder: "" })
+                    .css("width", "100%");
+            } else if ($(this).val() === "image") {
+                $("#variation-entryID").text("Enter Image URL");
+                $("#variation-entry")
+                    .attr({ type: "text", placeholder: "https://www." })
+                    .css("width", "100%");
+                $("#variation-entry").val("");
+            } else {
+                $("#variation-entryID").text("");
+                $("#variation-entry")
+                    .attr({ type: "text", placeholder: "" })
+                    .css("width", "0%");
+            }
         }
+
     });
 
     //exit variation modal
     $('#exit-variation-modal').click(function() {
         $("#d-modal-variations").addClass("d-display-none");
+        $('#d-modal-variations-details')[0].reset()
     })
 
 
@@ -594,6 +617,7 @@ $(document).ready(() => {
 
             // location.reload(true)
             $("#d-modal-variations").addClass("d-display-none");
+            $('#d-modal-variations-details')[0].reset()
         }
     });
 
@@ -607,8 +631,13 @@ $(document).ready(() => {
     });
 
     $("#variation-type").change(function() {
-
+        $("#variation-entryID").text("");
+        $("#variation-entry")
+            .attr({ type: "text", placeholder: "" })
+            .css("width", "0%");
         $("#d-modal-variations").removeClass("d-display-none");
+        localStorage.removeItem('Contents-Array')
+
     });
 
 
@@ -690,7 +719,6 @@ $(document).ready(() => {
             })
 
 
-
             // clear images array
             localStorage.removeItem('imagesArr')
 
@@ -755,6 +783,9 @@ $(document).ready(() => {
             console.log(err)
         }
     })
+
+
+
 
     $("#logout-admin").click(function() {
         // localStorage.removeItem("Merchant-Poketo");

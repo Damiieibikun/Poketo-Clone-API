@@ -373,7 +373,7 @@ $(document).ready(function() {
             // get products for each slider
             let products1 = res.data.splice(0, 9)
             let products2 = res.data.splice(9)
-        
+
 
             products1.forEach((product) => {
                 var itemProduct = {}
@@ -392,6 +392,12 @@ $(document).ready(function() {
                         tag: 'Best Seller',
                         tagColor: '#ffc845',
                     }
+                }
+                let likeTerm = ''
+                if (product.like === 1) {
+                    likeTerm = 'like'
+                } else {
+                    likeTerm = 'likes'
                 }
                 let productItem1 = $(` <div class="d-slick-items d-grid d-justify-center">
                     <div class="d-slider-product-item d-flex" data-id =${product.id} style="background-image: url(${product.image})" onMouseOver="this.style.backgroundImage='url(${product.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product.image})'">
@@ -420,6 +426,12 @@ $(document).ready(function() {
                         <div class="d-gap-20 d-product-selected-size" style="display: ${showSize};">
                             <div class="d-selected-size">Large</div>
                             <div> Small</div>
+                        </div>
+                        <div class="d-product-likes d-flex d-gap-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+</svg>
+                                <span>${product.like}</span><span>${likeTerm}</span>
                         </div>
                         <div class="d-product-colors d-flex d-gap-10">
 
@@ -473,6 +485,12 @@ $(document).ready(function() {
                 if (product.quantity === null) {
                     showStars = 'none'
                 }
+                let likeTerm = ''
+                if (product.like === 1) {
+                    likeTerm = 'like'
+                } else {
+                    likeTerm = 'likes'
+                }
                 let productItem2 = $(`<div class="d-slick-items d-grid d-justify-center">
                 <div class="d-slider-product-item d-flex" data-id = ${product.id} style="background-image: url(${product.image})" onMouseOver="this.style.backgroundImage='url(${product.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product.image})'">
                     <div class="d-item-tag" style ="background-color: ${itemProduct.tagColor}">${itemProduct.tag}</div>
@@ -497,6 +515,12 @@ $(document).ready(function() {
                         </div>
                         <p class="d-slider-product-price">$${product.price}</p>
                     </div>
+                    <div class="d-product-likes d-flex d-gap-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill liked-product" viewBox="0 0 16 16" id="like-Product" data-id="669d1b2d6996967a7dcd25e5">
+          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"></path>
+        </svg>
+                                <span>${product.like}</span><span>${likeTerm}</span>
+                        </div>
 
                 </div>
             </div>`)
@@ -521,8 +545,6 @@ $(document).ready(function() {
     })
 
 
-
-
     $('.d-product-colors').each((index, i) => {
         if ($(i).children()[0]) {
             $(i).children()[0].classList.add('d-selected-color')
@@ -542,7 +564,7 @@ $(document).ready(function() {
     $(document).on('click', '.d-slider-product-item', function() {
         let selectedId = $(this).data('id');
         console.log(selectedId)
-       
+
         $.ajax({
             url: `${endPoint}/products/${selectedId}`,
             method: 'GET',
@@ -556,7 +578,7 @@ $(document).ready(function() {
         })
 
 
-       
+
     })
 
 });
