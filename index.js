@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  localStorage.removeItem("ProductV");
   const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
 
@@ -346,12 +347,49 @@ $(document).ready(function () {
   $.ajax({
     url: `${endPoint}/products?merchant_id=${merchant.id}`,
     method: "GET",
-    success: function (res) {
+    success: function (resp) {
       // console.log(res.data)
+      resp.data.forEach((res) => {
+        // console.log(res)
+        let productImages = [];
+        let productColor = [];
+        $.ajax({
+          url: `${endPoint}/products/${res.id}`,
+          method: "GET",
+          success: function (data) {
+            // console.log(res.variations)
+            if (data.variations.length !== 0) {
+              data.variations[0].content.forEach((content) => {
+                if (content.display[0].type === "image") {
+                  productImages.push(content.display[0].value);
+                } else if (content.display[0].type === "text") {
+                  productColor.push(content.display[0].value);
+                }
+              });
+              let allVariations =
+                JSON.parse(localStorage.getItem("ProductV")) || [];
+              let productVariationsInfo = {
+                product_id: res.id,
+                availableImage: productImages,
+                availableColors: productColor,
+              };
+              allVariations.push(productVariationsInfo);
+
+              localStorage.setItem("ProductV", JSON.stringify(allVariations));
+
+              console.log(productImages);
+              // console.log(productColor)
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      });
 
       // get products for each slider
-      let products1 = res.data.splice(0, 9);
-      let products2 = res.data.splice(9);
+      let products1 = resp.data.splice(0, 9);
+      let products2 = resp.data.splice(9);
 
       products1.forEach((product) => {
         // get average rating for product
@@ -389,13 +427,12 @@ $(document).ready(function () {
                 tag: "Best Seller",
                 tagColor: "#ffc845",
               };
+            } else {
+              var itemProduct = {
+                tag: "New!",
+                tagColor: "#73ccf3",
+              };
             }
-            else {
-                var itemProduct = {
-                  tag: "New!",
-                  tagColor: "#73ccf3",
-                };
-              }
             let likeTerm = "";
             if (product.like === 1) {
               likeTerm = "like";
@@ -453,22 +490,29 @@ $(document).ready(function () {
               });
             }
 
-            if ("availableImage" in product) {
-              product.availableImage.forEach((img, i) => {
-                productItem1.find(".d-product-colors")
-                  .append(`<div class="d-color-selection-outer">
-                     <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
-                 </div>`);
-              });
-            }
-            if ("availableColors" in product) {
-              product.availableColors.forEach((color, i) => {
-                productItem1.find(".d-product-colors")
-                  .append(`<div class="d-color-selection-outer">
-                     <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
-                 </div>`);
-              });
-            }
+            let productV = JSON.parse(localStorage.getItem("ProductV"));
+
+            productV.forEach((productItem) => {
+              if (productItem.product_id === product.id) {
+                if (productItem.availableImage.length > 0) {
+                  productItem.availableImage.forEach((img, i) => {
+                    productItem1.find(".d-product-colors")
+                      .append(`<div class="d-color-selection-outer">
+                         <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
+                     </div>`);
+                  });
+                }
+                if (productItem.availableColors.length > 0) {
+                  productItem.availableColors.forEach((color, i) => {
+                    productItem1.find(".d-product-colors")
+                      .append(`<div class="d-color-selection-outer">
+                         <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
+                     </div>`);
+                  });
+                }
+              }
+            });
+
             $(".slider-nav1").slick("slickAdd", productItem1);
           },
           error: function (err) {
@@ -499,15 +543,16 @@ $(document).ready(function () {
                   tag: "New!",
                   tagColor: "#73ccf3",
                 };
-              } else if (product.review > 1 &&
+              } else if (
+                product.review > 1 &&
                 avgRating > 4 &&
-                product.like > 0) {
+                product.like > 0
+              ) {
                 var itemProduct = {
                   tag: "Best Seller",
                   tagColor: "#ffc845",
                 };
-              }
-              else {
+              } else {
                 var itemProduct = {
                   tag: "New!",
                   tagColor: "#73ccf3",
@@ -567,6 +612,29 @@ $(document).ready(function () {
                   }
                 });
               }
+
+              let productV = JSON.parse(localStorage.getItem("ProductV"));
+
+              productV.forEach((productItem) => {
+                if (productItem.product_id === product.id) {
+                  if (productItem.availableImage.length > 0) {
+                    productItem.availableImage.forEach((img, i) => {
+                      productItem2.find(".d-product-colors")
+                        .append(`<div class="d-color-selection-outer">
+                           <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
+                       </div>`);
+                    });
+                  }
+                  if (productItem.availableColors.length > 0) {
+                    productItem.availableColors.forEach((color, i) => {
+                      productItem2.find(".d-product-colors")
+                        .append(`<div class="d-color-selection-outer">
+                           <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
+                       </div>`);
+                    });
+                  }
+                }
+              });
 
               $(".slider-nav2").slick("slickAdd", productItem2);
             }
