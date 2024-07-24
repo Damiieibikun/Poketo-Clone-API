@@ -201,7 +201,7 @@ $(document).ready(() => {
             };
           }
 
-          console.log(selectedProductTag)
+          // console.log(selectedProductTag)
 
           $("#j-selectedProduct-info").html(
             ` <div data-id = ${res.id}>
@@ -487,28 +487,71 @@ $(document).ready(() => {
 
   $("#d-review-From").submit(function (e) {
     e.preventDefault();
-    let reviewText = $("#d-reviewText").val();
-    let data = {
-      product_id: selectedProduct.id,
-      user_id: loggedUser.id,
-      text: reviewText,
-    };
 
-    $.ajax({
-      url: `${endPoint}/reviews`,
-      method: "POST",
-      data: data,
-      success: function (res) {
-        console.log(res);
-        location.reload(true);
-      },
-      error: function (err) {
-        console.log(err);
-      },
-    });
+    let ratedStars = 0
+    $('.d-rated').each((i, star) =>{
 
-    $(this)[0].reset();
-    $("#d-createReview-Modal").addClass("d-display-none");
+      if($(star).attr('fill') === '#ffffff'){
+          ratedStars ++
+      }
+          
+   })
+
+if(ratedStars === 5){
+$('#d-reviewErrMsg').removeClass('d-display-none')
+$('#d-reviewErrMsg').text('Please Give a Rating *')
+
+}
+else if($("#d-reviewText").val() === ''){
+  $('#d-reviewErrMsg').removeClass('d-display-none')
+  $('#d-reviewErrMsg').text('Fill all required fields *')
+  $('#d-reviewText').addClass('wrong-format')
+}
+else if(!$('#d-checkBoxReview')[0].checked){
+  $('#d-reviewErrMsg').removeClass('d-display-none')
+  $('#d-reviewErrMsg').text('Fill all required fields *')
+  $('#d-checkBoxReview').addClass('wrong-format')
+}
+
+else{
+  $('#d-reviewErrMsg').addClass('d-display-none')
+  $('#d-reviewText').removeClass('wrong-format')
+  $('#d-checkBoxReview').removeClass('wrong-format')
+
+  // post reviews and ratings
+
+  let reviewText = $("#d-reviewText").val();
+  let data = {
+    product_id: selectedProduct.id,
+    user_id: loggedUser.id,
+    text: reviewText,
+  };
+
+  $.ajax({
+    url: `${endPoint}/reviews`,
+    method: "POST",
+    data: data,
+    success: function (res) {
+      console.log(res);
+      location.reload(true);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
+
+  $(this)[0].reset();
+  $("#d-createReview-Modal").addClass("d-display-none");
+}
+
+
+
+
+
+
+
+
+   
   });
 
   // display product reviews

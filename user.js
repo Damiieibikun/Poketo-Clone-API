@@ -154,7 +154,7 @@ $(document).on("click", ".bi-pen-fill", function() {
       data: data,
       success: function (res) {
         console.log(res);
-        location.reload(true)
+        // location.reload(true)
       },
       error: function (err) {
         console.log(err);
@@ -165,6 +165,25 @@ $(document).on("click", ".bi-pen-fill", function() {
   // reviews
      $("#d-review-From").submit(function (e) {
         e.preventDefault();
+
+  if($("#d-reviewText").val() === ''){
+      $('#d-reviewErrMsg').removeClass('d-display-none')
+      $('#d-reviewErrMsg').text('Fill all required fields *')
+      $('#d-reviewText').addClass('wrong-format')
+    }
+    else if(!$('#d-checkBoxReview')[0].checked){
+      $('#d-reviewErrMsg').removeClass('d-display-none')
+      $('#d-reviewErrMsg').text('Fill all required fields *')
+      $('#d-checkBoxReview').addClass('wrong-format')
+    }
+    
+    else{
+      $('#d-reviewErrMsg').addClass('d-display-none')
+      $('#d-reviewText').removeClass('wrong-format')
+      $('#d-checkBoxReview').removeClass('wrong-format')
+
+      // Edit reviews and ratings
+    
         let reviewText = $("#d-reviewText").val();
         let data = {
           user_id: userDetails.id,
@@ -187,6 +206,19 @@ $(document).on("click", ".bi-pen-fill", function() {
     
         $(this)[0].reset();
         $("#d-createReview-Modal").addClass("d-display-none");
+
+    }
+    
+      
+
+
+
+
+
+
+
+
+
       });
 })
 

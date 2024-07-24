@@ -153,6 +153,16 @@ button:hover{
     cursor: pointer;
 }
 
+
+#d-review-Form{
+    position: relative;
+  }
+  #d-reviewErrMsg{
+    position: absolute;
+    top: 10px;
+  }
+
+  
 .fillRed{
     fill: #EF4043
 }

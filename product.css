@@ -25,7 +25,7 @@ body {
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 110vh;
+    height: 100vh;
 }
 
 .jenny-item {
@@ -768,6 +768,13 @@ body {
 
   #d-reviewText{
     height: 150px;
+  }
+  #d-review-Form{
+    position: relative;
+  }
+  #d-reviewErrMsg{
+    position: absolute;
+    top: 10px;
   }
 
   #d-review-From button{
