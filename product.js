@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  localStorage.removeItem("ProductV");
   //get 4 items
   const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
@@ -7,8 +8,46 @@ $(document).ready(() => {
   $.ajax({
     url: `${endPoint}/products?merchant_id=${merchant.id}`,
     method: "GET",
-    success: function (res) {
-      let otherItems = res.data.splice(0, 4);
+    success: function (resp) {
+      resp.data.forEach((res) => {
+        // console.log(res)
+        let productImages = [];
+        let productColor = [];
+        $.ajax({
+          url: `${endPoint}/products/${res.id}`,
+          method: "GET",
+          success: function (data) {
+            // console.log(res.variations)
+            if (data.variations.length !== 0) {
+              data.variations[0].content.forEach((content) => {
+                if (content.display[0].type === "image") {
+                  productImages.push(content.display[0].value);
+                } else if (content.display[0].type === "text") {
+                  productColor.push(content.display[0].value);
+                }
+              });
+              let allVariations =
+                JSON.parse(localStorage.getItem("ProductV")) || [];
+              let productVariationsInfo = {
+                product_id: res.id,
+                availableImage: productImages,
+                availableColors: productColor,
+              };
+              allVariations.push(productVariationsInfo);
+
+              localStorage.setItem("ProductV", JSON.stringify(allVariations));
+
+              // console.log(productImages);
+              // console.log(productColor)
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      });
+
+      let otherItems = resp.data.splice(0, 4);
 
       otherItems.forEach((product) => {
         // get average rating for product
@@ -58,7 +97,7 @@ $(document).ready(() => {
             } else {
               likeTerm = "likes";
             }
-            let productItems = $(`<div class="d-grid">
+            let productItems_shop = $(`<div class="d-grid">
                    <div class="d-slider-product-item d-flex" data-id = ${product.id} style="background-image: url(${product.image})" onMouseOver="this.style.backgroundImage='url(${product.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product.image})'">
                        <div class="d-item-tag" style="background-color: ${itemProduct.tagColor}">${itemProduct.tag}</div>
                        <button class="d-addCart d-display-none">Add to Cart</button>
@@ -82,20 +121,21 @@ $(document).ready(() => {
                            </div>
                            <p class="d-slider-product-price">$${product.price}</p>
                        </div>
-                       <div class="d-product-likes d-flex d-gap-10">
+                        <div class="d-product-colors d-flex d-gap-10">
+   
+                       </div>
+                       <div class="d-product-likes d-flex d-gap-10 d-align-center">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
    </svg>
                                    <span>${product.like}</span><span>${likeTerm}</span>
                            </div>
                        
-                       <div class="d-product-colors d-flex d-gap-10">
-   
-                       </div>
+                      
                    </div>
                </div>`);
 
-            let productRating = productItems.find(".star").find("svg");
+            let productRating = productItems_shop.find(".star").find("svg");
             if (avgRating >= 1) {
               productRating.each((i, svg) => {
                 $(svg).find("path").css("fill", "#ef4043");
@@ -105,7 +145,30 @@ $(document).ready(() => {
               });
             }
 
-            $(".grid-2jen").append(productItems);
+            let productV = JSON.parse(localStorage.getItem("ProductV"));
+
+            productV.forEach((productItems) => {
+              if (productItems.product_id === product.id) {
+                if (productItems.availableImage.length > 0) {
+                  productItems.availableImage.forEach((img, i) => {
+                    productItems_shop.find(".d-product-colors")
+                      .append(`<div class="d-color-selection-outer">
+                         <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
+                     </div>`);
+                  });
+                }
+                if (productItems.availableColors.length > 0) {
+                  productItems.availableColors.forEach((color, i) => {
+                    productItems_shop.find(".d-product-colors")
+                      .append(`<div class="d-color-selection-outer">
+                         <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
+                     </div>`);
+                  });
+                }
+              }
+            });
+
+            $(".grid-2jen").append(productItems_shop);
           },
           error: function (err) {
             console.log(err);
@@ -124,7 +187,7 @@ $(document).ready(() => {
     url: `${endPoint}/products/${selectedProduct.id}`,
     method: "GET",
     success: function (res) {
-      //   console.log(res);
+      // console.log(res);
       let avgRating = 0;
       let totalRating = 0;
       let numRating = 0;
@@ -137,8 +200,6 @@ $(document).ready(() => {
           if (rating.length > 0) {
             rating.forEach((item) => {
               totalRating += item.value;
-              // $(`#stars${item.value}`).text(`${item.value}`)
-              // $(`#stars${item.value}`).prev().children().css('width', `${item.value / numRating * 100}%`)
             });
 
             if (rating.length > 0) {
@@ -188,8 +249,7 @@ $(document).ready(() => {
               tag: "New!",
               tagColor: "#73ccf3",
             };
-          } 
-          else if (avgRating > 3.5 && res.like > 0) {
+          } else if (avgRating > 3.5 && res.like > 0) {
             var selectedProductTag = {
               tag: "Best Seller",
               tagColor: "#ffc845",
@@ -240,7 +300,7 @@ $(document).ready(() => {
                                
                           
                      </div>
-                     <!-- <p>color:blue</p> -->
+                     <p id='d-variantSelection'></p>
                      <div class="jenny-icons d-product-colors">
                            <!-- available colors -->
                
@@ -251,6 +311,22 @@ $(document).ready(() => {
                      </div>
                      `
           );
+
+          if (res.variations.length !== 0) {
+            res.variations[0].content.forEach((content) => {
+              if (content.display[0].type === "image") {
+                $("#j-selectedProduct-info").find(".d-product-colors")
+                  .append(`<div class="d-color-selection-outer" id=${content.text}>
+                       <div class="d-color-selection" style="background-image: url(${content.display[0].value}); background-color: transparent"></div>
+                   </div>`);
+              } else if (content.display[0].type === "text") {
+                $("#j-selectedProduct-info").find(".d-product-colors")
+                  .append(`<div class="d-color-selection-outer" id=${content.text}>
+                       <div class="d-color-selection" style="background-image: url(''); background-color: ${content.display[0].value}"></div>
+                   </div>`);
+              }
+            });
+          }
 
           // get all products liked by a user and compare
           let isLiked = false;
@@ -461,7 +537,7 @@ $(document).ready(() => {
     $(this).prevAll().addClass("fillRed");
     $(this).nextAll().removeClass("fillRed");
     let starID = $(this).data("id");
-    console.log(starID);
+    // console.log(starID);
     $("#d-ratingValue").text(valuesRating[starID - 1]);
     let data = {
       product_id: selectedProduct.id,
@@ -488,70 +564,54 @@ $(document).ready(() => {
   $("#d-review-From").submit(function (e) {
     e.preventDefault();
 
-    let ratedStars = 0
-    $('.d-rated').each((i, star) =>{
-
-      if($(star).attr('fill') === '#ffffff'){
-          ratedStars ++
+    let ratedStars = 0;
+    $(".d-rated").each((i, star) => {
+      if ($(star).attr("fill") === "#ffffff") {
+        ratedStars++;
       }
-          
-   })
+    });
 
-if(ratedStars === 5){
-$('#d-reviewErrMsg').removeClass('d-display-none')
-$('#d-reviewErrMsg').text('Please Give a Rating *')
+    if (ratedStars === 5) {
+      $("#d-reviewErrMsg").removeClass("d-display-none");
+      $("#d-reviewErrMsg").text("Please Give a Rating *");
+    } else if ($("#d-reviewText").val() === "") {
+      $("#d-reviewErrMsg").removeClass("d-display-none");
+      $("#d-reviewErrMsg").text("Fill all required fields *");
+      $("#d-reviewText").addClass("wrong-format");
+    } else if (!$("#d-checkBoxReview")[0].checked) {
+      $("#d-reviewErrMsg").removeClass("d-display-none");
+      $("#d-reviewErrMsg").text("Fill all required fields *");
+      $("#d-checkBoxReview").addClass("wrong-format");
+    } else {
+      $("#d-reviewErrMsg").addClass("d-display-none");
+      $("#d-reviewText").removeClass("wrong-format");
+      $("#d-checkBoxReview").removeClass("wrong-format");
 
-}
-else if($("#d-reviewText").val() === ''){
-  $('#d-reviewErrMsg').removeClass('d-display-none')
-  $('#d-reviewErrMsg').text('Fill all required fields *')
-  $('#d-reviewText').addClass('wrong-format')
-}
-else if(!$('#d-checkBoxReview')[0].checked){
-  $('#d-reviewErrMsg').removeClass('d-display-none')
-  $('#d-reviewErrMsg').text('Fill all required fields *')
-  $('#d-checkBoxReview').addClass('wrong-format')
-}
+      // post reviews and ratings
 
-else{
-  $('#d-reviewErrMsg').addClass('d-display-none')
-  $('#d-reviewText').removeClass('wrong-format')
-  $('#d-checkBoxReview').removeClass('wrong-format')
+      let reviewText = $("#d-reviewText").val();
+      let data = {
+        product_id: selectedProduct.id,
+        user_id: loggedUser.id,
+        text: reviewText,
+      };
 
-  // post reviews and ratings
+      $.ajax({
+        url: `${endPoint}/reviews`,
+        method: "POST",
+        data: data,
+        success: function (res) {
+          console.log(res);
+          location.reload(true);
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
 
-  let reviewText = $("#d-reviewText").val();
-  let data = {
-    product_id: selectedProduct.id,
-    user_id: loggedUser.id,
-    text: reviewText,
-  };
-
-  $.ajax({
-    url: `${endPoint}/reviews`,
-    method: "POST",
-    data: data,
-    success: function (res) {
-      console.log(res);
-      location.reload(true);
-    },
-    error: function (err) {
-      console.log(err);
-    },
-  });
-
-  $(this)[0].reset();
-  $("#d-createReview-Modal").addClass("d-display-none");
-}
-
-
-
-
-
-
-
-
-   
+      $(this)[0].reset();
+      $("#d-createReview-Modal").addClass("d-display-none");
+    }
   });
 
   // display product reviews
@@ -645,18 +705,12 @@ else{
 
   // read less and more
 
-  $('#readMore').click(function(){
-    
-    if($(this).text() === 'Read Less'){
-      $(this).text('Read More');
+  $("#readMore").click(function () {
+    if ($(this).text() === "Read Less") {
+      $(this).text("Read More");
+    } else {
+      $(this).text("Read Less");
     }
-    else{
-      $(this).text('Read Less');
-    }
-    $('#productDescription-text').toggleClass('hidden')
-})
-
-
-
-
+    $("#productDescription-text").toggleClass("hidden");
+  });
 });

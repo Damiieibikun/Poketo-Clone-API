@@ -353,18 +353,20 @@
 }
 
 .d-product-colors {
-    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 .d-slider-product-item {
     position: relative;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 400px;
     transition: .3s ease-in-out;
     justify-content: center;
+    width: 95%;
+    margin: auto;
 }
 
 .d-slider-product-item:hover {

@@ -120,6 +120,8 @@ $(document).ready(() => {
 
         $(this).parent().addClass('d-selected-color')
         $(this).parent().siblings().removeClass('d-selected-color')
+        $('#d-variantSelection').text($(this).parent().attr('id'))
+        console.log($(this).parent().attr('id'))
     })
 
     // redirect to login
