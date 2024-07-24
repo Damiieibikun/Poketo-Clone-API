@@ -377,7 +377,7 @@ $(document).ready(function () {
 
               localStorage.setItem("ProductV", JSON.stringify(allVariations));
 
-              console.log(productImages);
+              // console.log(productImages);
               // console.log(productColor)
             }
           },
@@ -667,7 +667,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".d-slider-product-item", function () {
     let selectedId = $(this).data("id");
-    console.log(selectedId);
+    // console.log(selectedId);
 
     $.ajax({
       url: `${endPoint}/products/${selectedId}`,

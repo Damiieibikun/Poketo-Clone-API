@@ -48,7 +48,7 @@
     font-size: 16px;
 }
 
-button{
+#d-userUpdatebtns button{
     font-size: 14px;
     border: none;
     padding: 10px;
@@ -63,7 +63,7 @@ button{
     -o-border-radius: 49px;
 }
 
-button:hover{
+#d-userUpdatebtns button:hover{
     cursor: pointer;
 }
 
