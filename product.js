@@ -156,7 +156,7 @@ $(document).ready(() => {
               });
 
               for (let i = 5; i >= 0; i--) {
-                console.log(counter[i]);
+                // console.log(counter[i]);
                 if (counter[i]) {
                   $(`#stars${i}`).text(`${counter[i]}`);
                   $(`#stars${i}`)
@@ -184,7 +184,12 @@ $(document).ready(() => {
           var selectedProductTag = {};
 
           if (res.review === 0 && res.total_sold === 0) {
-          } else if (avgRating > 4 && res.like > 0) {
+            var selectedProductTag = {
+              tag: "New!",
+              tagColor: "#73ccf3",
+            };
+          } 
+          else if (avgRating > 3.5 && res.like > 0) {
             var selectedProductTag = {
               tag: "Best Seller",
               tagColor: "#ffc845",
@@ -195,6 +200,8 @@ $(document).ready(() => {
               tagColor: "#73ccf3",
             };
           }
+
+          console.log(selectedProductTag)
 
           $("#j-selectedProduct-info").html(
             ` <div data-id = ${res.id}>
@@ -592,4 +599,21 @@ $(document).ready(() => {
       console.log(err);
     },
   });
+
+  // read less and more
+
+  $('#readMore').click(function(){
+    
+    if($(this).text() === 'Read Less'){
+      $(this).text('Read More');
+    }
+    else{
+      $(this).text('Read Less');
+    }
+    $('#productDescription-text').toggleClass('hidden')
+})
+
+
+
+
 });

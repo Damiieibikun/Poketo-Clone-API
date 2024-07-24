@@ -382,7 +382,7 @@ $(document).ready(function () {
               };
             } else if (
               product.review > 1 &&
-              avgRating > 4 &&
+              avgRating > 3.5 &&
               product.like > 0
             ) {
               var itemProduct = {
