@@ -514,7 +514,7 @@ body {
 .gridJE-items {
     display: flex;
     flex-direction: column;
-    border-right: .5px solid #ddd;
+    /* border-right: .5px solid #ddd; */
     height: 200px;
     /* margin-right: 30px; */
 }
@@ -897,4 +897,50 @@ body {
     .grid-staritem3 {
         gap: 200px;
     } */
+}
+
+
+.rating-distribution {
+    width: 300px;
+    border-left: 1px solid #8080803d;
+    border-right: 1px solid #8080803d;
+    padding: 0 30px;
+}
+
+.rating-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.d-starsR {
+    width: 30px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.d-star {
+    color: red;
+}
+
+.bar {
+    flex: 1;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.fill {
+    height: 100%;
+    background-color: #4285F4;
+    border-radius: 5px;
+    width: 0; /* Initial width */
+}
+
+.count {
+    width: 20px;
+    text-align: right;
+    color: #4285F4;
 }

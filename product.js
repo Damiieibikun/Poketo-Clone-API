@@ -128,6 +128,7 @@ $(document).ready(() => {
       let avgRating = 0;
       let totalRating = 0;
       let numRating = 0;
+
       $.ajax({
         url: `${endPoint}/ratings?product_id=${selectedProduct.id}`,
         method: "GET",
@@ -136,7 +137,38 @@ $(document).ready(() => {
           if (rating.length > 0) {
             rating.forEach((item) => {
               totalRating += item.value;
+              // $(`#stars${item.value}`).text(`${item.value}`)
+              // $(`#stars${item.value}`).prev().children().css('width', `${item.value / numRating * 100}%`)
             });
+
+            if (rating.length > 0) {
+              let ratinsArry = rating.map((item) => {
+                return item.value;
+              });
+              // console.log(ratinsArry)
+              const counter = {};
+              ratinsArry.forEach((ele) => {
+                if (counter[ele]) {
+                  counter[ele] += 1;
+                } else {
+                  counter[ele] = 1;
+                }
+              });
+
+              for (let i = 5; i >= 0; i--) {
+                console.log(counter[i]);
+                if (counter[i]) {
+                  $(`#stars${i}`).text(`${counter[i]}`);
+                  $(`#stars${i}`)
+                    .prev()
+                    .children()
+                    .css("width", `${(counter[i] / numRating) * 100}%`);
+                } else {
+                  $(`#stars${i}`).text(`0`);
+                }
+              }
+            }
+
             // calculate average rating
             avgRating = (totalRating / rating.length).toFixed(1);
           }
@@ -461,7 +493,7 @@ $(document).ready(() => {
       data: data,
       success: function (res) {
         console.log(res);
-        location.reload(true)
+        location.reload(true);
       },
       error: function (err) {
         console.log(err);
