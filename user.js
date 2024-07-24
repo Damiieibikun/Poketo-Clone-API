@@ -8,6 +8,7 @@ $(document).ready(() => {
     <p>${userDetails.phone}</p>
     `);
 
+    // get customer's likes
   $.ajax({
     url: `${endPoint}/users/likes?user_id=${userDetails.id}`,
     method: "GET",
@@ -124,6 +125,64 @@ $(document).ready(() => {
       console.log(err);
     },
   });
+
+
+  // get customer's orders
+  let cartItems = JSON.parse(localStorage.getItem('CurrentUser-cartItems')) 
+  if (cartItems !== null){
+    cartItems.forEach(user =>{
+if(user.user_id === userDetails.id){
+  if(user.cartItems.length > 0){
+    $("#no-orders").addClass("d-display-none");
+    let total = 0
+    user.cartItems.forEach(product =>{
+      let productID = product.itemId
+      total += (product.quantity * product.price)
+      // console.log(productID)
+      $.ajax({
+        url: `${endPoint}/products/${productID}`,
+        method: 'GET',
+        success: function(res){
+          console.log(res)
+$('#user-order-historyInfo').append(
+  `<div class="d-grid d-align-center d-gap-20 d-listOrders">
+  <div class="d-flex-col d-gap-10">
+    <div class="d-likedProductIMG" style="background-image: url(${res.images[0]})"></div>
+    <p class="d-orderedProductName">${res.title}</p>
+  </div>                               
+ 
+  <p class="d-qtyOrdered"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg> ${product.quantity}</p>
+  <b class="d-priceItem">$${product.price}</b>
+</div>`
+)
+        },
+        error: function(err){
+          console.log(err)
+        }
+      })
+    })
+
+    $('#d-TotalOrders').text(`Total: $${total}`)
+    // console.log(total)
+   
+  }
+}
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //   edit reviews and ratings

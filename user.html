@@ -717,7 +717,7 @@
 
     <section id="d-userDetails">
         <div id="d-userDetailsInfo" class="d-grid">
-            <div class="d-grid d-userDetailsInfo-items">
+            <div class="d-grid d-userDetailsInfo-items" style="width: 75%; margin:auto">
                 <div>
                     <h1 class="d-userDetailsH1">Account</h1>
                     <div class="d-flex d-align-center d-gap-10">
@@ -728,21 +728,24 @@
                     </div>
                     
                 </div>
-                <div>
+                <div class="d-flex-col">
                     <h2 class="d-userDetailsH2">Order history</h2>
                     <div id="user-order-historyInfo"></div>
                     <p id="no-orders">You haven't placed any orders yet.</p>
+                    <b style="align-self: end; margin-right: 60px" id="d-TotalOrders"></b>
                     <!-- //append details here -->
-                </div>
-                <div>
-                    <h2 class="d-userDetailsH2">Reviews and Ratings</h2>
-                    <div id="user-order-reviews"></div>
-                    <p id="no-reviews">You haven't reviewed any products yet.</p>
-                    <!-- //append details here -->
+
                 </div>
                 
+                
             </div>
-            <div class="d-grid d-userDetailsInfo-items" style="justify-self: end;">
+            <div class="d-grid d-userDetailsInfo-items" style="justify-self: end; width: 75%; margin:auto">
+              <div>
+                <h2 class="d-userDetailsH2">Reviews and Ratings</h2>
+                <div id="user-order-reviews"></div>
+                <p id="no-reviews">You haven't reviewed any products yet.</p>
+                <!-- //append details here -->
+            </div>
                     <div>
                         <h2 class="d-userDetailsH2">Liked Products</h2>
                         <p id="no-likes" class="d-display-none">You haven't liked any products yet.</p>

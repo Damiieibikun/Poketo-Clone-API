@@ -26,6 +26,7 @@
 
 #d-userDetailsInfo-items{
     grid-template-rows: auto;
+   
 
 }
 
@@ -171,4 +172,8 @@
 .bi-trash2-fill:hover, 
 .bi-pen-fill:hover{
     cursor: pointer;
+}
+
+.d-listOrders{
+    grid-template-columns: repeat(3, 1fr);
 }

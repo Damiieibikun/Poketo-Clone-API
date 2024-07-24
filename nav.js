@@ -91,6 +91,7 @@ $(document).ready(() => {
     } else {
       // proceed to checkout
       console.log("Checkout");
+      window.location.href = 'user.html'
     }
   });
 
