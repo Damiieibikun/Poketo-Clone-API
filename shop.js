@@ -35,7 +35,7 @@ $(document).ready(() => {
 
               localStorage.setItem("ProductV", JSON.stringify(allVariations));
 
-              console.log(productImages);
+              // console.log(productImages);
               // console.log(productColor)
             }
           },

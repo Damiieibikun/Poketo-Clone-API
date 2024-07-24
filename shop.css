@@ -87,6 +87,7 @@
   .d-slider-product-item {
     width: 300px;
     justify-self: center;
+    margin: auto;
   }
   #d-shopAll-filter {
     display: none;
@@ -112,5 +113,6 @@
   .d-slider-product-item {
     width: 300px;
     justify-self: center;
+    margin: auto;
   }
 }

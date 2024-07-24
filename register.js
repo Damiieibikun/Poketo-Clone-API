@@ -91,11 +91,21 @@ $(document).ready(function() {
                 data: usersData,
                 success: function(res) {
                     console.log(res)
+                    let usersItems = JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
+                        let currentUserCart = {
+                            user_id:  res.id,
+                            cartItems : []
+                          }
+                          usersItems.push(currentUserCart)
+                          localStorage.setItem('CurrentUser-cartItems', JSON.stringify(usersItems))
+                          window.location.href = 'login.html'
                 },
-                error: function(err) {}
+                error: function(err) {
+                    console.log(err)
+                }
             })
 
-            window.location.href = 'login.html'
+            
         }
 
     });
