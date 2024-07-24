@@ -224,11 +224,8 @@ $(document).ready(() => {
                           );
                         }
                       });
-
                     }
                   });
-
-                
                 }
 
                 // console.log(res)
@@ -300,8 +297,9 @@ $(document).ready(() => {
             <hr style="opacity: 0.5;">`
                 );
 
-
-                var cartDetails = JSON.parse(localStorage.getItem("CurrentUser-cartItems"));
+                var cartDetails = JSON.parse(
+                  localStorage.getItem("CurrentUser-cartItems")
+                );
                 if (cartDetails !== null) {
                   cartDetails.forEach((user) => {
                     if (currentUser.id === user.user_id) {
@@ -440,14 +438,51 @@ $(document).ready(() => {
     if (currentUser === null) {
       window.location.href = "login.html";
     } else {
-    console.log(addedItemID)
-     console.log(quantity)
-     console.log($(this).parent().prev().find('#d-selectedproductPrice').text())
+      console.log(addedItemID);
+      console.log(quantity);
+      console.log(
+        $(this).parent().prev().find("#d-selectedproductPrice").text()
+      );
+
+      let usersItems =
+        JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
+      let userFound = false;
+
+      usersItems.forEach((user) => {
+        if (user.user_id === currentUser.id) {
+          userFound = true;
+          let itemFound = false;
+
+          user.cartItems.forEach((item) => {
+            if (item.itemId === addedItemID) {
+              itemFound = true;
+            }
+          });
+
+          if (!itemFound) {
+            let addedItem = {
+              itemId: addedItemID,
+              quantity: quantity,
+            };
+            user.cartItems.push(addedItem);
+            localStorage.setItem(
+              "CurrentUser-cartItems",
+              JSON.stringify(usersItems)
+            );
+            location.reload(true);
+          } else {
+            alert("Item already added to cart");
+          }
+        }
+      });
+
+      if (!userFound) {
+        alert("User not found. Please log in or register.");
+      }
     }
   });
 
   // add products to cart from anywhere else
-
   $(document).on("click", ".d-AddBtn-cart, .d-addCart", function (e) {
     e.stopPropagation();
     if (currentUser === null) {
@@ -455,50 +490,50 @@ $(document).ready(() => {
     } else {
       console.log("item added");
       let productID = $(this).parent().data("id");
-      let usersItems = JSON.parse(
-        localStorage.getItem("CurrentUser-cartItems")
-      );
+
+      let usersItems =
+        JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
+      let userFound = false;
+
       usersItems.forEach((user) => {
         if (user.user_id === currentUser.id) {
-          let addedItem = {
-            itemId: productID,
-            quantity: 1,
-          };
-          user.cartItems.push(addedItem);
-          localStorage.setItem(
-            "CurrentUser-cartItems",
-            JSON.stringify(usersItems)
-          );
+          userFound = true;
+          let itemFound = false;
 
-          location.reload(true)
+          user.cartItems.forEach((item) => {
+            if (item.itemId === productID) {
+              itemFound = true;
+            }
+          });
+
+          if (!itemFound) {
+            let addedItem = {
+              itemId: productID,
+              quantity: 1,
+            };
+            user.cartItems.push(addedItem);
+            localStorage.setItem(
+              "CurrentUser-cartItems",
+              JSON.stringify(usersItems)
+            );
+            location.reload(true);
+          } else {
+            alert("Item already added to cart");
+          }
         }
       });
+
+      if (!userFound) {
+        alert("User not found. Please log in or register.");
+      }
     }
   });
 
-  //get total
-
-  // let cartDetails = JSON.parse(localStorage.getItem("CurrentUser-cartItems"));
-  // if (cartDetails !== null) {
-  //   cartDetails.forEach((user) => {
-  //     if (currentUser.id === user.user_id) {
-  //       let total = 0;
-  //       user.cartItems.forEach((item) => {
-  //         // let total = 0;
-  //         let price = item.quantity * item.price;
-  //         total += price;
-  //       });
-  //       // console.log(total);
-  //       $("#d-price").text(`$${total}`);
-  //     }
-  //   });
-  // }
-
   // delete from cart
 
-  $(document).on('click', ".bi-trash3", function () {
+  $(document).on("click", ".bi-trash3", function () {
     let itemIndex = $(this).data("id");
-    console.log(itemIndex)
+    console.log(itemIndex);
     // let itemId = $(this).data("id");
     let usersItems = JSON.parse(localStorage.getItem("CurrentUser-cartItems"));
     usersItems.forEach((user) => {
