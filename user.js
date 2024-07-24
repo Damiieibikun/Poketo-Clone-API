@@ -8,7 +8,7 @@ $(document).ready(() => {
     <p>${userDetails.phone}</p>
     `);
 
-    // get customer's likes
+  // get customer's likes
   $.ajax({
     url: `${endPoint}/users/likes?user_id=${userDetails.id}`,
     method: "GET",
@@ -126,26 +126,25 @@ $(document).ready(() => {
     },
   });
 
-
   // get customer's orders
-  let cartItems = JSON.parse(localStorage.getItem('CurrentUser-cartItems')) 
-  if (cartItems !== null){
-    cartItems.forEach(user =>{
-if(user.user_id === userDetails.id){
-  if(user.cartItems.length > 0){
-    $("#no-orders").addClass("d-display-none");
-    let total = 0
-    user.cartItems.forEach(product =>{
-      let productID = product.itemId
-      total += (product.quantity * product.price)
-      // console.log(productID)
-      $.ajax({
-        url: `${endPoint}/products/${productID}`,
-        method: 'GET',
-        success: function(res){
-          console.log(res)
-$('#user-order-historyInfo').append(
-  `<div class="d-grid d-align-center d-gap-20 d-listOrders">
+  let cartItems = JSON.parse(localStorage.getItem("CurrentUser-cartItems"));
+  if (cartItems !== null) {
+    cartItems.forEach((user) => {
+      if (user.user_id === userDetails.id) {
+        if (user.cartItems.length > 0) {
+          $("#no-orders").addClass("d-display-none");
+          let total = 0;
+          user.cartItems.forEach((product) => {
+            let productID = product.itemId;
+            total += product.quantity * product.price;
+            // console.log(productID)
+            $.ajax({
+              url: `${endPoint}/products/${productID}`,
+              method: "GET",
+              success: function (res) {
+                console.log(res);
+                $("#user-order-historyInfo").append(
+                  `<div class="d-grid d-align-center d-gap-20 d-listOrders">
   <div class="d-flex-col d-gap-10">
     <div class="d-likedProductIMG" style="background-image: url(${res.images[0]})"></div>
     <p class="d-orderedProductName">${res.title}</p>
@@ -156,201 +155,158 @@ $('#user-order-historyInfo').append(
 </svg> ${product.quantity}</p>
   <b class="d-priceItem">$${product.price}</b>
 </div>`
-)
-        },
-        error: function(err){
-          console.log(err)
+                );
+              },
+              error: function (err) {
+                console.log(err);
+              },
+            });
+          });
+
+          $("#d-TotalOrders").text(`Total: $${total}`);
+          // console.log(total)
         }
-      })
-    })
-
-    $('#d-TotalOrders').text(`Total: $${total}`)
-    // console.log(total)
-   
-  }
-}
-    })
+      }
+    });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   edit reviews and ratings
-let valuesRating = ["Very poor", "Poor", "Average", "Good", "Great!"];
-$(document).on("click", ".bi-pen-fill", function() {
+  //   edit reviews and ratings
+  let valuesRating = ["Very poor", "Poor", "Average", "Good", "Great!"];
+  $(document).on("click", ".bi-pen-fill", function () {
     $("#d-createReview-Modal").removeClass("d-display-none");
     $("#sendReviewRating").text("Edit Review");
-    let productID = $(this).data('id')
-    let reviewID = $(this).parent().data('id')
-     // ratings 
-  $(".d-rated").click(function () {
-    $(this).addClass("fillRed");
-    $(this).prevAll().addClass("fillRed");
-    $(this).nextAll().removeClass("fillRed");
-    let starID = $(this).data("id");
-    console.log(starID);
-    $("#d-ratingValue").text(valuesRating[starID - 1]);
-    let data = {
-      product_id: productID,
-      user_id: userDetails.id,
-      text: valuesRating[starID - 1],
-      value: starID,
-    };  
+    let productID = $(this).data("id");
+    let reviewID = $(this).parent().data("id");
+    // ratings
+    $(".d-rated").click(function () {
+      $(this).addClass("fillRed");
+      $(this).prevAll().addClass("fillRed");
+      $(this).nextAll().removeClass("fillRed");
+      let starID = $(this).data("id");
+      console.log(starID);
+      $("#d-ratingValue").text(valuesRating[starID - 1]);
+      let data = {
+        product_id: productID,
+        user_id: userDetails.id,
+        text: valuesRating[starID - 1],
+        value: starID,
+      };
 
-    $.ajax({
-      url: `${endPoint}/ratings`,
-      method: "PUT",
-      data: data,
-      success: function (res) {
-        console.log(res);
-        // location.reload(true)
-      },
-      error: function (err) {
-        console.log(err);
-      },
+      $.ajax({
+        url: `${endPoint}/ratings`,
+        method: "PUT",
+        data: data,
+        success: function (res) {
+          console.log(res);
+          // location.reload(true)
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
     });
-  });
 
-  // reviews
-     $("#d-review-From").submit(function (e) {
-        e.preventDefault();
+    // reviews
+    $("#d-review-From").submit(function (e) {
+      e.preventDefault();
 
-  if($("#d-reviewText").val() === ''){
-      $('#d-reviewErrMsg').removeClass('d-display-none')
-      $('#d-reviewErrMsg').text('Fill all required fields *')
-      $('#d-reviewText').addClass('wrong-format')
-    }
-    else if(!$('#d-checkBoxReview')[0].checked){
-      $('#d-reviewErrMsg').removeClass('d-display-none')
-      $('#d-reviewErrMsg').text('Fill all required fields *')
-      $('#d-checkBoxReview').addClass('wrong-format')
-    }
-    
-    else{
-      $('#d-reviewErrMsg').addClass('d-display-none')
-      $('#d-reviewText').removeClass('wrong-format')
-      $('#d-checkBoxReview').removeClass('wrong-format')
+      if ($("#d-reviewText").val() === "") {
+        $("#d-reviewErrMsg").removeClass("d-display-none");
+        $("#d-reviewErrMsg").text("Fill all required fields *");
+        $("#d-reviewText").addClass("wrong-format");
+      } else if (!$("#d-checkBoxReview")[0].checked) {
+        $("#d-reviewErrMsg").removeClass("d-display-none");
+        $("#d-reviewErrMsg").text("Fill all required fields *");
+        $("#d-checkBoxReview").addClass("wrong-format");
+      } else {
+        $("#d-reviewErrMsg").addClass("d-display-none");
+        $("#d-reviewText").removeClass("wrong-format");
+        $("#d-checkBoxReview").removeClass("wrong-format");
 
-      // Edit reviews and ratings
-    
+        // Edit reviews and ratings
+
         let reviewText = $("#d-reviewText").val();
         let data = {
           user_id: userDetails.id,
           text: reviewText,
         };
-        console.log(data)
-    
+        console.log(data);
+
         $.ajax({
           url: `${endPoint}/reviews/${reviewID}`,
           method: "PUT",
           data: data,
           success: function (res) {
             console.log(res);
-            location.reload(true)
+            location.reload(true);
           },
           error: function (err) {
             console.log(err);
           },
         });
-    
+
         $(this)[0].reset();
         $("#d-createReview-Modal").addClass("d-display-none");
-
-    }
-    
-      
-
-
-
-
-
-
-
-
-
-      });
-})
+      }
+    });
+  });
 
   // close reviews modal
   $("#d-closeReviews").click(function () {
     $("#d-createReview-Modal").addClass("d-display-none");
   });
 
+  // delete reviews and ratings
 
-// delete reviews and ratings
-
-$(document).on("click", ".bi-trash2-fill", function() {
+  $(document).on("click", ".bi-trash2-fill", function () {
     $("#d-deleteReview-Modal").removeClass("d-display-none");
-    let productID = $(this).data('id')
-    let reviewID = $(this).parent().data('id')
-    $('#d-deleteCustomerRating').click(function(){
-        let data = {
-            product_id: productID,
-            user_id: userDetails.id            
-          }; 
-          $.ajax({
-            url: `${endPoint}/ratings`,
-            method: 'DELETE',
-            data: data,
-            success: function (res) {
-                console.log(res)
-                alert('Rating Deleted Successfully')
-                location.reload(true)
-            },
-            error: function (err) {
-                console.log(err)
-            }
-          })
-    })
+    let productID = $(this).data("id");
+    let reviewID = $(this).parent().data("id");
+    $("#d-deleteCustomerRating").click(function () {
+      let data = {
+        product_id: productID,
+        user_id: userDetails.id,
+      };
+      $.ajax({
+        url: `${endPoint}/ratings`,
+        method: "DELETE",
+        data: data,
+        success: function (res) {
+          console.log(res);
+          alert("Rating Deleted Successfully");
+          location.reload(true);
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    });
 
-    $('#d-deleteCustomerReview').click(function(){
-        let data = {
-            review_id: reviewID,
-            user_id: userDetails.id            
-          }; 
-          $.ajax({
-            url: `${endPoint}/reviews`,
-            method: 'DELETE',
-            data: data,
-            success: function (res) {
-                console.log(res)
-                alert('Review Deleted Successfully')
-                location.reload(true)
-            },
-            error: function (err) {
-                console.log(err)
-            }
-          })
-    })
-})
+    $("#d-deleteCustomerReview").click(function () {
+      let data = {
+        review_id: reviewID,
+        user_id: userDetails.id,
+      };
+      $.ajax({
+        url: `${endPoint}/reviews`,
+        method: "DELETE",
+        data: data,
+        success: function (res) {
+          console.log(res);
+          alert("Review Deleted Successfully");
+          location.reload(true);
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    });
+  });
 
   // close delete reviews modal
   $("#d-closedeleteReviews").click(function () {
     $("#d-deleteReview-Modal").addClass("d-display-none");
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   //remove logged users details
   $("#d-userslogout-link").click(function () {
