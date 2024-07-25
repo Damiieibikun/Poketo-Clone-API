@@ -98,6 +98,7 @@ $(document).ready(function() {
                           }
                           usersItems.push(currentUserCart)
                           localStorage.setItem('CurrentUser-cartItems', JSON.stringify(usersItems))
+                          alert('Registration Successful')
                           window.location.href = 'login.html'
                 },
                 error: function(err) {

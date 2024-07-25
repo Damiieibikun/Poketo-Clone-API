@@ -244,7 +244,7 @@ $(document).ready(() => {
 
 
         $.ajax({
-            url: `${endPoint}/products?merchant_id=${merchant.id}`,
+            url: `${endPoint}/products?merchant_id=${merchant.id}&page=2`,
             method: "GET",
             success: function(res) {
 
@@ -711,7 +711,7 @@ $(document).ready(() => {
                 method: "POST",
                 success: function(res) {
                     console.log(res)
-                    location.reload(true)
+                    // location.reload(true)
                 },
                 error: function(err) {
                     console.log(err)

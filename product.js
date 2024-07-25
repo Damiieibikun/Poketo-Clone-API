@@ -571,10 +571,7 @@ $(document).ready(() => {
       }
     });
 
-    if (ratedStars === 5) {
-      $("#d-reviewErrMsg").removeClass("d-display-none");
-      $("#d-reviewErrMsg").text("Please Give a Rating *");
-    } else if ($("#d-reviewText").val() === "") {
+if ($("#d-reviewText").val() === "") {
       $("#d-reviewErrMsg").removeClass("d-display-none");
       $("#d-reviewErrMsg").text("Fill all required fields *");
       $("#d-reviewText").addClass("wrong-format");

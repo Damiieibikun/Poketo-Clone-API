@@ -341,6 +341,8 @@ $(document).ready(function () {
         },
       },
     ],
+    prevArrow: ".d-prev-arrow",
+    nextArrow: ".d-next-arrow",
   });
 
   // get all products posted by merchant
@@ -388,8 +390,8 @@ $(document).ready(function () {
       });
 
       // get products for each slider
-      let products1 = resp.data.splice(0, 9);
-      let products2 = resp.data.splice(9);
+      let products1 = resp.data.splice(0, 5);
+      let products2 = resp.data.splice(0, 5);
 
       products1.forEach((product) => {
         // get average rating for product
@@ -492,8 +494,8 @@ $(document).ready(function () {
             }
 
             let productV = JSON.parse(localStorage.getItem("ProductV"));
-
-            productV.forEach((productItem) => {
+            if(productV!== null){
+  productV.forEach((productItem) => {
               if (productItem.product_id === product.id) {
                 if (productItem.availableImage.length > 0) {
                   productItem.availableImage.forEach((img, i) => {
@@ -513,6 +515,9 @@ $(document).ready(function () {
                 }
               }
             });
+            }
+
+          
 
             $(".slider-nav1").slick("slickAdd", productItem1);
           },
