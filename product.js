@@ -552,6 +552,10 @@ $(document).ready(() => {
       data: data,
       success: function (res) {
         console.log(res);
+        if(res.msg === 'User already made a rating'){
+          alert(`${res.msg}; Edit in User's Profile`)
+        }
+        
       },
       error: function (err) {
         console.log(err);
