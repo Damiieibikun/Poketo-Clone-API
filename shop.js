@@ -4,7 +4,7 @@ $(document).ready(() => {
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
 
   $.ajax({
-    url: `${endPoint}/products?merchant_id=${merchant.id}`,
+    url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
     method: "GET",
     success: function (resp) {
       resp.data.forEach((res) => {

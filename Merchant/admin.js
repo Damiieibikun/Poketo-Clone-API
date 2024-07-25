@@ -219,7 +219,7 @@ $(document).ready(() => {
 
 
     $.ajax({
-        url: `${endPoint}/products?merchant_id=${merchant.id}`,
+        url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
         method: "GET",
         success: function(res) {
             let allProducts = res.data
@@ -244,7 +244,7 @@ $(document).ready(() => {
 
 
         $.ajax({
-            url: `${endPoint}/products?merchant_id=${merchant.id}&page=2`,
+            url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
             method: "GET",
             success: function(res) {
 
