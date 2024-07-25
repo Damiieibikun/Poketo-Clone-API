@@ -331,7 +331,7 @@
               class="right-format"
               placeholder="https://www."
             />
-            <button id="create-cat" type="submit ">Create</button>
+            <button id="create-cat" type="submit" style="align-self: center;">Create</button>
           </form>
         </div>
       </div>
@@ -348,7 +348,7 @@
           <form
             action=""
             id="d-chooseCat-form"
-            class="d-flex-col d-justify-center d-gap-20"
+            class="d-flex-col d-justify-center d-gap-20 d-align-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -413,7 +413,7 @@
                 <input type="text" id="productTitle" class="right-format" />
 
                 <label for="productDesc">Description</label>
-                <input type="text" id="productDesc" class="right-format" />
+                <input type="text" id="productDesc" class="right-format" style="height: 90px;" />
 
                 <label for="productPrice">Price</label>
                 <input
@@ -441,9 +441,9 @@
               </div>
 
               <div class="d-flex-col d-gap-10 d-justify-around">
-                <div class="d-flex d-gap-10">
-                  <label for="productImg">Add Images</label>
-                  <button id="add-Images" type="button">
+                <div class="d-flex d-gap-10 d-align-center">
+                  <!-- <label for="productImg">Add Images</label> -->
+                  <button id="add-Images" type="button" class="d-flex d-align-center d-gap-10"> Add Images
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -542,9 +542,9 @@
                   </div>
                 </div>
                 <div class="d-flex-col d-gap-10">
-                  <div class="d-flex d-gap-10">
-                    <label for="">Shipping Locations</label>
-                    <button id="add-shiping-location" type="button">
+                  <div class="d-flex d-gap-10 d-align-center">
+                    <!-- <label for="add-shiping-location">Shipping Locations</label> -->
+                    <button id="add-shiping-location" type="button"> Add Shipping Locations
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -591,7 +591,7 @@
           
           <div class="d-gap-20">
             <div class="d-flex-col d-gap-10">
-              <label for="variation-type">Type of Variation display</label>
+              <label for="variation-type">Choose type of variation display</label>
               <select name="" id="variation-display" class="right-format">
                 <option value=""></option>
                 <option value="image">image</option>
@@ -617,12 +617,12 @@
               id="variation-text"
               class="right-format"
               style="width: 80%"
-            /> <button id="d-add-variation-btn" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+            /> <button id="d-add-variation-btn" type="button" class="d-flex d-align-center d-gap-10">Add<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path></svg></button>
             </div>
            
           </div>
-          <button id="d-close-variations" type="button">Done</button>
+          <button id="d-close-variations" type="button" style="align-self: center;">Done</button>
         </form> 
       </div>
 
@@ -633,7 +633,7 @@
       >
         <div
           id="d-modal-addImages-details"
-          class="modal-details d-flex-col d-gap-20"
+          class="modal-details d-flex-col d-gap-20 d-align-center"
         >
           <p id="img-input-error" class="error-msg d-display-none"></p>
           <p
@@ -645,7 +645,7 @@
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
           </svg></span>
 
-          <label for="productImg">Images</label>
+          <label for="productImg">Paste Images URL</label>
 
           <input
             type="text"
@@ -664,7 +664,7 @@
       >
         <div
           id="d-modal-shippingLoc-details"
-          class="modal-details d-flex-col d-gap-20"
+          class="modal-details d-flex-col d-gap-20 d-align-center"
         >
           <p id="ship-input-error" class="error-msg d-display-none"></p>
           <p
@@ -676,7 +676,7 @@
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
           </svg></span>
 
-          <label for="add-productShippingLoc">Add Location</label>
+          <label for="add-productShippingLoc">Enter Location</label>
 
           <input type="text" id="add-productShippingLoc" class="right-format" />
           <button id="add-location" type="button">Add</button>

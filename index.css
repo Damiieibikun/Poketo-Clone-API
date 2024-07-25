@@ -254,7 +254,9 @@
     height: 50px;
 }
 .d-prev-arrow, 
-.d-next-arrow{
+.d-next-arrow, 
+.d-prev-arrow2, 
+.d-next-arrow2{
     background-color: #0085CA;
     border-radius: 50%;
     width: 50px;
@@ -264,15 +266,17 @@
 }
 
 .d-prev-arrow:hover, 
-.d-next-arrow:hover{
+.d-next-arrow:hover,
+.d-prev-arrow2:hover, 
+.d-next-arrow2:hover{
     cursor: pointer;
 }
 
-.d-next-arrow{
+.d-next-arrow,.d-next-arrow2 {
     right: 40px;
 }
 
-.d-prev-arrow{
+.d-prev-arrow, .d-prev-arrow2{
     right: 100px;
 }
 
