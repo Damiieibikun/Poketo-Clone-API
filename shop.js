@@ -180,6 +180,13 @@ $(document).ready(() => {
                 }
               }
             });
+
+            productItem.find(".d-product-colors").each((index, i) => {
+              if ($(i).children()[0]) {
+                $(i).children()[0].classList.add("d-selected-color");
+              }
+            });
+
             $("#d-shopAll-grid-items").append(productItem);
           },
           error: function (err) {
