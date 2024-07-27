@@ -310,10 +310,20 @@ li#d-dashboard-heading a {
   color: white;
   min-width: 130px;
   padding: 12px 0;
+  transition: .3s all;
+  -webkit-transition: .3s all;
+  -moz-transition: .3s all;
+  -ms-transition: .3s all;
+  -o-transition: .3s all;
 }
 
 .modal-details button:hover {
   cursor: pointer;
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
 }
 
 #d-modal-Admin-details {
@@ -362,7 +372,7 @@ li#d-dashboard-heading a {
 
 #d-modal-product-details {
   width: 80%;
-  height: 80%;
+  height: 90%;
   max-width: none;
 }
 
@@ -393,12 +403,12 @@ li#d-dashboard-heading a {
 #add-shiping-location,
 #d-add-variation-btn {
   min-width: 0px;
-  padding: 5px;
-  border-radius: 0%;
-  -webkit-border-radius: 0%;
-  -moz-border-radius: 0%;
-  -ms-border-radius: 0%;
-  -o-border-radius: 0%;
+  padding: 7px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 select#variation-type {

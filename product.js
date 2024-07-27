@@ -13,11 +13,14 @@ $(document).ready(() => {
         // console.log(res)
         let productImages = [];
         let productColor = [];
+        let productDiscount = null;
         $.ajax({
           url: `${endPoint}/products/${res.id}`,
           method: "GET",
           success: function (data) {
-            // console.log(res.variations)
+            productDiscount = data.discount;
+            let allVariations =
+              JSON.parse(localStorage.getItem("ProductV")) || [];
             if (data.variations.length !== 0) {
               data.variations[0].content.forEach((content) => {
                 if (content.display[0].type === "image") {
@@ -26,20 +29,22 @@ $(document).ready(() => {
                   productColor.push(content.display[0].value);
                 }
               });
-              let allVariations =
-                JSON.parse(localStorage.getItem("ProductV")) || [];
+
               let productVariationsInfo = {
                 product_id: res.id,
                 availableImage: productImages,
                 availableColors: productColor,
+                productDiscount: productDiscount,
               };
               allVariations.push(productVariationsInfo);
-
-              localStorage.setItem("ProductV", JSON.stringify(allVariations));
-
-              // console.log(productImages);
-              // console.log(productColor)
+            } else {
+              let productVariationsInfo = {
+                product_id: res.id,
+                productDiscount: productDiscount,
+              };
+              allVariations.push(productVariationsInfo);
             }
+            localStorage.setItem("ProductV", JSON.stringify(allVariations));
           },
           error: function (err) {
             console.log(err);
@@ -97,6 +102,16 @@ $(document).ready(() => {
             } else {
               likeTerm = "likes";
             }
+            let showDiscount = "";
+            let discountStyle = "";
+            let colorStyle = "black";
+            if (product.has_discount) {
+              showDiscount = "block";
+              discountStyle = "line-through";
+              colorStyle = "grey";
+            } else {
+              showDiscount = "none";
+            }
             let productItems_shop = $(`<div class="d-grid">
                    <div class="d-slider-product-item d-flex" data-id = ${product.id} style="background-image: url(${product.image})" onMouseOver="this.style.backgroundImage='url(${product.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product.image})'">
                        <div class="d-item-tag" style="background-color: ${itemProduct.tagColor}">${itemProduct.tag}</div>
@@ -119,7 +134,9 @@ $(document).ready(() => {
                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#f6ede6"></path></svg>
                                <span class="d-slider-product-rating">${avgRating} <span class='d-quantity-avail'>(${product.quantity})</span></span>
                            </div>
-                           <p class="d-slider-product-price">$${product.price}</p>
+                           <div class="d-flex d-gap-10">
+                            <span class="d-slider-product-price" style="text-decoration: ${discountStyle}; color: ${colorStyle}">$${product.price}</span> <span class="d-discountedPriceValue" style = "display:${showDiscount}"></span>
+                            </div>
                        </div>
                         <div class="d-product-colors d-flex d-gap-10">
    
@@ -149,22 +166,42 @@ $(document).ready(() => {
 
             productV.forEach((productItems) => {
               if (productItems.product_id === product.id) {
-                if (productItems.availableImage.length > 0) {
-                  productItems.availableImage.forEach((img, i) => {
-                    productItems_shop.find(".d-product-colors")
-                      .append(`<div class="d-color-selection-outer">
-                         <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
-                     </div>`);
-                  });
+                productItems_shop
+                  .find(".d-discountedPriceValue")
+                  .text(
+                    `$${Math.round(
+                      product.price -
+                        (productItems.productDiscount / 100) * product.price
+                    )}`
+                  );
+
+                if (
+                  "avaliableImage" in productItems ||
+                  "availableColors" in productItems
+                ) {
+                  if (productItems.availableImage.length > 0) {
+                    productItems.availableImage.forEach((img, i) => {
+                      productItems_shop.find(".d-product-colors")
+                        .append(`<div class="d-color-selection-outer">
+                             <div class="d-color-selection" data-id=${i}" style="background-image: url(${img}); background-color: transparent"></div>
+                         </div>`);
+                    });
+                  }
+                  if (productItems.availableColors.length > 0) {
+                    productItems.availableColors.forEach((color, i) => {
+                      productItems_shop.find(".d-product-colors")
+                        .append(`<div class="d-color-selection-outer">
+                             <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
+                         </div>`);
+                    });
+                  }
                 }
-                if (productItems.availableColors.length > 0) {
-                  productItems.availableColors.forEach((color, i) => {
-                    productItems_shop.find(".d-product-colors")
-                      .append(`<div class="d-color-selection-outer">
-                         <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
-                     </div>`);
-                  });
-                }
+              }
+            });
+
+            productItems_shop.find(".d-product-colors").each((index, i) => {
+              if ($(i).children()[0]) {
+                $(i).children()[0].classList.add("d-selected-color");
               }
             });
 
@@ -249,7 +286,7 @@ $(document).ready(() => {
               tag: "New!",
               tagColor: "#73ccf3",
             };
-          } else if (avgRating > 3.5 && res.like > 0) {
+          } else if (res.review > 1 && avgRating > 4 && res.like > 0) {
             var selectedProductTag = {
               tag: "Best Seller",
               tagColor: "#ffc845",
@@ -261,26 +298,42 @@ $(document).ready(() => {
             };
           }
 
-          // console.log(selectedProductTag)
+          let showDiscount = "";
+          let discountStyle = "";
+          let colorStyle = "black";
+          if (res.has_discount) {
+            showDiscount = "block";
+            discountStyle = "line-through";
+            colorStyle = "grey";
+          } else {
+            showDiscount = "none";
+          }
 
           $("#j-selectedProduct-info").html(
             ` <div data-id = ${res.id}>
-                       <div class="mustard d-align-center" style="background-color: ${selectedProductTag.tagColor};">
+                       <div class="mustard d-align-center" style="background-color: ${
+                         selectedProductTag.tagColor
+                       };">
                          <p>${selectedProductTag.tag}</p>
                    
                      </div>
                      <div class= "d-flex d-gap-10 d-align-center d-justify-between">
                      <h1>${res.title}</h1> 
-                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#dedede" class="bi bi-heart-fill" viewBox="0 0 16 16"  id="like-Product" data-id = ${res.id}>
+                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#dedede" class="bi bi-heart-fill" viewBox="0 0 16 16"  id="like-Product" data-id = ${
+                       res.id
+                     }>
                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
                </svg>
                
                      </div>
-                     
                
-                     <div class="jenny-flex">
-                     
-                         <h3>$<span id="d-selectedproductPrice">${res.price}</span></h3>
+                     <div class="jenny-flex">                     
+                         <h3 class = "d-flex d-gap-10"><span id="d-selectedproductPrice" style="text-decoration: ${discountStyle}; color: ${colorStyle}">$${
+              res.price
+            }</span> <span style = "display:${showDiscount}">  $${Math.round(
+              res.price - (res.discount / 100) * res.price
+            )}</span></h3>
+
                          <div class = "d-flex">
                          <div class="star" style = "display: ${showStars}">
                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path></svg>
@@ -295,7 +348,9 @@ $(document).ready(() => {
                                                </svg>
                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path></svg>
                                </div>
-                               <span style = "display: ${showStars}" class="d-slider-product-rating">${avgRating}(${res.quantity})</span>
+                               <span style = "display: ${showStars}" class="d-slider-product-rating">${avgRating}(${
+              res.quantity
+            })</span>
                          </div>
                                
                           
@@ -327,6 +382,16 @@ $(document).ready(() => {
               }
             });
           }
+
+          $("#j-selectedProduct-info")
+            .find(".d-product-colors")
+            .each((index, i) => {
+              if ($(i).children()[0]) {
+                $(i).children()[0].classList.add("d-selected-color");
+                console.log($(i).children()[0].id);
+                $("#d-variantSelection").text($(i).children()[0].id);
+              }
+            });
 
           // get all products liked by a user and compare
           let isLiked = false;
@@ -390,33 +455,33 @@ $(document).ready(() => {
             });
           }
 
-          if ("availableImage" in res) {
-            res.availableImage.forEach((img, i) => {
-              $("#j-selectedProduct-info").find(".d-product-colors")
-                .append(` < div class = "d-color-selection-outer" >
-                               <
-                               div class = "d-color-selection"
-                           data - id = $ { i }
-                           " style="
-                           background - image: url($ { img });
-                           background - color: transparent "></div> < /
-                               div > `);
-            });
-          }
-          if ("availableColors" in res) {
-            res.availableColors.forEach((color, i) => {
-              $("#j-selectedProduct-info").find(".d-product-colors")
-                .append(` < div class = "d-color-selection-outer" >
-                               <
-                               div class = "d-color-selection"
-                           data - id = $ { i }
-                           " style="
-                           background - image: url('');
-                           background - color: $ { color }
-                           "></div> <
-                           /div>`);
-            });
-          }
+          // if ("availableImage" in res) {
+          //   res.availableImage.forEach((img, i) => {
+          //     $("#j-selectedProduct-info").find(".d-product-colors")
+          //       .append(` < div class = "d-color-selection-outer" >
+          //                      <
+          //                      div class = "d-color-selection"
+          //                  data - id = $ { i }
+          //                  " style="
+          //                  background - image: url($ { img });
+          //                  background - color: transparent "></div> < /
+          //                      div > `);
+          //   });
+          // }
+          // if ("availableColors" in res) {
+          //   res.availableColors.forEach((color, i) => {
+          //     $("#j-selectedProduct-info").find(".d-product-colors")
+          //       .append(` < div class = "d-color-selection-outer" >
+          //                      <
+          //                      div class = "d-color-selection"
+          //                  data - id = $ { i }
+          //                  " style="
+          //                  background - image: url('');
+          //                  background - color: $ { color }
+          //                  "></div> <
+          //                  /div>`);
+          //   });
+          // }
           $("#reviewScore").text(avgRating);
           $("#numReviewers").text(`Based on ${numRating} reviews`);
         },
@@ -552,10 +617,9 @@ $(document).ready(() => {
       data: data,
       success: function (res) {
         console.log(res);
-        if(res.msg === 'User already made a rating'){
-          alert(`${res.msg}; Edit in User's Profile`)
+        if (res.msg === "User already made a rating") {
+          alert(`${res.msg}; Edit in User's Profile`);
         }
-        
       },
       error: function (err) {
         console.log(err);
@@ -575,7 +639,7 @@ $(document).ready(() => {
       }
     });
 
-if ($("#d-reviewText").val() === "") {
+    if ($("#d-reviewText").val() === "") {
       $("#d-reviewErrMsg").removeClass("d-display-none");
       $("#d-reviewErrMsg").text("Fill all required fields *");
       $("#d-reviewText").addClass("wrong-format");
