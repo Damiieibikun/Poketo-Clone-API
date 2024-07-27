@@ -54,7 +54,7 @@ $(document).ready(() => {
                 itemsInStock += item.quantity
             });
 
-            console.log(itemsInStock)
+            // console.log(itemsInStock)
         },
         error: function(err) {}
     })
@@ -241,19 +241,35 @@ $(document).ready(() => {
 
     $(document).on('click', '.bi-trash2-fill', function() {
         let catID = $(this).parents("li").data("id");
-
         $.ajax({
-            url: `${endPoint}/categories/${catID}`,
-            method: 'DELETE',
-            success: function(res) {
+            url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
+            method: 'GET',
+            success: function(res){
                 console.log(res)
-                alert('Deleted Successfully!')
-                location.reload(true)
+                if(res.data.length > 0){
+                    alert('Cannot Delete, Items already assigned in this category!')
+                }
+                else{
+                    $.ajax({
+                        url: `${endPoint}/categories/${catID}`,
+                        method: 'DELETE',
+                        success: function(res) {
+                            console.log(res)
+                            alert('Deleted Successfully!')
+                            location.reload(true)
+                        },
+                        error: function(err) {
+                            console.log(err)
+                        }
+                    })
+                }
             },
-            error: function(err) {
+            error: function(err){
                 console.log(err)
             }
         })
+
+       
     })
 
     // get all items in stock
@@ -318,7 +334,7 @@ $(document).ready(() => {
                     itemsInStock += item.quantity
                 });
 
-                console.log(itemsInStock)
+                // console.log(itemsInStock)
             },
             error: function(err) {}
         })
@@ -818,8 +834,8 @@ $(document).ready(() => {
         url: `${endPoint}/sales?merchant_id=${merchant.id}`,
         method: 'GET',
         success: function(res) {
-            console.log('Total Sales: ')
-            console.log(res)
+            // console.log('Total Sales: ')
+            // console.log(res)
         },
         error: function(err) {
             console.log(err)
