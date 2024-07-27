@@ -350,16 +350,17 @@ $(document).ready(function () {
     url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
     method: "GET",
     success: function (resp) {
-      // console.log(resp.data.length)
+      
       resp.data.forEach((res) => {
-        // console.log(res)
+      
         let productImages = [];
         let productColor = [];
+        let productDiscount = null
         $.ajax({
           url: `${endPoint}/products/${res.id}`,
           method: "GET",
           success: function (data) {
-            // console.log(res.variations)
+            productDiscount = data.discount
             if (data.variations.length !== 0) {
               data.variations[0].content.forEach((content) => {
                 if (content.display[0].type === "image") {
@@ -374,13 +375,13 @@ $(document).ready(function () {
                 product_id: res.id,
                 availableImage: productImages,
                 availableColors: productColor,
+                productDiscount: productDiscount
               };
               allVariations.push(productVariationsInfo);
 
               localStorage.setItem("ProductV", JSON.stringify(allVariations));
 
-              // console.log(productImages);
-              // console.log(productColor)
+            
             }
           },
           error: function (err) {
@@ -389,20 +390,13 @@ $(document).ready(function () {
         });
       });
 
-      // // get products for each slider
-      // let products1 = resp.data.splice(0, 5);
-      // let products2 = resp.data.splice(5);
-
-    let productsDataCopy = [...resp.data];
-    console.log(productsDataCopy.length)
+      // get products for each slider
+       let productsDataCopy = [...resp.data];
+   
     let products1 = productsDataCopy.slice(0, 10);
     let products2 = productsDataCopy.slice(10, 20);
 
-    // console.log(products2)
-
-
-
-      products1.forEach((product) => {
+       products1.forEach((product) => {
         // get average rating for product
         let avgRating = 0;
         let totalRating = 0;
@@ -450,6 +444,16 @@ $(document).ready(function () {
             } else {
               likeTerm = "likes";
             }
+            let showDiscount = ""
+            let discountStyle = ""
+            let colorStyle = "black"
+            if(product.has_discount){
+              showDiscount = "block"
+              discountStyle = "line-through"
+              colorStyle = 'grey'
+            }else{
+              showDiscount = "none"
+            }
             let productItem1 =
               $(` <div class="d-slick-items d-grid d-justify-center">
          <div class="d-slider-product-item d-flex" data-id =${product.id} style="background-image: url(${product.image})" onMouseOver="this.style.backgroundImage='url(${product.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product.image})'">
@@ -473,7 +477,9 @@ $(document).ready(function () {
                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#f6ede6"></path></svg>
                      <span class="d-slider-product-rating">${avgRating} <span class='d-quantity-avail'>(${product.quantity})</span></span>
                  </div>
-                 <p class="d-slider-product-price">$${product.price}</p>
+                 <div>
+                            <span class="d-slider-product-price" style="text-decoration: ${discountStyle}; color: ${colorStyle}">$${product.price}</span> <span class="d-discountedPriceValue" style = "display:${showDiscount}"></span>
+                            </div>
              </div>
              <div class="d-gap-20 d-product-selected-size" style="display: ${showSize};">
                  <div class="d-selected-size">Large</div>
@@ -506,6 +512,7 @@ $(document).ready(function () {
             if(productV!== null){
   productV.forEach((productItem) => {
               if (productItem.product_id === product.id) {
+                productItem1.find('.d-discountedPriceValue').text(`$${Math.round(product.price - ((productItem.productDiscount/100) * product.price))}`)
                 if (productItem.availableImage.length > 0) {
                   productItem.availableImage.forEach((img, i) => {
                     productItem1.find(".d-product-colors")
@@ -545,7 +552,7 @@ $(document).ready(function () {
           url: `${endPoint}/ratings?product_id=${product2.id}`,
           method: "GET",
           success: function (rating) {
-            console.log(rating)
+          
             if (rating.length > 0) {
               rating.forEach((item) => {
                 totalRating += item.value;
@@ -585,8 +592,17 @@ $(document).ready(function () {
               } else {
                 likeTerm = "likes";
               }
-              console.log(rating)
-              console.log(product2)
+              let showDiscount = ""
+              let discountStyle = ""
+              let colorStyle = "black"
+              if(product2.has_discount){
+                showDiscount = "block"
+                discountStyle = "line-through"
+                colorStyle = 'grey'
+              }else{
+                showDiscount = "none"
+              }
+              
               let productItem2 =
                 $(`<div class="d-slick-items d-grid d-justify-center">
        <div class="d-slider-product-item d-flex" data-id = ${product2.id} style="background-image: url(${product2.image})" onMouseOver="this.style.backgroundImage='url(${product2.images[1]})'" onMouseOut="this.style.backgroundImage='url(${product2.image})'">
@@ -610,7 +626,9 @@ $(document).ready(function () {
                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path></svg>
                    <span class="d-slider-product-rating">${avgRating} <span class='d-quantity-avail'>(${product2.quantity})</span></span>
                </div>
-               <p class="d-slider-product-price">$${product2.price}</p>
+               <div>
+                            <span class="d-slider-product-price" style="text-decoration: ${discountStyle}; color: ${colorStyle}">$${product2.price}</span> <span class="d-discountedPriceValue" style = "display:${showDiscount}"></span>
+                            </div>
            </div>
            <div class="d-product-likes d-flex d-gap-10">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
@@ -636,6 +654,7 @@ $(document).ready(function () {
               if(productV !==null){
                 productV.forEach((productItem) => {
                   if (productItem.product_id === product2.id) {
+                    productItem2.find('.d-discountedPriceValue').text(`$${Math.round(product2.price - ((productItem.productDiscount/100) * product2.price))}`)
                     if (productItem.availableImage.length > 0) {
                       productItem.availableImage.forEach((img, i) => {
                         productItem2.find(".d-product-colors")
@@ -687,8 +706,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".d-slider-product-item", function () {
     let selectedId = $(this).data("id");
-    // console.log(selectedId);
-
+ 
     $.ajax({
       url: `${endPoint}/products/${selectedId}`,
       method: "GET",
