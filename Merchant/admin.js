@@ -19,6 +19,47 @@ $(document).ready(() => {
         $("#d-addProducts-list").slideToggle();
     });
 
+    // get all products
+    $.ajax({
+        url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
+        method: "GET",
+        success: function(res) {
+
+            let allProducts = res.data
+            // console.log(allProducts)
+            let itemsInStock = 0
+            // $("#d-dashboard-all-items").empty()
+            allProducts.forEach((item, i) => {
+                $("#d-dashboard-all-items").append(
+                    `<div class="all-products-grid">
+                        <div>
+                            <span>${i+1}</span>
+                        </div>
+                        <div class="d-flex d-gap-10">
+                            <div class="product-img" style="background-image: url(${
+                              item.image
+                            });"></div>
+                            <p class="product-name">${item.title}</p>
+                        </div>
+                        <div>
+                            <p class="product-price">$${item.price}</p>
+                        </div>
+                        <div style="justify-self: center;">
+                            <p class="product-qty">${item.quantity}</p>
+                        </div>
+                        
+                    </div>`
+                );
+
+                itemsInStock += item.quantity
+            });
+
+            console.log(itemsInStock)
+        },
+        error: function(err) {}
+    })
+
+
     //GET categories
     $.ajax({
         url: `${endPoint}/categories?merchant_id=${merchant.id}`,
@@ -249,7 +290,7 @@ $(document).ready(() => {
             success: function(res) {
 
                 let allProducts = res.data
-                console.log(allProducts)
+                // console.log(allProducts)
                 let itemsInStock = 0
                 $("#d-dashboard-all-items").empty()
                 allProducts.forEach((item, i) => {
@@ -378,7 +419,7 @@ $(document).ready(() => {
         let emptyVal = 0;
 
         $("#d-product-form")
-            .find("input")
+            .find("input, textarea")
             .each((index, input) => {
                 if ($(input).val() === "" && $(input).attr("id") !== "productImg") {
                     $(input).addClass("wrong-format");
@@ -449,6 +490,7 @@ $(document).ready(() => {
     $("#d-close-product").click(function() {
         $("#d-modal-product").addClass("d-display-none");
         $("#d-product-form input").removeClass("wrong-format");
+        $("#d-product-form textarea").removeClass("wrong-format");
         $("#add-input-error-product").addClass("d-display-none");
     });
 
