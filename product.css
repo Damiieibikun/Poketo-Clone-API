@@ -138,7 +138,11 @@ body {
 .jenny-b {
     display: flex;
     margin-top: 5px;
-    /* padding-left: 140px; */
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    background-color: #F6EDE6;
+    margin-bottom: 20px;
 }
 
 .items-jenny {

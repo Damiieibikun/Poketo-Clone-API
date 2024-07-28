@@ -22,14 +22,21 @@ $(document).ready(() => {
             productDiscount = data.discount;
             let allVariations =
               JSON.parse(localStorage.getItem("ProductV")) || [];
-            if (data.variations.length !== 0) {
-              data.variations[0].content.forEach((content) => {
-                if (content.display[0].type === "image") {
-                  productImages.push(content.display[0].value);
-                } else if (content.display[0].type === "text") {
-                  productColor.push(content.display[0].value);
+              if (data.variations.length !== 0) {
+                if(data.variations[0].type === 'color'){
+                  data.variations[0].content.forEach((content) => {
+                    if (content.display[0].type === "image") {
+                      productImages.push(content.display[0].value);
+                    } else if (content.display[0].type === "text") {
+                      productColor.push(content.display[0].value);
+                    }
+                  });
                 }
-              });
+                else{
+                  data.variations[0].content.forEach((content) => {
+                    productSizes.push(content.text)
+                  });
+                }
               if(data.variations[1]){
                 data.variations[1].content.forEach((content) => {
                   productSizes.push(content.text)
@@ -386,27 +393,48 @@ $(document).ready(() => {
                
                      </div>
                      <div class="jenny-b">
-                         <p style="color: #0085ca;">Free Returns & Free Shipping over $50</p>
+                         <p><span style="color: #456fc7">&#9670;</span> Free Returns & Free Shipping over $50</p>
                      </div>
                      </div>
                      `
           );
 
           if (res.variations.length !== 0) {
-            res.variations[0].content.forEach((content) => {
-              if (content.display[0].type === "image") {
-                $("#j-selectedProduct-info").find(".d-product-colors")
-                  .append(`<div class="d-color-selection-outer" id=${content.text}>
-                       <div class="d-color-selection" style="background-image: url(${content.display[0].value}); background-color: transparent"></div>
-                   </div>`);
-              } else if (content.display[0].type === "text") {
-                $("#j-selectedProduct-info").find(".d-product-colors")
-                  .append(`<div class="d-color-selection-outer" id=${content.text}>
-                       <div class="d-color-selection" style="background-image: url(''); background-color: ${content.display[0].value}"></div>
-                   </div>`);
-              }
 
-            });
+            if(res.variations[0].type === 'color'){
+              res.variations[0].content.forEach((content) => {
+                if (content.display[0].type === "image") {
+                  $("#j-selectedProduct-info").find(".d-product-colors")
+                    .append(`<div class="d-color-selection-outer" id=${content.text}>
+                         <div class="d-color-selection" style="background-image: url(${content.display[0].value}); background-color: transparent"></div>
+                     </div>`);
+                } else if (content.display[0].type === "text") {
+                  $("#j-selectedProduct-info").find(".d-product-colors")
+                    .append(`<div class="d-color-selection-outer" id=${content.text}>
+                         <div class="d-color-selection" style="background-image: url(''); background-color: ${content.display[0].value}"></div>
+                     </div>`);
+                }
+  
+              });
+            }
+            else{
+              res.variations[0].content.forEach((content, i) => {
+                if(i===0){
+                  $("#j-selectedProduct-info").find(".d-product-sizes").append(`
+                    <div class="d-productPageSizes selectedSizeProduct-Page">${content.text}</div>
+                    `)
+                }
+                else{
+                  $("#j-selectedProduct-info").find(".d-product-sizes").append(`
+                    <div class="d-productPageSizes">${content.text}</div>
+                    `)
+                }
+                
+              });
+            }
+
+
+
             
             if(res.variations[1]){              
               res.variations[1].content.forEach((content, i) => {
