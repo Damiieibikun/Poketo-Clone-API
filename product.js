@@ -14,6 +14,7 @@ $(document).ready(() => {
         let productImages = [];
         let productColor = [];
         let productDiscount = null;
+        let productSizes = []
         $.ajax({
           url: `${endPoint}/products/${res.id}`,
           method: "GET",
@@ -29,12 +30,18 @@ $(document).ready(() => {
                   productColor.push(content.display[0].value);
                 }
               });
+              if(data.variations[1]){
+                data.variations[1].content.forEach((content) => {
+                  productSizes.push(content.text)
+                });
+              }
 
               let productVariationsInfo = {
                 product_id: res.id,
                 availableImage: productImages,
                 availableColors: productColor,
                 productDiscount: productDiscount,
+                Sizes: productSizes
               };
               allVariations.push(productVariationsInfo);
             } else {
@@ -138,6 +145,9 @@ $(document).ready(() => {
                             <span class="d-slider-product-price" style="text-decoration: ${discountStyle}; color: ${colorStyle}">$${product.price}</span> <span class="d-discountedPriceValue" style = "display:${showDiscount}"></span>
                             </div>
                        </div>
+                       <div class = "d-product-sizes d-flex d-gap-10">
+                        
+                        </div>
                         <div class="d-product-colors d-flex d-gap-10">
    
                        </div>
@@ -177,7 +187,7 @@ $(document).ready(() => {
 
                 if (
                   "avaliableImage" in productItems ||
-                  "availableColors" in productItems
+                  "availableColors" in productItems || 'Sizes' in productItems
                 ) {
                   if (productItems.availableImage.length > 0) {
                     productItems.availableImage.forEach((img, i) => {
@@ -194,6 +204,17 @@ $(document).ready(() => {
                              <div class="d-color-selection" data-id=${i}" style="background-image: url(''); background-color: ${color}"></div>
                          </div>`);
                     });
+                  }
+                  if(productItems.Sizes.length > 0){
+                    productItems.Sizes.forEach((size, i)=>{
+                      if(i === 0){
+                        productItems_shop.find(".d-product-sizes").append(`<div class='d-selectedProductSize sizeOuter-border'>${size}</div>`)
+                      }
+                      else{
+                        productItems_shop.find(".d-product-sizes").append(`<div class='d-selectedProductSize'>${size}</div>`)
+                      }
+                     
+                    })
                   }
                 }
               }
@@ -355,6 +376,10 @@ $(document).ready(() => {
                                
                           
                      </div>
+                     <p style="font-size: 13px">Size:</p>
+                      <div class = "d-product-sizes d-flex">
+                     
+                        </div>
                      <p id='d-variantSelection'></p>
                      <div class="jenny-icons d-product-colors">
                            <!-- available colors -->
@@ -380,7 +405,24 @@ $(document).ready(() => {
                        <div class="d-color-selection" style="background-image: url(''); background-color: ${content.display[0].value}"></div>
                    </div>`);
               }
+
             });
+            
+            if(res.variations[1]){              
+              res.variations[1].content.forEach((content, i) => {
+                if(i===0){
+                  $("#j-selectedProduct-info").find(".d-product-sizes").append(`
+                    <div class="d-productPageSizes selectedSizeProduct-Page">${content.text}</div>
+                    `)
+                }
+                else{
+                  $("#j-selectedProduct-info").find(".d-product-sizes").append(`
+                    <div class="d-productPageSizes">${content.text}</div>
+                    `)
+                }
+                
+              });
+            } 
           }
 
           $("#j-selectedProduct-info")
@@ -389,7 +431,7 @@ $(document).ready(() => {
               if ($(i).children()[0]) {
                 $(i).children()[0].classList.add("d-selected-color");
                 console.log($(i).children()[0].id);
-                $("#d-variantSelection").text($(i).children()[0].id);
+                $("#d-variantSelection").text(`Color: ${$(i).children()[0].id}`);
               }
             });
 
@@ -455,33 +497,7 @@ $(document).ready(() => {
             });
           }
 
-          // if ("availableImage" in res) {
-          //   res.availableImage.forEach((img, i) => {
-          //     $("#j-selectedProduct-info").find(".d-product-colors")
-          //       .append(` < div class = "d-color-selection-outer" >
-          //                      <
-          //                      div class = "d-color-selection"
-          //                  data - id = $ { i }
-          //                  " style="
-          //                  background - image: url($ { img });
-          //                  background - color: transparent "></div> < /
-          //                      div > `);
-          //   });
-          // }
-          // if ("availableColors" in res) {
-          //   res.availableColors.forEach((color, i) => {
-          //     $("#j-selectedProduct-info").find(".d-product-colors")
-          //       .append(` < div class = "d-color-selection-outer" >
-          //                      <
-          //                      div class = "d-color-selection"
-          //                  data - id = $ { i }
-          //                  " style="
-          //                  background - image: url('');
-          //                  background - color: $ { color }
-          //                  "></div> <
-          //                  /div>`);
-          //   });
-          // }
+         
           $("#reviewScore").text(avgRating);
           $("#numReviewers").text(`Based on ${numRating} reviews`);
         },
@@ -494,6 +510,14 @@ $(document).ready(() => {
       console.log(err);
     },
   });
+
+  // apply styles to selected size
+$(document).on('click', '.d-productPageSizes', function(){
+  $(this).addClass('selectedSizeProduct-Page')
+  $(this).siblings().removeClass('selectedSizeProduct-Page')
+})
+
+
 
   $(document).on("click", ".d-slider-product-item", function () {
     let selectedId = $(this).data("id");

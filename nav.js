@@ -548,4 +548,10 @@ $(document).ready(() => {
       }
     });
   });
+
+  // add style to selected size
+  $(document).on("click", ".d-selectedProductSize", function () {
+      $(this).addClass('sizeOuter-border')
+      $(this).siblings().removeClass('sizeOuter-border')
+  })
 });
