@@ -13,6 +13,7 @@ $(document).ready(() => {
         let productImages = [];
         let productColor = [];
         let productDiscount = null;
+        let productSizes = []
         $.ajax({
           url: `${endPoint}/products/${res.id}`,
           method: "GET",
@@ -22,18 +23,34 @@ $(document).ready(() => {
             let allVariations =
               JSON.parse(localStorage.getItem("ProductV")) || [];
             if (data.variations.length !== 0) {
-              data.variations[0].content.forEach((content) => {
-                if (content.display[0].type === "image") {
-                  productImages.push(content.display[0].value);
-                } else if (content.display[0].type === "text") {
-                  productColor.push(content.display[0].value);
-                }
+              if(data.variations[0].type === 'color'){
+                data.variations[0].content.forEach((content) => {
+                  if (content.display[0].type === "image") {
+                    productImages.push(content.display[0].value);
+                  } else if (content.display[0].type === "text") {
+                    productColor.push(content.display[0].value);
+                  }
+                });
+              }
+              else{
+                data.variations[0].content.forEach((content) => {
+                  productSizes.push(content.text)
+                });
+              }
+            
+              
+            if(data.variations[1]){
+              data.variations[1].content.forEach((content) => {
+                productSizes.push(content.text)
               });
+            }           
+
               let productVariationsInfo = {
                 product_id: res.id,
                 availableImage: productImages,
                 availableColors: productColor,
                 productDiscount: productDiscount,
+                Sizes: productSizes
               };
               allVariations.push(productVariationsInfo);
             } else {
@@ -139,6 +156,9 @@ $(document).ready(() => {
                             </div>
                            
                         </div>
+                        <div class = "d-product-sizes d-flex d-gap-10">
+                        
+                        </div>
                             <div class="d-product-colors d-flex d-gap-10">
     
                         </div>
@@ -178,7 +198,7 @@ $(document).ready(() => {
 
                 if (
                   "avaliableImage" in productItems ||
-                  "availableColors" in productItems
+                  "availableColors" in productItems || 'Sizes' in productItems
                 ) {
                   if (productItems.availableImage.length > 0) {
                     productItems.availableImage.forEach((img, i) => {
@@ -196,7 +216,18 @@ $(document).ready(() => {
                        </div>`);
                     });
                   }
-                }
+                  if(productItems.Sizes.length > 0){
+                    productItems.Sizes.forEach((size, i)=>{
+                      if(i === 0){
+                        productItem.find(".d-product-sizes").append(`<div class='d-selectedProductSize sizeOuter-border'>${size}</div>`)
+                      }
+                      else{
+                        productItem.find(".d-product-sizes").append(`<div class='d-selectedProductSize'>${size}</div>`)
+                      }
+                     
+                    })
+                  }
+                }           
               }
             });
 

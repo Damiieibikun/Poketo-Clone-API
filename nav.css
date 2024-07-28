@@ -530,7 +530,17 @@ footer ul a:hover {
 #d-variantSelection{
   margin: 0;
 }
-
+.d-selectedProductSize{
+  padding: 5px;
+  border-radius: 15px;
+  margin: 10px 0;
+}
+.d-selectedProductSize:hover{
+  cursor: pointer;
+}
+.sizeOuter-border{
+  border: 1px solid black;
+}
 /* media queries */
 @media  screen and (max-width: 1024px) and (min-width: 768px) {
   .d-footer-links {
