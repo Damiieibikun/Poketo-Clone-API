@@ -19,69 +19,35 @@ $(document).ready(() => {
     $("#d-addProducts-list").slideToggle();
   });
 
-  // get all products
-  $.ajax({
-    url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
-    method: "GET",
-    success: function (res) {
-      let allProducts = res.data;
-      console.log(allProducts)
-      let itemsInStock = 0;
-      // $("#d-dashboard-all-items").empty()
-      allProducts.forEach((item, i) => {
-        $("#d-dashboard-all-items").append(
-          `<div class="all-products-grid" data-id=${item.id}>
-                        <div>
-                            <span>${i + 1}</span>
-                        </div>
-                        <div class="d-flex d-gap-10">
-                            <div class="product-img" style="background-image: url(${
-                              item.image
-                            });"></div>
-                            <p class="product-name">${item.title}</p>
-                        </div>
-                        <div>
-                            <p class="product-price">$${item.price}</p>
-                        </div>
-                        <div style="justify-self: center;">
-                            <p class="product-qty">${item.quantity}</p>
-                        </div>
+  // show all categories
+  $("#d-dashboard-categories").click(function () {
+    // $("#d-category-list").slideToggle();
+    // $("#d-category-list").removeClass('d-display-none');
+     //GET categories
 
-                        <div class = "d-flex d-gap-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16" id="d-editProduct">
-  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-</svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16" id="d-trashProduct">
-  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-</svg>
-                        </div>
-                        
-                    </div>`
-        );
-
-        itemsInStock += item.quantity;
-      });
-
-      // console.log(itemsInStock)
-    },
-    error: function (err) {},
-  });
-
-  //GET categories
-  $.ajax({
+     $('#d-dashboard-all').addClass('d-display-none')
+     $('#d-category-list').removeClass('d-display-none')
+     $('#d-headerCat').removeClass('d-display-none')
+     $('#d-category-list').empty()
+     $.ajax({
     url: `${endPoint}/categories?merchant_id=${merchant.id}`,
     method: "GET",
     success: function (data) {
       let allCat = data;
       allCat.forEach((item) => {
         $("#d-category-list")
-          .append(`<li class="d-dashboard-item d-category-item" data-id=${item.id}>
-            <a href="#" class="d-flex d-gap-10 d-align-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-              </svg>${item.name} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+          .append(`<div class="d-dashboard-item d-category-item d-flex-col d-justify-center d-align-center" data-id=${item.id}>
+            
+            <div class="categoryImage-d" style="background-image: url(${
+                                  item.image
+                                });">
+            
+            </div>
+            <div class="d-flex d-gap-10 d-align-center">
+            <p href="#" class="d-flex d-gap-10 d-align-center"> ${item.name} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
               </svg>
+              </p>
                 <div class="d-display-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
                         <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
@@ -90,8 +56,9 @@ $(document).ready(() => {
                         <path d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
                       </svg>
                 </div>
-            </a>
-        </li>`);
+            
+            </div>
+        </div>`);
 
         $("#selectCategory").append(
           `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`
@@ -100,10 +67,6 @@ $(document).ready(() => {
     },
     error: function (err) {},
   });
-
-  // show all categories
-  $("#d-dashboard-categories").click(function () {
-    $("#d-category-list").slideToggle();
   });
 
   // add styles to selected items
@@ -121,7 +84,7 @@ $(document).ready(() => {
 
   // show edit and delete categories
   $(document).on("click", ".bi-three-dots", function () {
-    $(this).next().toggle();
+    $(this).parent().next().toggle();
   });
 
   // show edit admin modal
@@ -213,7 +176,7 @@ $(document).ready(() => {
   $(document).on("click", ".bi-pen-fill", function () {
     $("#d-modal-cat").removeClass("d-display-none");
     $("#create-cat").text("Edit Category");
-    let catID = $(this).parents("li").data("id");
+    let catID = $(this).parents(".d-category-item").data("id");
     // $('#categoryImage').val()
 
     $("#d-admin-form").unbind();
@@ -247,7 +210,7 @@ $(document).ready(() => {
   // delete a category
 
   $(document).on("click", ".bi-trash2-fill", function () {
-    let catID = $(this).parents("li").data("id");
+    let catID = $(this).parents(".d-category-item").data("id");
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
       method: "GET",
@@ -295,6 +258,8 @@ $(document).ready(() => {
   // Get all product for a particular merchant
 
   $("#d-all-products-admin").click(function () {
+    $('#d-category-list').addClass('d-display-none')
+    $('#d-headerCat').addClass('d-display-none')
     $("#d-dashboard-all").removeClass("d-display-none");
     $("#d-dashboardTitle").text("All Products");
 
@@ -303,12 +268,10 @@ $(document).ready(() => {
       method: "GET",
       success: function (res) {
         let allProducts = res.data;
-        // console.log(allProducts)
-        let itemsInStock = 0;
         $("#d-dashboard-all-items").empty();
         allProducts.forEach((item, i) => {
           $("#d-dashboard-all-items").append(
-            `<div class="all-products-grid">
+            `<div class="all-products-grid d-align-center" data-id=${item.id}>
                             <div>
                                 <span>${i + 1}</span>
                             </div>
@@ -324,16 +287,26 @@ $(document).ready(() => {
                             <div style="justify-self: center;">
                                 <p class="product-qty">${item.quantity}</p>
                             </div>
+
+                            <div class="d-flex d-gap-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil d-editProduct" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+</svg>                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill d-trashProduct" viewBox="0 0 16 16">
+  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+</svg>
+                            </div>
+                            
                             
                         </div>`
           );
 
-          itemsInStock += item.quantity;
+         
         });
 
-        // console.log(itemsInStock)
       },
-      error: function (err) {},
+      error: function (err) {
+        console.log(err)
+      },
     });
   });
 
@@ -341,25 +314,26 @@ $(document).ready(() => {
 
   $(document).on("click", ".d-category-item", function () {
     let catID = $(this).data("id");
-    $("#d-dashboard-all").removeClass("d-display-none");
-    $("#d-dashboardTitle").text(`${$(this).find("a").text()}`);
+    $("#d-dashboard-Scat").removeClass("d-display-none");
+    $("#d-dashboardCatTitle").text(`${$(this).find("p").text()}`);
+    $("#d-dashboard-Scat-modal").removeClass('d-display-none')
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
       method: "GET",
       success: function (res) {
-        $("#d-dashboard-all-items").empty();
+        $("#d-dashboard-Scat-items").empty();
         // console.log(res.data)
         let allProducts = res.data;
         if (allProducts.length === 0) {
           $(".all-products-grid").hide();
-          $("#d-dashboard-all-items").html(
+          $("#d-dashboard-Scat-items").html(
             `<h1>No items in this category</h1>`
           );
         } else {
           $(".all-products-grid").show();
           allProducts.forEach((item, i) => {
-            $("#d-dashboard-all-items").append(
-              `<div class="all-products-grid">
+            $("#d-dashboard-Scat-items").append(
+              `<div class="all-products-grid d-align-center" data-id=${item.id}>
                                 <div>
                                     <span>${i + 1}</span>
                                 </div>
@@ -375,6 +349,13 @@ $(document).ready(() => {
                                 <div style="justify-self: center;">
                                     <p class="product-qty">${item.quantity}</p>
                                 </div>
+                                 <div class="d-flex d-gap-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil d-editProduct" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+</svg>                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill d-trashProduct" viewBox="0 0 16 16">
+  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+</svg>
+                            </div>
                                 
                             </div>`
             );
@@ -386,6 +367,12 @@ $(document).ready(() => {
       },
     });
   });
+
+  // close categories modal
+
+  $(document).on('click', '#d-closeCatFilter', function(){
+    $("#d-dashboard-Scat-modal").addClass("d-display-none");
+  })
 
   //open add images modal
 
@@ -807,7 +794,7 @@ $(document).ready(() => {
 
 
   // edit a product
-$(document).on('click', '#d-editProduct', function(){
+$(document).on('click', '.d-editProduct', function(){
   let productID = $(this).parent().parent().data('id')
   $("#d-modal-chooseCat").removeClass("d-display-none");
   $("#d-chooseCat-form").unbind()
@@ -893,7 +880,7 @@ $(document).on('click', '#d-editProduct', function(){
         method: "PUT",
         success: function (res) {
           console.log(res);
-          // location.reload(true);
+          location.reload(true);
         },
         error: function (err) {
           console.log(err);
@@ -918,14 +905,6 @@ $(document).on('click', '#d-editProduct', function(){
     }
   });
 })
-
-
-
-
-
-
-
-
 
   // open shipping locations
   $("#add-shiping-location").click(function () {
@@ -976,7 +955,7 @@ $(document).on('click', '#d-editProduct', function(){
   });
 
   // delete a product
-  $(document).on('click', '#d-trashProduct', function(){
+  $(document).on('click', '.d-trashProduct', function(){
       let productID = $(this).parent().parent().data('id')
       $.ajax({
         url: `${endPoint}/products/${productID}`,
@@ -991,12 +970,4 @@ $(document).on('click', '#d-editProduct', function(){
       })
   })
 
-
-
-
-
-
-  $("#logout-admin").click(function () {
-    // localStorage.removeItem("Merchant-Poketo");
-  });
 });

@@ -524,7 +524,6 @@ $(document).ready(() => {
               }
             });
           }
-
          
           $("#reviewScore").text(avgRating);
           $("#numReviewers").text(`Based on ${numRating} reviews`);

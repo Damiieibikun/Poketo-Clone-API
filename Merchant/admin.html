@@ -133,11 +133,11 @@
               View Categories</a
             >
           </li>
-          <ul id="d-category-list" class="d-flex-col d-gap-20 d-display-none">
+          <!-- <ul id="d-category-list" class="d-flex-col d-gap-20 d-display-none"> -->
             <!-- //add categories with template -->
 
             <!-- //end -->
-          </ul>
+          <!-- </ul> -->
 
           <li class="d-dashboard-item" id="logout-admin">
             <a href="../merchlog.html" class="d-flex d-gap-10 d-align-center">
@@ -242,6 +242,21 @@
           </div>
         </div>
 
+        
+
+        <!-- // show all categories -->
+         <div>
+          <h3 id="d-headerCat" class="d-display-none">Categories</h3>
+          <div id="d-category-list" class="d-flex d-gap-10 d-display-none">
+            
+            <!-- //add categories with template -->
+  
+            <!-- //end -->
+          </div>
+         </div>
+        
+
+        <!-- // show all products -->
         <div id="d-dashboard-all" class="d-dashboard-items d-display-none">
           <b id="d-dashboardTitle">All Products</b>
           <div
@@ -266,6 +281,37 @@
           </div>
           <div id="d-dashboard-all-items"></div>
         </div>
+
+<!-- // show products based on categories -->
+ <div id="d-dashboard-Scat-modal" class="modals-admin d-display-none">
+  <div id="d-dashboard-Scat" class="d-dashboard-items modal-details d-flex-col">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16" id="d-closeCatFilter">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+    </svg>
+    <b id="d-dashboardCatTitle"></b>
+    <div
+      class="all-products-grid"
+      style="
+        border-top: 1px solid rgba(128, 128, 128, 0.208);
+        font-weight: bold;
+      "
+    >
+      <div>
+        <p>S/N</p>
+      </div>
+      <div>
+        <p>Product</p>
+      </div>
+      <div>
+        <p>Price</p>
+      </div>
+      <div>
+        <p>Quantity Availiable</p>
+      </div>
+    </div>
+    <div id="d-dashboard-Scat-items"></div>
+  </div>
+ </div> 
       </div>
 
       <!-- //Modals -->
