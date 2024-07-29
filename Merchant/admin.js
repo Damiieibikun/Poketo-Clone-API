@@ -19,10 +19,71 @@ $(document).ready(() => {
     $("#d-addProducts-list").slideToggle();
   });
 
+
+  // admin dash board
+  $.ajax({
+    url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
+    method: 'GET',
+    success: function(res){
+      let mostLiked = {
+        num: 0,
+        item: null
+      }
+      res.data.forEach(item=>{
+       
+        // get top ratings
+        $.ajax({
+          url: `${endPoint}/ratings?product_id=${item.id}`,
+          method: 'GET',
+          success: function(rating){
+            // console.log(rating)
+            if(rating.length > 0){
+              let ratingCount = 0;
+              let avgrating = 0;
+              rating.forEach(val=>{
+                ratingCount += val.value;
+              })
+              avgrating = ratingCount / rating.length;
+              // console.log(avgrating)
+              if(avgrating >= 4){
+                // append top rating and category from here
+                // console.log(item)
+              }
+            }
+          },
+          error: function(err){
+            console.log(err)
+          }
+        })
+
+        
+
+// get top likes
+if(item.like > mostLiked.num){
+  mostLiked.num = item.like
+  mostLiked.item = item
+}
+ })
+ // append top liked product and its category from here
+//  console.log(mostLiked.item)
+    },
+    error: function(err){
+      console.log(err)
+    }
+  
+  })
+
+
+
+
+
+
+
+
+
   // show all categories
   $("#d-dashboard-categories").click(function () {
-    // $("#d-category-list").slideToggle();
-    // $("#d-category-list").removeClass('d-display-none');
+    
      //GET categories
 
      $('#d-dashboard-all').addClass('d-display-none')
@@ -102,7 +163,7 @@ $(document).ready(() => {
     $("#d-modal-cat").removeClass("d-display-none");
   });
 
-  // close categry
+  // close category
 
   $("#d-close-cat").click(function () {
     $("#d-modal-cat").addClass("d-display-none");

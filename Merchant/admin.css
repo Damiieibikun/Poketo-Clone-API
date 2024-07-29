@@ -102,7 +102,7 @@ option,#d-dashboardTitle {
   background-color: white;
   width: fit-content;
   height: 90vh;
-  padding: 30px 50px;
+  padding: 30px;
   position: fixed;
   left: 0;
   right: 0;
@@ -204,7 +204,7 @@ li#d-dashboard-heading a {
 #d-dashboard-main {
   width: 70%;
   margin: auto;
-  margin-left: 24%;
+  margin-left: 23%;
 }
 
 .d-dashboard-items {
