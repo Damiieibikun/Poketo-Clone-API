@@ -96,8 +96,6 @@ $(document).ready(() => {
                       }
                   })
 
-
-
                   // get top likes
                   if (item.like > mostLiked.num) {
                       mostLiked.num = item.like
@@ -174,7 +172,9 @@ $(document).ready(() => {
                   );
               });
           },
-          error: function(err) {},
+          error: function(err) {
+            console.log(err)
+          },
       });
   });
 
@@ -484,6 +484,12 @@ $(document).ready(() => {
   $(document).on('click', '#d-closeCatFilter', function() {
       $("#d-dashboard-Scat-modal").addClass("d-display-none");
   })
+
+  // close each product details modal 
+
+  $(document).on('click', '#d-closeEachP ', function() {
+    $("#d-dashboard-EachP-modal").addClass("d-display-none");
+})
 
   //open add images modal
 
@@ -1084,7 +1090,7 @@ $(document).ready(() => {
   $('#totalNumOfUsers').text(users.length)
 
 
-  // number of orders
+  // number of orders and sales
   let numOfOrders = 0
   let totalSales = 0
   users.forEach(user =>{
@@ -1099,5 +1105,76 @@ $(document).ready(() => {
 
 $('#d-total-orders').text(numOfOrders)
 $('#d-total-sales').text(`$${totalSales}`)
+
+// display product details
+
+$(document).on('click', '.all-products-grid', function(){
+  $('#d-dashboard-EachP-modal').removeClass('d-display-none')
+ let productID = $(this).data('id')
+
+ // get item info
+//  productInfo-adminP-title
+$.ajax({
+  url: `${endPoint}/products/${productID}`,
+  method: 'GET',
+  success: function(res){
+    // console.log(res)
+    $('#productInfo-adminP-title').text(res.title)
+    $('#productInfo-adminP-img').css('background-image', `url(${res.images[0]})` )
+    $('#productInfo-adminP-likes').text(`${res.like} likes`)
+  },
+  error: function(err){
+    console.log(err)
+  }
+})
+
+ // get item rating
+ $.ajax({
+  url: `${endPoint}/ratings?product_id=${productID}`,
+  method: 'GET',
+  success: function(rating) {
+      // console.log(rating)
+      let ratingCount = 0;
+          let avgrating = 0;
+      if (rating.length > 0) {          
+          rating.forEach(val => {
+              ratingCount += val.value;
+          })
+          avgrating = ratingCount / rating.length;          
+      }
+      $('#productInfo-adminP-rating').text(` Avg. ${avgrating}`)
+      // console.log(avgrating)
+     
+  },
+  error: function(err) {
+      console.log(err)
+  }
+})
+
+// get reviews
+$.ajax({ 
+  url: `${endPoint}/reviews?product_id=${productID}`,
+  method: 'GET',
+  success: function(res){
+    // console.log(res)
+    if(res.length > 0){
+      res.forEach(review=>{
+        console.log(review)
+        $('#productInfo-adminP-reviews').append(`<div>
+    <b>${review.user.first_name} ${review.user.last_name[0]} <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+</svg></b>
+    <p>${review.text}</p>
+  </div>`)
+      })
+    }
+  },
+  error: function(err){
+    console.log(err)
+  }
+})
+
+
+})
  
 });
