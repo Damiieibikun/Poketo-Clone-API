@@ -1,42 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Poketo-Admin Home</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="admin.css" />
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
-  </head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
 
-  <body>
+<body>
     <section id="d-admin-home">
-      <div id="d-side-nav">
-        <ul class="d-flex-col d-gap-20 d-justify-center">
-          <li>
-            <img
-              src="https://www.poketo.com/cdn/shop/files/pk-logotype-dark.png?v=1674686921&width=130"
-              alt=""
-            />
-          </li>
-          <li id="d-dashboard-heading" class="d-dashboard-item">
-            <a href="#" class="d-flex d-gap-10 d-align-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-menu-button-fill"
-                viewBox="0 0 16 16"
-              >
+
+        <!-- // admin icon -->
+        <div class="d-flex d-align-center d-justify-center d-gap-10" id="admin-main-div">
+            <div id="admin-icon-sm" class="admin-icon"></div>
+            <p style="font-size: 20px" class="admin-Name"></p>
+        </div>
+
+        <div id="d-side-nav">
+            <ul class="d-flex-col d-gap-20 d-justify-center">
+                <li>
+                    <img src="https://www.poketo.com/cdn/shop/files/pk-logotype-dark.png?v=1674686921&width=130" alt="" />
+                </li>
+                <li id="d-dashboard-heading" class="d-dashboard-item">
+                    <a href="#" class="d-flex d-gap-10 d-align-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-button-fill" viewBox="0 0 16 16">
                 <path
                   d="M1.5 0A1.5 1.5 0 0 0 0 1.5v2A1.5 1.5 0 0 0 1.5 5h8A1.5 1.5 0 0 0 11 3.5v-2A1.5 1.5 0 0 0 9.5 0zm5.927 2.427A.25.25 0 0 1 7.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"
                 /></svg
@@ -129,20 +120,11 @@
                 <path
                   d="M16.803,18.615h-4.535c-1,0-1.814-0.812-1.814-1.812v-4.535c0-1.002,0.814-1.814,1.814-1.814h4.535c1.001,0,1.813,0.812,1.813,1.814v4.535C18.616,17.803,17.804,18.615,16.803,18.615zM17.71,12.268c0-0.502-0.405-0.906-0.907-0.906h-4.535c-0.501,0-0.906,0.404-0.906,0.906v4.535c0,0.502,0.405,0.906,0.906,0.906h4.535c0.502,0,0.907-0.404,0.907-0.906V12.268z M16.803,9.546h-4.535c-1,0-1.814-0.812-1.814-1.814V3.198c0-1.002,0.814-1.814,1.814-1.814h4.535c1.001,0,1.813,0.812,1.813,1.814v4.534C18.616,8.734,17.804,9.546,16.803,9.546zM17.71,3.198c0-0.501-0.405-0.907-0.907-0.907h-4.535c-0.501,0-0.906,0.406-0.906,0.907v4.534c0,0.501,0.405,0.908,0.906,0.908h4.535c0.502,0,0.907-0.406,0.907-0.908V3.198z M7.733,18.615H3.198c-1.002,0-1.814-0.812-1.814-1.812v-4.535c0-1.002,0.812-1.814,1.814-1.814h4.535c1.002,0,1.814,0.812,1.814,1.814v4.535C9.547,17.803,8.735,18.615,7.733,18.615zM8.64,12.268c0-0.502-0.406-0.906-0.907-0.906H3.198c-0.501,0-0.907,0.404-0.907,0.906v4.535c0,0.502,0.406,0.906,0.907,0.906h4.535c0.501,0,0.907-0.404,0.907-0.906V12.268z M7.733,9.546H3.198c-1.002,0-1.814-0.812-1.814-1.814V3.198c0-1.002,0.812-1.814,1.814-1.814h4.535c1.002,0,1.814,0.812,1.814,1.814v4.534C9.547,8.734,8.735,9.546,7.733,9.546z M8.64,3.198c0-0.501-0.406-0.907-0.907-0.907H3.198c-0.501,0-0.907,0.406-0.907,0.907v4.534c0,0.501,0.406,0.908,0.907,0.908h4.535c0.501,0,0.907-0.406,0.907-0.908V3.198z"
                 ></path>
-              </svg>
-              View Categories</a
-            >
-          </li>
-        <li class="d-dashboard-item" id="logout-admin">
-            <a href="../merchlog.html" class="d-flex d-gap-10 d-align-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-box-arrow-right"
-                viewBox="0 0 16 16"
-              >
+              </svg> View Categories</a>
+                </li>
+                <li class="d-dashboard-item" id="logout-admin">
+                    <a href="../merchlog.html" class="d-flex d-gap-10 d-align-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                 <path
                   fill-rule="evenodd"
                   d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
@@ -158,472 +140,353 @@
       </div>
 
       <div id="d-dashboard-main">
-        <div
-          id="d-dashboard-title"
-          class="d-flex d-align-center d-justify-around"
-        >
-          <div id="d-dashboard-summary">
-            <div class="d-flex-col d-gap-20 d-align-center d-justify-evenly">
-              <div class="d-flex d-align-center d-justify-center d-gap-10">
-                <div id="admin-icon-sm" class="admin-icon"></div>
-                <p style="font-size: 20px" class="admin-Name"></p>
-              </div>
-              <div id="d-totalSales">
-                <p class="d-flex d-align-center d-gap-10">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-cash-coin"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"
-                    />
-                    <path
-                      d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"
-                    />
-                    <path
-                      d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"
-                    />
-                    <path
-                      d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"
-                    /></svg
-                  >Total Sales
-                </p>
-                <h2 id="d-total-sales">$0</h2>
-              </div>
+        <!-- // dashboard analytics -->
+         <div id="d-dashboard-analytics">
+          <div class="d-flex d-justify-between">
+            <h2>DashBoard</h2>
+          </div>        
 
-              <div id="d-totalOrders">
-                <p class="d-flex d-align-center d-gap-10">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-cart-check-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708"
-                    /></svg
-                  >Total Orders
-                </p>
-                <h2 id="d-total-orders">$0</h2>
-              </div>
-
-              <div id="d-totalItems">
-                <p class="d-flex d-align-center d-gap-10">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    class="bi bi-bag-heart"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"
-                    /></svg
-                  >Items in Stock
-                </p>
-                <h2 id="d-total-stock">0</h2>
-              </div>
-            </div>
-          </div>
+          <div class="d-flex d-gap-20 d-justify-around" id="d-DashboardSum">
+            <!-- // total users -->
+            <div class="d-flex-col d-gap-10 d-align-center d-justify-center">
+              <h3 class="d-flex d-align-center d-gap-10">Total Users <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+              </svg></h3>
+                        <div id="UsersNum" class="d-flex d-align-center d-justify-center">
+                            <b id="totalNumOfUsers">7</b>
+                        </div>
         </div>
 
-        <!-- // dashboard analytics -->
-         <div>
-          <h2>DashBoard Analytics</h2>
+        <!-- // total sales -->
+        <div class="d-flex-col d-gap-10 d-align-center d-justify-center">
+            <h3 class="d-flex d-align-center d-gap-10">
+                Total Sales
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+    <path
+      fill-rule="evenodd"
+      d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"
+    />
+    <path
+      d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"
+    />
+    <path
+      d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"
+    />
+    <path
+      d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"
+    /></svg>
+
+            </h3>
 
 
-         </div>
+            <div id="d-totalSales" class="d-flex d-align-center d-justify-center">
+                <b id="d-total-sales">$0</b>
+            </div>
+        </div>
 
-        
+        <!-- // total orders -->
+        <div class="d-flex-col d-gap-10 d-align-center d-justify-center">
+            <h3 class="d-flex d-align-center d-gap-10"> Total Orders
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                <path
+                  d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708"
+                /></svg
+              >
+                </h3>
+            <div id="d-totalOrders" class="d-flex d-align-center d-justify-center">
+              <b id="d-total-orders">$0</b>
+            </div>
+            
+          </div>
+
+          <!-- // total items in stock -->
+          <div class="d-flex-col d-gap-10 d-align-center d-justify-center">
+            <h3 class="d-flex d-align-center d-gap-10"> Items in Stock
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"
+              /></svg
+            >
+              </h3>
+          <div id="d-totalItems" class="d-flex d-align-center d-justify-center">
+            <b id="d-total-stock">0</b>
+          </div>
+          </div>
+        </div>                 
+          </div>
+
+
+          <!-- // dash board contents -->
+           <div id="d-dashboard-landingPage" class="d-flex d-gap-20">
+            <div id="d-topRatedItem" class="d-dashboardAnalytics-items">
+              <h3 style = "text-align: center;">Top Rated Products <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+              </svg></h3>
+            <div id="topRatedItem-products">
+                <!-- // append top rated here -->
+
+                <!-- // end -->
+
+            </div>
+
+        </div>
+        <!-- // append top liked product -->
+
+        </div>
+
 
         <!-- // show all categories -->
-         <div>
-          <h3 id="d-headerCat" class="d-display-none">Categories</h3>
-          <div id="d-category-list" class="d-flex d-gap-10 d-display-none">
-            
-            <!-- //add categories with template -->
-  
-            <!-- //end -->
-          </div>
-         </div>
-        
+        <div>
+            <h3 id="d-headerCat" class="d-display-none">Categories</h3>
+            <div id="d-category-list" class="d-flex d-gap-10 d-display-none">
+
+                <!-- //add categories with template -->
+
+                <!-- //end -->
+            </div>
+        </div>
+
 
         <!-- // show all products -->
         <div id="d-dashboard-all" class="d-dashboard-items d-display-none">
-          <b id="d-dashboardTitle">All Products</b>
-          <div
-            class="all-products-grid"
-            style="
-              border-top: 1px solid rgba(128, 128, 128, 0.208);
-              font-weight: bold;
-            "
-          >
-            <div>
-              <p>S/N</p>
+            <b id="d-dashboardTitle">All Products</b>
+            <div class="all-products-grid" style="
+            border-top: 1px solid rgba(128, 128, 128, 0.208);
+            font-weight: bold;
+          ">
+                <div>
+                    <p>S/N</p>
+                </div>
+                <div>
+                    <p>Product</p>
+                </div>
+                <div>
+                    <p>Price</p>
+                </div>
+                <div>
+                    <p>Quantity Availiable</p>
+                </div>
             </div>
-            <div>
-              <p>Product</p>
-            </div>
-            <div>
-              <p>Price</p>
-            </div>
-            <div>
-              <p>Quantity Availiable</p>
-            </div>
-          </div>
-          <div id="d-dashboard-all-items"></div>
+            <div id="d-dashboard-all-items"></div>
         </div>
 
-<!-- // show products based on categories -->
- <div id="d-dashboard-Scat-modal" class="modals-admin d-display-none">
-  <div id="d-dashboard-Scat" class="d-dashboard-items modal-details d-flex-col">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16" id="d-closeCatFilter">
-      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-    </svg>
-    <b id="d-dashboardCatTitle"></b>
-    <div
-      class="all-products-grid"
-      style="
-        border-top: 1px solid rgba(128, 128, 128, 0.208);
-        font-weight: bold;
-      "
-    >
-      <div>
-        <p>S/N</p>
-      </div>
-      <div>
-        <p>Product</p>
-      </div>
-      <div>
-        <p>Price</p>
-      </div>
-      <div>
-        <p>Quantity Availiable</p>
+        <!-- // show products based on categories -->
+        <div id="d-dashboard-Scat-modal" class="modals-admin d-display-none d-flex d-align-center d-justify-center">
+            <div id="d-dashboard-Scat" class="d-dashboard-items modal-details d-flex-col">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16" id="d-closeCatFilter">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+  </svg>
+                <b id="d-dashboardCatTitle"></b>
+                <div class="all-products-grid" style="
+      border-top: 1px solid rgba(128, 128, 128, 0.208);
+      font-weight: bold;
+    ">
+                    <div>
+                        <p>S/N</p>
+                    </div>
+                    <div>
+                        <p>Product</p>
+                    </div>
+                    <div>
+                        <p>Price</p>
+                    </div>
+                    <div>
+                        <p>Quantity Availiable</p>
+                    </div>
+                </div>
+                <div id="d-dashboard-Scat-items"></div>
+            </div>
+        </div>
+        </div>
+
+        <!-- //Modals -->
+        <!-- //Edit admin details -->
+        <div id="d-modal-Admin" class="modals-admin d-flex d-align-center d-display-none">
+            <div id="d-modal-Admin-details" class="modal-details d-flex-col d-gap-20">
+                <div class="d-flex d-justify-between d-align-center">
+                    <h1>Merchant Information:</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16" id="d-close-editAdmin">
+            <path
+              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+            />
+          </svg>
+                </div>
+
+                <div id="admin-icon-lg" class="admin-icon" style="align-self: center"></div>
+                <div><b>First Name:</b> <span id="d-modaladmin-fname"></span></div>
+                <div><b>Last Name:</b> <span id="d-modaladmin-lname"></span></div>
+                <div><b>Email:</b> <span id="d-modaladmin-email"></span></div>
+                <div>
+                    <b>Store Name:</b> <span id="d-modaladmin-shopName">Poketo</span>
+                </div>
+                <div>
+                    <b>Description:</b> <span id="d-modaladmin-Desc">Poketo</span>
+                </div>
+
+                <div class="d-flex d-justify-between">
+                    <a href="../upmerch.html"><button type="button" id="d-edit-admin-btn">Edit Info</button></a
+          >
+
+          <a href="../pass.html"
+            ><button type="button" id="d-passwordChange-btn">
+              Change Password
+            </button></a
+          >
+        </div>
       </div>
     </div>
-    <div id="d-dashboard-Scat-items"></div>
-  </div>
- </div> 
-      </div>
 
-      <!-- //Modals -->
-      <!-- //Edit admin details -->
-      <div
-        id="d-modal-Admin"
-        class="modals-admin d-flex d-align-center d-display-none"
-      >
-        <div
-          id="d-modal-Admin-details"
-          class="modal-details d-flex-col d-gap-20"
+    <!-- //Add and edit a category -->
+    <div
+      id="d-modal-cat"
+      class="modals-admin d-flex d-align-center d-display-none"
+    >
+      <div id="d-modal-cat-details" class="modal-details d-flex-col d-gap-20">
+        <form
+          action=""
+          id="d-admin-form"
+          class="d-flex-col d-justify-center d-gap-20"
         >
-          <div class="d-flex d-justify-between d-align-center">
-            <h1>Merchant Information:</h1>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-lg"
-              viewBox="0 0 16 16"
-              id="d-close-editAdmin"
-            >
-              <path
-                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
-              />
-            </svg>
-          </div>
-
-          <div
-            id="admin-icon-lg"
-            class="admin-icon"
-            style="align-self: center"
-          ></div>
-          <div><b>First Name:</b> <span id="d-modaladmin-fname"></span></div>
-          <div><b>Last Name:</b> <span id="d-modaladmin-lname"></span></div>
-          <div><b>Email:</b> <span id="d-modaladmin-email"></span></div>
-          <div>
-            <b>Store Name:</b> <span id="d-modaladmin-shopName">Poketo</span>
-          </div>
-          <div>
-            <b>Description:</b> <span id="d-modaladmin-Desc">Poketo</span>
-          </div>
-
-          <div class="d-flex d-justify-between">
-            <a href="../upmerch.html"
-              ><button type="button" id="d-edit-admin-btn">Edit Info</button></a
-            >
-
-            <a href="../pass.html"
-              ><button type="button" id="d-passwordChange-btn">
-                Change Password
-              </button></a
-            >
-          </div>
-        </div>
-      </div>
-
-      <!-- //Add and edit a category -->
-      <div
-        id="d-modal-cat"
-        class="modals-admin d-flex d-align-center d-display-none"
-      >
-        <div id="d-modal-cat-details" class="modal-details d-flex-col d-gap-20">
-          <form
-            action=""
-            id="d-admin-form"
-            class="d-flex-col d-justify-center d-gap-20"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-lg"
+            viewBox="0 0 16 16"
+            id="d-close-cat"
+            style="align-self: end"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-lg"
-              viewBox="0 0 16 16"
-              id="d-close-cat"
-              style="align-self: end"
-            >
-              <path
-                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
-              />
-            </svg>
-            <p class="error-msg d-display-none" id="add-input-error"></p>
-            <label for="categoryName">Category Name</label>
-            <input type="text" id="categoryName" class="right-format" />
-            <label for="categoryImage">Paste Image URL</label>
-            <input
-              type="text"
-              id="categoryImage"
-              class="right-format"
-              placeholder="https://www."
+            <path
+              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
             />
-            <button id="create-cat" type="submit" style="align-self: center">
-              Create
-            </button>
-          </form>
-        </div>
+          </svg>
+          <p class="error-msg d-display-none" id="add-input-error"></p>
+          <label for="categoryName">Category Name</label>
+          <input type="text" id="categoryName" class="right-format" />
+          <label for="categoryImage">Paste Image URL</label>
+          <input
+            type="text"
+            id="categoryImage"
+            class="right-format"
+            placeholder="https://www."
+          />
+          <button id="create-cat" type="submit" style="align-self: center">
+            Create
+          </button>
+        </form>
       </div>
+    </div>
 
-      <!-- //Choose a category -->
+    <!-- //Choose a category -->
+    <div
+      id="d-modal-chooseCat"
+      class="modals-admin d-flex d-align-center d-display-none"
+    >
       <div
-        id="d-modal-chooseCat"
-        class="modals-admin d-flex d-align-center d-display-none"
+        id="d-modal-chooseCat-details"
+        class="modal-details d-flex-col d-gap-20"
       >
-        <div
-          id="d-modal-chooseCat-details"
-          class="modal-details d-flex-col d-gap-20"
+        <form
+          action=""
+          id="d-chooseCat-form"
+          class="d-flex-col d-justify-center d-gap-20 d-align-center"
         >
-          <form
-            action=""
-            id="d-chooseCat-form"
-            class="d-flex-col d-justify-center d-gap-20 d-align-center"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-lg"
+            viewBox="0 0 16 16"
+            id="d-close-Selectcat"
+            style="align-self: end"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-lg"
-              viewBox="0 0 16 16"
-              id="d-close-Selectcat"
-              style="align-self: end"
-            >
-              <path
-                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
-              />
-            </svg>
-            <p class="error-msg d-display-none" id="select-input-error"></p>
-            <label for="selectCategory">Select Category</label>
-            <select name="" id="selectCategory" class="right-format">
-              <!-- //start template -->
-              <option value=""></option>
-            </select>
-            <button id="d-add-product" type="submit ">Ok</button>
-          </form>
-        </div>
+            <path
+              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+            />
+          </svg>
+          <p class="error-msg d-display-none" id="select-input-error"></p>
+          <label for="selectCategory">Select Category</label>
+          <select name="" id="selectCategory" class="right-format">
+            <!-- //start template -->
+            <option value=""></option>
+          </select>
+          <button id="d-add-product" type="submit ">Ok</button>
+        </form>
       </div>
+    </div>
 
-      <!-- //Add and edit a Product -->
-      <div id="d-modal-product" class="modals-admin d-flex d-align-center d-display-none">
-        <div
-          id="d-modal-product-details"
-          class="modal-details d-flex-col d-gap-20"
+    <!-- //Add and edit a Product -->
+    <div id="d-modal-product" class="modals-admin d-flex d-align-center d-display-none">
+      <div
+        id="d-modal-product-details"
+        class="modal-details d-flex-col d-gap-20"
+      >
+        <form
+          action=""
+          id="d-product-form"
+          class="d-flex-col d-justify-center d-gap-20"
         >
-          <form
-            action=""
-            id="d-product-form"
-            class="d-flex-col d-justify-center d-gap-20"
+          <p
+            class="error-msg d-display-none"
+            id="add-input-error-product"
+          ></p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-lg"
+            viewBox="0 0 16 16"
+            id="d-close-product"
+            style="align-self: end"
           >
-            <p
-              class="error-msg d-display-none"
-              id="add-input-error-product"
-            ></p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-lg"
-              viewBox="0 0 16 16"
-              id="d-close-product"
-              style="align-self: end"
-            >
-              <path
-                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+            <path
+              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+            />
+          </svg>
+          <div id="d-modal-product-grid" class="d-gap-20">
+            <div class="d-flex-col d-gap-10 d-justify-around">
+              <label for="productTitle">Title</label>
+              <input type="text" id="productTitle" class="right-format" />
+
+              <label for="productDesc">Description</label>
+             
+              <textarea
+                name="productDesc"
+                id="productDesc"
+                class="right-format"
+                style="height: 90px"
+              ></textarea>
+
+              <label for="productPrice">Price</label>
+              <input
+                type="text"
+                id="productPrice"
+                class="right-format"
+                min="0"
               />
-            </svg>
-            <div id="d-modal-product-grid" class="d-gap-20">
-              <div class="d-flex-col d-gap-10 d-justify-around">
-                <label for="productTitle">Title</label>
-                <input type="text" id="productTitle" class="right-format" />
 
-                <label for="productDesc">Description</label>
-                <!-- <input type="text" id="productDesc" class="right-format" style="height: 90px;" /> -->
-                <textarea
-                  name="productDesc"
-                  id="productDesc"
-                  class="right-format"
-                  style="height: 90px"
-                ></textarea>
+              <label for="productBrand">Brand</label>
+              <input
+                type="text"
+                id="productBrand"
+                class="right-format"
+                value="Poketo"
+              />
+            </div>
 
-                <label for="productPrice">Price</label>
-                <input
-                  type="text"
-                  id="productPrice"
-                  class="right-format"
-                  min="0"
-                />
-
-                <label for="productBrand">Brand</label>
-                <input
-                  type="text"
-                  id="productBrand"
-                  class="right-format"
-                  value="Poketo"
-                />
-              </div>
-
-              <div class="d-flex-col d-gap-10 d-justify-around">
-                <div class="d-flex d-gap-10 d-align-center">
-                  <!-- <label for="productImg">Add Images</label> -->
-                  <button
-                    id="add-Images"
-                    type="button"
-                    class="d-flex d-align-center d-gap-10"
-                  >
-                    Add Images
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-plus"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div>
-                  <label for="productCurrency">Currency</label>
-                  <input
-                    type="text"
-                    id="productCurrency"
-                    class="right-format"
-                  />
-                </div>
-
-                <div class="d-flex d-align-center d-gap-10">
-                  <label for="productDiscounted">Discount Availiable</label>
-                  <input
-                    type="checkbox"
-                    id="productDiscounted"
-                    class="right-format"
-                  />
-                </div>
-                <div class="d-display-none">
-                  <label for="productDiscount">Discount</label>
-                  <input
-                    type="text"
-                    id="productDiscount"
-                    class="right-format"
-                    min="0"
-                  />
-                </div>
-
-                <div class="d-display-none">
-                  <label for="productDiscountEx">Discount Expiration</label>
-                  <input
-                    type="date"
-                    id="productDiscountEx"
-                    class="right-format"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div class="d-flex-col d-gap-10 d-justify-around">
-                <div>
-                  <label for="productQTY ">Quantity</label>
-                  <input
-                    type="text"
-                    id="productQTY"
-                    class="right-format"
-                    min="0"
-                  />
-                </div>
-                <div class="d-flex d-gap-10">
-                  <input
-                    type="text"
-                    name=""
-                    id="min-qty"
-                    min="0"
-                    placeholder="min-qty"
-                    class="right-format"
-                  />
-                  <input
-                    type="text"
-                    name=""
-                    id="max-qty"
-                    min="0"
-                    placeholder="max-qty"
-                    class="right-format"
-                  />
-                </div>
-
-                <div class="d-flex d-align-center d-gap-10">
-                  <label for="productRefund">Refund</label>
-                  <input
-                    type="checkbox"
-                    id="productRefund"
-                    class="right-format"
-                  />
-                </div>
-
-                <div class="d-flex d-align-center d-gap-10">
-                  <label for="productShipment">Shipment Availiable</label>
-                  <input
-                    type="checkbox"
-                    id="productShipment"
-                    class="right-format"
-                  />
-                </div>
+            <div class="d-flex-col d-gap-10 d-justify-around">
+              <div class="d-flex d-gap-10 d-align-center">
+               
                 <button
-                  id="add-shiping-location"
+                  id="add-Images"
                   type="button"
-                  class="d-display-none"
+                  class="d-flex d-align-center d-gap-10"
                 >
-                  Add Shipping Locations
+                  Add Images
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -637,209 +500,315 @@
                     />
                   </svg>
                 </button>
-                <div class="d-flex d-align-center d-gap-10">
-                  <label for="productVariations">Variations</label>
-                  <input
-                    type="checkbox"
-                    id="productVariations"
-                    class="right-format"
-                  />
-                  <div
-                    class="d-flex-col d-gap-10 d-display-none d-justify-center"
-                    id="show-variations"
-                  >
-                    <label for="variation-type">Variation Type</label>
+              </div>
+              <div>
+                <label for="productCurrency">Currency</label>
+                <input
+                  type="text"
+                  id="productCurrency"
+                  class="right-format"
+                />
+              </div>
 
-                    <select name="" id="variation-type">
-                      <option value=""></option>
-                      <option value="color">color</option>
-                      <option value="size">size</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="d-flex-col d-gap-10">
-                  <div class="d-flex d-gap-10 d-align-center"></div>
-                </div>
+              <div class="d-flex d-align-center d-gap-10">
+                <label for="productDiscounted">Discount Availiable</label>
+                <input
+                  type="checkbox"
+                  id="productDiscounted"
+                  class="right-format"
+                />
+              </div>
+              <div class="d-display-none">
+                <label for="productDiscount">Discount</label>
+                <input
+                  type="text"
+                  id="productDiscount"
+                  class="right-format"
+                  min="0"
+                />
+              </div>
+
+              <div class="d-display-none">
+                <label for="productDiscountEx">Discount Expiration</label>
+                <input
+                  type="date"
+                  id="productDiscountEx"
+                  class="right-format"
+                  value=""
+                />
               </div>
             </div>
+            <div class="d-flex-col d-gap-10 d-justify-around">
+              <div>
+                <label for="productQTY ">Quantity</label>
+                <input
+                  type="text"
+                  id="productQTY"
+                  class="right-format"
+                  min="0"
+                />
+              </div>
+              <div class="d-flex d-gap-10">
+                <input
+                  type="text"
+                  name=""
+                  id="min-qty"
+                  min="0"
+                  placeholder="min-qty"
+                  class="right-format"
+                />
+                <input
+                  type="text"
+                  name=""
+                  id="max-qty"
+                  min="0"
+                  placeholder="max-qty"
+                  class="right-format"
+                />
+              </div>
 
-            <button id="create-product" type="submit ">Create</button>
-          </form>
-        </div>
-      </div>
-      <!-- // -->
+              <div class="d-flex d-align-center d-gap-10">
+                <label for="productRefund">Refund</label>
+                <input
+                  type="checkbox"
+                  id="productRefund"
+                  class="right-format"
+                />
+              </div>
 
-      <!-- //Variations modal -->
+              <div class="d-flex d-align-center d-gap-10">
+                <label for="productShipment">Shipment Availiable</label>
+                <input
+                  type="checkbox"
+                  id="productShipment"
+                  class="right-format"
+                />
+              </div>
+              <button
+                id="add-shiping-location"
+                type="button"
+                class="d-display-none"
+              >
+                Add Shipping Locations
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-plus"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+                  />
+                </svg>
+              </button>
+              <div class="d-flex d-align-center d-gap-10">
+                <label for="productVariations">Variations</label>
+                <input
+                  type="checkbox"
+                  id="productVariations"
+                  class="right-format"
+                />
+                <div
+                  class="d-flex-col d-gap-10 d-display-none d-justify-center"
+                  id="show-variations"
+                >
+                  <label for="variation-type">Variation Type</label>
 
-      <div
-        id="d-modal-variations"
-        class="modals-admin d-flex d-align-center d-display-none"
-      >
-        <form
-          id="d-modal-variations-details"
-          class="modal-details d-flex-col d-gap-20"
-        >
-          <p id="variations-input-error" class="error-msg d-display-none"></p>
-          <p
-            id="variations-input-success"
-            class="d-display-none"
-            style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
-          ></p>
-          <div style="align-self: end" class="d-flex d-align-center d-gap-10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-circle-fill"
-              viewBox="0 0 16 16"
-              style="align-self: end"
-              id="exit-variation-modal"
-            >
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
-              />
-            </svg>
+                  <select name="" id="variation-type">
+                    <option value=""></option>
+                    <option value="color">color</option>
+                    <option value="size">size</option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex-col d-gap-10">
+                <div class="d-flex d-gap-10 d-align-center"></div>
+              </div>
+            </div>
           </div>
 
-          <div class="d-gap-20">
-            <div class="d-flex-col d-gap-10">
-              <label for="variation-type"
-                >Choose type of variation display</label
-              >
-              <select
-                name=""
-                id="variation-display"
-                class="right-format"
-                style="width: 50%"
-              >
-                <option value=""></option>
-                <option value="image">image</option>
-                <option value="text">text</option>
-              </select>
-            </div>
-
-            <div class="d-flex-col d-gap-10">
-              <label id="variation-entryID" for="variation-entry"></label>
-              <input
-                type="text"
-                id="variation-entry"
-                class="right-format"
-                style="width: 0%"
-              />
-            </div>
-          </div>
-          <div class="d-flex-col d-gap-20">
-            <label for="variation-text">Description</label>
-            <div class="d-flex d-gap-10">
-              <input
-                type="text"
-                id="variation-text"
-                class="right-format"
-                style="width: 50%"
-              />
-            </div>
-            <button
-              id="d-add-variation-btn"
-              type="button"
-              class="d-flex d-align-center d-gap-10"
-            >
-              Add<svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-plus"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <button id="d-close-variations" type="button" style="align-self: end">
-            Done
-          </button>
+          <button id="create-product" type="submit ">Create</button>
         </form>
       </div>
+    </div>
+    <!-- // -->
 
-      <!-- //Add product image modal -->
-      <div
-        id="d-modal-addImages"
-        class="modals-admin d-flex d-align-center d-display-none"
+    <!-- //Variations modal -->
+    <div
+      id="d-modal-variations"
+      class="modals-admin d-flex d-align-center d-display-none"
+    >
+      <form
+        id="d-modal-variations-details"
+        class="modal-details d-flex-col d-gap-20"
       >
-        <div
-          id="d-modal-addImages-details"
-          class="modal-details d-flex-col d-gap-20 d-align-center"
-        >
-          <p id="img-input-error" class="error-msg d-display-none"></p>
-          <p
-            id="images-input-success"
-            class="d-display-none"
-            style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
-          ></p>
-          <span id="d-close-addImages" style="align-self: end"
-            ><svg
+        <p id="variations-input-error" class="error-msg d-display-none"></p>
+        <p
+          id="variations-input-success"
+          class="d-display-none"
+          style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
+        ></p>
+        <div style="align-self: end" class="d-flex d-align-center d-gap-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+            style="align-self: end"
+            id="exit-variation-modal"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
+            />
+          </svg>
+        </div>
+
+        <div class="d-gap-20">
+          <div class="d-flex-col d-gap-10">
+            <label for="variation-type"
+              >Choose type of variation display</label
+            >
+            <select
+              name=""
+              id="variation-display"
+              class="right-format"
+              style="width: 50%"
+            >
+              <option value=""></option>
+              <option value="image">image</option>
+              <option value="text">text</option>
+            </select>
+          </div>
+
+          <div class="d-flex-col d-gap-10">
+            <label id="variation-entryID" for="variation-entry"></label>
+            <input
+              type="text"
+              id="variation-entry"
+              class="right-format"
+              style="width: 0%"
+            />
+          </div>
+        </div>
+        <div class="d-flex-col d-gap-20">
+          <label for="variation-text">Description</label>
+          <div class="d-flex d-gap-10">
+            <input
+              type="text"
+              id="variation-text"
+              class="right-format"
+              style="width: 50%"
+            />
+          </div>
+          <button
+            id="d-add-variation-btn"
+            type="button"
+            class="d-flex d-align-center d-gap-10"
+          >
+            Add<svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-x-circle-fill"
+              class="bi bi-plus"
               viewBox="0 0 16 16"
             >
               <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
-              /></svg
-          ></span>
-
-          <label for="productImg">Paste Images URL</label>
-
-          <input
-            type="text"
-            id="productImg"
-            class="right-format"
-            placeholder="https://www."
-          />
-          <button id="add-product-img" type="button">Add</button>
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
+              ></path>
+            </svg>
+          </button>
         </div>
-      </div>
+        <button id="d-close-variations" type="button" style="align-self: end">
+          Done
+        </button>
+      </form>
+    </div>
 
-      <!-- //Add shipping locations modal -->
+    <!-- //Add product image modal -->
+    <div
+      id="d-modal-addImages"
+      class="modals-admin d-flex d-align-center d-display-none"
+    >
       <div
-        id="d-modal-shippingLoc"
-        class="modals-admin d-flex d-align-center d-display-none"
+        id="d-modal-addImages-details"
+        class="modal-details d-flex-col d-gap-20 d-align-center"
       >
-        <div
-          id="d-modal-shippingLoc-details"
-          class="modal-details d-flex-col d-gap-20 d-align-center"
-        >
-          <p id="ship-input-error" class="error-msg d-display-none"></p>
-          <p
-            id="shipping-input-success"
-            class="d-display-none"
-            style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
-          ></p>
-          <span id="d-close-shipping" style="align-self: end"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
-              /></svg
-          ></span>
+        <p id="img-input-error" class="error-msg d-display-none"></p>
+        <p
+          id="images-input-success"
+          class="d-display-none"
+          style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
+        ></p>
+        <span id="d-close-addImages" style="align-self: end"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
+            /></svg
+        ></span>
 
-          <label for="add-productShippingLoc">Enter Location</label>
+        <label for="productImg">Paste Images URL</label>
 
-          <input type="text" id="add-productShippingLoc" class="right-format" />
-          <button id="add-location" type="button">Add</button>
-        </div>
+        <input
+          type="text"
+          id="productImg"
+          class="right-format"
+          placeholder="https://www."
+        />
+        <button id="add-product-img" type="button">Add</button>
       </div>
+    </div>
+
+    <!-- //Add shipping locations modal -->
+    <div
+      id="d-modal-shippingLoc"
+      class="modals-admin d-flex d-align-center d-display-none"
+    >
+      <div
+        id="d-modal-shippingLoc-details"
+        class="modal-details d-flex-col d-gap-20 d-align-center"
+      >
+        <p id="ship-input-error" class="error-msg d-display-none"></p>
+        <p
+          id="shipping-input-success"
+          class="d-display-none"
+          style="color: #013e0ee5; font-size: 12px; margin: 0 0 9px 0"
+        ></p>
+        <span id="d-close-shipping" style="align-self: end"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"
+            /></svg
+        ></span>
+
+        <label for="add-productShippingLoc">Enter Location</label>
+
+        <input type="text" id="add-productShippingLoc" class="right-format" />
+        <button id="add-location" type="button">Add</button>
+      </div>
+    </div>
+
+    </div>
+        
+    
     </section>
 
     <script src="admin.js "></script>
