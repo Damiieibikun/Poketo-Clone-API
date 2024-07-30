@@ -127,14 +127,6 @@ $(document).ready(() => {
 
   })
 
-
-
-
-
-
-
-
-
   // show all categories
   $("#d-dashboard-categories").click(function() {
 
@@ -143,6 +135,8 @@ $(document).ready(() => {
       $('#d-dashboard-all').addClass('d-display-none')
       $('#d-category-list').removeClass('d-display-none')
       $('#d-headerCat').removeClass('d-display-none')
+      $('#d-dashboard-analytics').addClass('d-display-none')
+      $('#d-dashboard-landingPage').addClass('d-display-none')
       $('#d-category-list').empty()
       $.ajax({
           url: `${endPoint}/categories?merchant_id=${merchant.id}`,
@@ -377,6 +371,8 @@ $(document).ready(() => {
       $('#d-headerCat').addClass('d-display-none')
       $("#d-dashboard-all").removeClass("d-display-none");
       $("#d-dashboardTitle").text("All Products");
+      $('#d-dashboard-analytics').addClass('d-display-none')
+      $('#d-dashboard-landingPage').addClass('d-display-none')
 
       $.ajax({
           url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
@@ -1083,4 +1079,25 @@ $(document).ready(() => {
       })
   })
 
+  // number of users
+  let users = JSON.parse(localStorage.getItem('CurrentUser-cartItems')) || []
+  $('#totalNumOfUsers').text(users.length)
+
+
+  // number of orders
+  let numOfOrders = 0
+  let totalSales = 0
+  users.forEach(user =>{
+    if(user.cartItems.length > 0){
+      numOfOrders+= user.cartItems.length
+      // calculate total number of orders
+      user.cartItems.forEach(item => {
+        totalSales += item.price * item.quantity
+      })
+    }
+  })
+
+$('#d-total-orders').text(numOfOrders)
+$('#d-total-sales').text(`$${totalSales}`)
+ 
 });
