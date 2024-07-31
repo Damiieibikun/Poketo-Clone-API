@@ -571,3 +571,6 @@ td {
     align-items: center;
     align-self: center;
 }
+#d-dashboard-EachP-modal{
+  z-index: 60;
+}
