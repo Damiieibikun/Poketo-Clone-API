@@ -19,82 +19,157 @@ $(document).ready(() => {
     $("#d-addProducts-list").slideToggle();
   });
 
-  // get all products
+  // admin dash board
   $.ajax({
     url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
     method: "GET",
     success: function (res) {
-      let allProducts = res.data;
-      // console.log(allProducts)
-      let itemsInStock = 0;
-      // $("#d-dashboard-all-items").empty()
-      allProducts.forEach((item, i) => {
-        $("#d-dashboard-all-items").append(
-          `<div class="all-products-grid">
-                        <div>
-                            <span>${i + 1}</span>
-                        </div>
-                        <div class="d-flex d-gap-10">
-                            <div class="product-img" style="background-image: url(${
-                              item.image
-                            });"></div>
-                            <p class="product-name">${item.title}</p>
-                        </div>
-                        <div>
-                            <p class="product-price">$${item.price}</p>
-                        </div>
-                        <div style="justify-self: center;">
-                            <p class="product-qty">${item.quantity}</p>
-                        </div>
-                        
-                    </div>`
-        );
+      let mostLiked = {
+        num: 0,
+        item: null,
+      };
+      let count = 1;
+      res.data.forEach((item, i) => {
+        // get top ratings
+        $.ajax({
+          url: `${endPoint}/ratings?product_id=${item.id}`,
+          method: "GET",
+          success: function (rating) {
+            // console.log(rating)
+            if (rating.length > 0) {
+              let ratingCount = 0;
+              let avgrating = 0;
+              rating.forEach((val) => {
+                ratingCount += val.value;
+              });
+              avgrating = ratingCount / rating.length;
 
-        itemsInStock += item.quantity;
+              if (avgrating >= 4) {
+                // append top rating and category from here
+
+                let rateItem =
+                  $(`<div class="d-grid d-justify-between d-align-center topRatedItem-productsgrid" data-id=${item.id}>
+                  <span>${count}</span>
+                  <p>${item.title}</p>
+                  <img src=${item.image} alt="" width="40%">
+                  <div>
+                      <b>Average Rating</b>
+                      <div> <div class="stars">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#f6ede6"></path></svg>
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z"
+                                  fill="#f6ede6"></path>
+                              </svg>
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#f6ede6"></path></svg>
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z"
+                                      fill="#f6ede6"></path>
+                                  </svg>
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#f6ede6"></path></svg>
+                              <span>${avgrating}</span>
+                          </div>
+                          </div>
+                  </div>
+              </div>`);
+
+                let productRating = rateItem.find(".stars").find("svg");
+                if (avgrating > 0) {
+                  productRating.each((i, svg) => {
+                    $(svg).find("path").css("fill", "#ef4043");
+                    if (i === Math.round(avgrating) - 1) {
+                      return false;
+                    }
+                  });
+                }
+
+                $("#topRatedItem-products").append(rateItem);
+                count++;
+              }
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+
+        // get top likes
+        if (item.like > mostLiked.num) {
+          mostLiked.num = item.like;
+          mostLiked.item = item;
+        }
       });
+      // append top liked product and its category from here
 
-      // console.log(itemsInStock)
+      $("#d-dashboard-landingPage")
+        .append(`<div id="d-topLikedItem" class="d-dashboardAnalytics-items d-flex-col d-gap-10" data-id=${mostLiked.item.id}>
+          <div id=BS>Best Seller</div>
+            <h3 style = "text-align: center;">Most Liked Product <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-hearts" viewBox="0 0 16 16">
+<path fill-rule="evenodd" d="M4.931.481c1.627-1.671 5.692 1.254 0 5.015-5.692-3.76-1.626-6.686 0-5.015m6.84 1.794c1.084-1.114 3.795.836 0 3.343-3.795-2.507-1.084-4.457 0-3.343M7.84 7.642c2.71-2.786 9.486 2.09 0 8.358-9.487-6.268-2.71-11.144 0-8.358"/>
+</svg></h3>
+            <div style="background-image: url(${mostLiked.item.image});" class="dashboard-images">
+
+            </div>
+            <div style="align-self: center; text-align: center;">
+              <p>${mostLiked.item.title}</p>
+              
+             
+            </div>
+
+          </div>`);
     },
-    error: function (err) {},
-  });
-
-  //GET categories
-  $.ajax({
-    url: `${endPoint}/categories?merchant_id=${merchant.id}`,
-    method: "GET",
-    success: function (data) {
-      let allCat = data;
-      allCat.forEach((item) => {
-        $("#d-category-list")
-          .append(`<li class="d-dashboard-item d-category-item" data-id=${item.id}>
-            <a href="#" class="d-flex d-gap-10 d-align-center"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-              </svg>${item.name} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-              </svg>
-                <div class="d-display-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
-                      </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash2-fill" viewBox="0 0 16 16">
-                        <path d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
-                      </svg>
-                </div>
-            </a>
-        </li>`);
-
-        $("#selectCategory").append(
-          `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`
-        );
-      });
+    error: function (err) {
+      console.log(err);
     },
-    error: function (err) {},
   });
 
   // show all categories
   $("#d-dashboard-categories").click(function () {
-    $("#d-category-list").slideToggle();
+    //GET categories
+
+    $("#d-dashboard-all").addClass("d-display-none");
+    $("#d-category-list").removeClass("d-display-none");
+    $("#d-headerCat").removeClass("d-display-none");
+    $("#d-dashboard-analytics").addClass("d-display-none");
+    $("#d-dashboard-landingPage").addClass("d-display-none");
+    $("#d-category-list").empty();
+    $.ajax({
+      url: `${endPoint}/categories?merchant_id=${merchant.id}`,
+      method: "GET",
+      success: function (data) {
+        let allCat = data;
+        allCat.forEach((item) => {
+          $("#d-category-list")
+            .append(`<div class="d-dashboard-item d-category-item d-flex-col d-justify-center d-align-center" data-id=${item.id}>
+          
+          <div class="categoryImage-d" style="background-image: url(${item.image});">
+          
+          </div>
+          <div class="d-flex d-gap-10 d-align-center">
+          <p href="#" class="d-flex d-gap-10 d-align-center"> ${item.name} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+            </svg>
+            </p>
+              <div class="d-display-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
+                    </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash2-fill" viewBox="0 0 16 16">
+                      <path d="M2.037 3.225A.7.7 0 0 1 2 3c0-1.105 2.686-2 6-2s6 .895 6 2a.7.7 0 0 1-.037.225l-1.684 10.104A2 2 0 0 1 10.305 15H5.694a2 2 0 0 1-1.973-1.671zm9.89-.69C10.966 2.214 9.578 2 8 2c-1.58 0-2.968.215-3.926.534-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466-.18-.14-.498-.307-.975-.466z"/>
+                    </svg>
+              </div>
+          
+          </div>
+      </div>`);
+
+          $("#selectCategory").append(
+            `<option value="${item.name}" data-id=${item.id}>${item.name}</option>`
+          );
+        });
+      },
+      error: function (err) {
+        console.log(err);
+      },
+    });
   });
 
   // add styles to selected items
@@ -112,7 +187,7 @@ $(document).ready(() => {
 
   // show edit and delete categories
   $(document).on("click", ".bi-three-dots", function () {
-    $(this).next().toggle();
+    $(this).parent().next().toggle();
   });
 
   // show edit admin modal
@@ -130,7 +205,7 @@ $(document).ready(() => {
     $("#d-modal-cat").removeClass("d-display-none");
   });
 
-  // close categry
+  // close category
 
   $("#d-close-cat").click(function () {
     $("#d-modal-cat").addClass("d-display-none");
@@ -204,7 +279,7 @@ $(document).ready(() => {
   $(document).on("click", ".bi-pen-fill", function () {
     $("#d-modal-cat").removeClass("d-display-none");
     $("#create-cat").text("Edit Category");
-    let catID = $(this).parents("li").data("id");
+    let catID = $(this).parents(".d-category-item").data("id");
     // $('#categoryImage').val()
 
     $("#d-admin-form").unbind();
@@ -238,7 +313,7 @@ $(document).ready(() => {
   // delete a category
 
   $(document).on("click", ".bi-trash2-fill", function () {
-    let catID = $(this).parents("li").data("id");
+    let catID = $(this).parents(".d-category-item").data("id");
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
       method: "GET",
@@ -286,45 +361,54 @@ $(document).ready(() => {
   // Get all product for a particular merchant
 
   $("#d-all-products-admin").click(function () {
+    $("#d-category-list").addClass("d-display-none");
+    $("#d-headerCat").addClass("d-display-none");
     $("#d-dashboard-all").removeClass("d-display-none");
     $("#d-dashboardTitle").text("All Products");
+    $("#d-dashboard-analytics").addClass("d-display-none");
+    $("#d-dashboard-landingPage").addClass("d-display-none");
 
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
       method: "GET",
       success: function (res) {
         let allProducts = res.data;
-        // console.log(allProducts)
-        let itemsInStock = 0;
         $("#d-dashboard-all-items").empty();
         allProducts.forEach((item, i) => {
           $("#d-dashboard-all-items").append(
-            `<div class="all-products-grid">
-                            <div>
-                                <span>${i + 1}</span>
-                            </div>
-                            <div class="d-flex d-gap-10">
-                                <div class="product-img" style="background-image: url(${
-                                  item.image
-                                });"></div>
-                                <p class="product-name">${item.title}</p>
-                            </div>
-                            <div>
-                                <p class="product-price">$${item.price}</p>
-                            </div>
-                            <div style="justify-self: center;">
-                                <p class="product-qty">${item.quantity}</p>
-                            </div>
-                            
-                        </div>`
+            `<div class="all-products-grid d-align-center" data-id=${item.id}>
+                          <div>
+                              <span>${i + 1}</span>
+                          </div>
+                          <div class="d-flex d-gap-10">
+                              <div class="product-img" style="background-image: url(${
+                                item.image
+                              });"></div>
+                              <p class="product-name">${item.title}</p>
+                          </div>
+                          <div>
+                              <p class="product-price">$${item.price}</p>
+                          </div>
+                          <div style="justify-self: center;">
+                              <p class="product-qty">${item.quantity}</p>
+                          </div>
+
+                          <div class="d-flex d-gap-10">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil d-editProduct" viewBox="0 0 16 16">
+<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+</svg>                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill d-trashProduct" viewBox="0 0 16 16">
+<path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+</svg>
+                          </div>
+                          
+                          
+                      </div>`
           );
-
-          itemsInStock += item.quantity;
         });
-
-        // console.log(itemsInStock)
       },
-      error: function (err) {},
+      error: function (err) {
+        console.log(err);
+      },
     });
   });
 
@@ -332,42 +416,50 @@ $(document).ready(() => {
 
   $(document).on("click", ".d-category-item", function () {
     let catID = $(this).data("id");
-    $("#d-dashboard-all").removeClass("d-display-none");
-    $("#d-dashboardTitle").text(`${$(this).find("a").text()}`);
+    $("#d-dashboard-Scat").removeClass("d-display-none");
+    $("#d-dashboardCatTitle").text(`${$(this).find("p").text()}`);
+    $("#d-dashboard-Scat-modal").removeClass("d-display-none");
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
       method: "GET",
       success: function (res) {
-        $("#d-dashboard-all-items").empty();
+        $("#d-dashboard-Scat-items").empty();
         // console.log(res.data)
         let allProducts = res.data;
         if (allProducts.length === 0) {
           $(".all-products-grid").hide();
-          $("#d-dashboard-all-items").html(
+          $("#d-dashboard-Scat-items").html(
             `<h1>No items in this category</h1>`
           );
         } else {
           $(".all-products-grid").show();
           allProducts.forEach((item, i) => {
-            $("#d-dashboard-all-items").append(
-              `<div class="all-products-grid">
-                                <div>
-                                    <span>${i + 1}</span>
-                                </div>
-                                <div class="d-flex d-gap-10">
-                                    <div class="product-img" style="background-image: url(${
-                                      item.image
-                                    });"></div>
-                                    <p class="product-name">${item.title}</p>
-                                </div>
-                                <div>
-                                    <p class="product-price">$${item.price}</p>
-                                </div>
-                                <div style="justify-self: center;">
-                                    <p class="product-qty">${item.quantity}</p>
-                                </div>
-                                
-                            </div>`
+            $("#d-dashboard-Scat-items").append(
+              `<div class="all-products-grid d-align-center" data-id=${item.id}>
+                              <div>
+                                  <span>${i + 1}</span>
+                              </div>
+                              <div class="d-flex d-gap-10">
+                                  <div class="product-img" style="background-image: url(${
+                                    item.image
+                                  });"></div>
+                                  <p class="product-name">${item.title}</p>
+                              </div>
+                              <div>
+                                  <p class="product-price">$${item.price}</p>
+                              </div>
+                              <div style="justify-self: center;">
+                                  <p class="product-qty">${item.quantity}</p>
+                              </div>
+                               <div class="d-flex d-gap-10">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil d-editProduct" viewBox="0 0 16 16">
+<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+</svg>                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill d-trashProduct" viewBox="0 0 16 16">
+<path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+</svg>
+                          </div>
+                              
+                          </div>`
             );
           });
         }
@@ -376,6 +468,23 @@ $(document).ready(() => {
         console.log(err);
       },
     });
+  });
+
+  // close categories modal
+
+  $(document).on("click", "#d-closeCatFilter", function () {
+    $("#d-dashboard-Scat-modal").addClass("d-display-none");
+  });
+
+  // close each product details modal
+
+  $(document).on("click", "#d-closeEachP ", function () {
+    $("#d-dashboard-EachP-modal").addClass("d-display-none");
+  });
+
+  // close show all users modal
+  $(document).on("click", "#d-closeEachU", function () {
+    $("#d-dashboard-EachU-modal").addClass("d-display-none");
   });
 
   //open add images modal
@@ -709,6 +818,7 @@ $(document).ready(() => {
   let date = $("#productDiscountEx");
   date.attr("min", `${today}`);
 
+  // posting a product
   $("#d-product-form").submit(function (e) {
     e.preventDefault();
     console.log(validateProducts());
@@ -795,6 +905,118 @@ $(document).ready(() => {
     }
   });
 
+  // edit a product
+  $(document).on("click", ".d-editProduct", function () {
+    let productID = $(this).parent().parent().data("id");
+    $("#d-modal-chooseCat").removeClass("d-display-none");
+    $("#d-chooseCat-form").unbind();
+    $("#d-chooseCat-form").submit(function (e) {
+      e.preventDefault();
+      if ($("#selectCategory").val() === "") {
+        $("#select-input-error").removeClass("d-display-none");
+        $("#selectCategory").addClass("wrong-format");
+        $("#select-input-error").text("Select a category");
+      } else {
+        $("#select-input-error").addClass("d-display-none");
+        $("#selectCategory").removeClass("wrong-format");
+        let catId = $("#selectCategory").children(":selected").data("id");
+        localStorage.setItem("ChosenCategory-product", catId);
+        $("#d-modal-product").removeClass("d-display-none");
+        $("#d-modal-chooseCat").addClass("d-display-none");
+        $(this)[0].reset();
+      }
+    });
+
+    $("#d-product-form").unbind();
+    $("#d-product-form").submit(function (e) {
+      e.preventDefault();
+      console.log(validateProducts());
+      if (validateProducts()) {
+        let chosenCatId = localStorage.getItem("ChosenCategory-product");
+        let title = $("#productTitle").val();
+        let desc = $("#productDesc").val();
+        let price = $("#productPrice").val();
+        let brand = $("#productBrand").val();
+        let quantity = $("#productQTY").val();
+        // get array for images
+        let images = JSON.parse(localStorage.getItem("imagesArr")) || [];
+        let currency = $("#productCurrency").val();
+        let minQty = $("#min-qty").val();
+        let maxQty = $("#max-qty").val();
+        let discount = $("#productDiscount").val();
+        let discountExp = $("#productDiscountEx").val();
+        let refund = $("#productRefund")[0].checked;
+        let discountAvail = $("#productDiscounted")[0].checked;
+        let shiping = $("#productShipment")[0].checked;
+        let variations = $("#productVariations")[0].checked;
+        // get shipping locations
+        let shippingLoc =
+          JSON.parse(localStorage.getItem("locationArray")) || [];
+        let attr = [];
+        // get variations info
+        let variationInfo =
+          JSON.parse(localStorage.getItem("createdVariations")) || [];
+
+        let productData = {
+          title: title,
+          descp: desc,
+          price: price,
+          brand: brand,
+          quantity: quantity,
+          images: images,
+          currency: currency,
+          min_qty: minQty,
+          max_qty: maxQty,
+          discount: discount,
+          discount_expiration: discountExp,
+          has_refund_policy: refund,
+          has_discount: discountAvail,
+          has_shipment: shiping,
+          has_variation: variations,
+          shipping_locations: shippingLoc,
+          attrib: attr,
+          category_id: chosenCatId,
+          merchant_id: merchant.id,
+        };
+
+        if (variations) {
+          productData.variations = variationInfo;
+        }
+
+        console.log(productData);
+
+        $.ajax({
+          url: `${endPoint}/products/${productID}`,
+          data: productData,
+          method: "PUT",
+          success: function (res) {
+            console.log(res);
+            location.reload(true);
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+
+        // clear images array
+        localStorage.removeItem("imagesArr");
+
+        // clear contents array
+        localStorage.removeItem("Contents-Array");
+        // clear variations local storage
+        localStorage.removeItem("createdVariations");
+        // clear locations
+        localStorage.removeItem("locationArray");
+        // clear category id
+        localStorage.removeItem("ChosenCategory-product");
+        // reset form
+
+        $(this)[0].reset();
+        // location.reload(true)
+      }
+    });
+  });
+
   // open shipping locations
   $("#add-shiping-location").click(function () {
     $("#d-modal-shippingLoc").removeClass("d-display-none");
@@ -843,7 +1065,339 @@ $(document).ready(() => {
     },
   });
 
-  $("#logout-admin").click(function () {
-    // localStorage.removeItem("Merchant-Poketo");
+  // delete a product
+  $(document).on("click", ".d-trashProduct", function () {
+    let productID = $(this).parent().parent().data("id");
+    $.ajax({
+      url: `${endPoint}/products/${productID}`,
+      method: "DELETE",
+      success: function (res) {
+        console.log(res);
+        alert("Product deleted successfully!");
+      },
+      error: function (err) {
+        console.log(err);
+      },
+    });
+  });
+
+  // number of users
+  let users = JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
+  $("#totalNumOfUsers").text(users.length);
+
+  // number of orders and sales
+  let numOfOrders = 0;
+  let totalSales = 0;
+  users.forEach((user) => {
+    if (user.cartItems.length > 0) {
+      numOfOrders += user.cartItems.length;
+      // calculate total number of orders
+      user.cartItems.forEach((item) => {
+        totalSales += item.price * item.quantity;
+      });
+    }
+  });
+
+  $("#d-total-orders").text(numOfOrders);
+  $("#d-total-sales").text(`$${totalSales}`);
+
+  // display product details
+
+  $(document).on(
+    "click",
+    ".all-products-grid, #d-topLikedItem, .topRatedItem-productsgrid",
+    function () {
+      $("#d-dashboard-EachP-modal").removeClass("d-display-none");
+      $("#productInfo-adminP-reviews").empty();
+      let productID = $(this).data("id");
+      console.log(productID);
+
+      // get item info
+
+      $.ajax({
+        url: `${endPoint}/products/${productID}`,
+        method: "GET",
+        success: function (res) {
+          // console.log(res)
+          $("#productInfo-adminP-title").text(res.title);
+          $("#productInfo-adminP-img").css(
+            "background-image",
+            `url(${res.images[0]})`
+          );
+          $("#productInfo-adminP-likes").text(`${res.like} likes`);
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+
+      // get item rating
+      $.ajax({
+        url: `${endPoint}/ratings?product_id=${productID}`,
+        method: "GET",
+        success: function (rating) {
+          // console.log(rating)
+          let ratingCount = 0;
+          let avgrating = 0;
+          if (rating.length > 0) {
+            rating.forEach((val) => {
+              ratingCount += val.value;
+            });
+            avgrating = ratingCount / rating.length;
+          }
+          $("#productInfo-adminP-rating").text(` Avg. ${avgrating}`);
+          // console.log(avgrating)
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+
+      // mine
+      // $.ajax({
+      //   url: `${endPoint}/reviews?product_id=${productID}`,
+      //   method: "GET",
+      //   success: function (res) {
+      //     res.forEach((review) => {
+      //       $.ajax({
+      //         url: `${endPoint}/ratings?product_id=${productID}`,
+      //         method: "GET",
+      //         success: function (rating) {
+      //           rating.forEach((item) => {
+      //             let productReview = null
+      //             let reviewIncluded = false
+      //             if (item.user.id === review.user.id) {
+      //               reviewIncluded = true
+      //             productReview = $(`<div>
+      //     <b>${review.user.first_name}. ${review.user.last_name[0]}
+      //       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+      //         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      //       </svg>
+      //     </b>
+      //     <div id='d-item-review-stars'>
+      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //       </svg>
+      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //       </svg>
+      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //       </svg>
+      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //       </svg>
+      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //       </svg>
+      //     </div>
+      //     <p>${review.text}</p>
+      // </div>
+      // `);
+      //                 // Fill the stars based on the rating
+      //                 let productRating = productReview
+      //                 .find("#d-item-review-stars")
+      //                 .find("svg");
+      //                 if (item.value > 0) {
+      //                 productRating.each((i, svg) => {
+      //                   $(svg).find("path").css("fill", "#ef4043");
+      //                   if (i === Math.round(item.value) - 1) {
+      //                     return false;
+      //                   }
+      //                 });
+      //                 }
+      //                 $("#productInfo-adminP-reviews").append(productReview);
+      //             }
+      //             if(!reviewIncluded && item.user.id !== review.user.id){
+      //               productReview = $(`<div>
+      //                 <b>${item.user.first_name}. ${item.user.last_name[0]}
+      //                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+      //                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      //                   </svg>
+      //                 </b>
+      //                 <div id='d-item-review-stars'>
+      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //                   </svg>
+      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //                   </svg>
+      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //                   </svg>
+      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //                   </svg>
+      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+      //                   </svg>
+      //                 </div>
+      //                 <p>${item.text}</p>
+      //             </div>
+      //             `);
+      //              // Fill the stars based on the rating
+      //              let productRating = productReview
+      //              .find("#d-item-review-stars")
+      //              .find("svg");
+      //             if (item.value > 0) {
+      //              productRating.each((i, svg) => {
+      //                $(svg).find("path").css("fill", "#ef4043");
+      //                if (i === Math.round(item.value) - 1) {
+      //                  return false;
+      //                }
+      //              });
+      //             }
+      //             $("#productInfo-adminP-reviews").append(productReview);
+      //             }
+
+      //           });
+      //         },
+      //         error: function (err) {
+      //           console.log(err);
+      //         },
+      //       });
+      //     });
+      //   },
+      //   error: function (err) {
+      //     console.log(err);
+      //   },
+      // });
+
+      // get reviews and ratings
+      $.ajax({
+        url: `${endPoint}/reviews?product_id=${productID}`,
+        method: "GET",
+        success: function (reviews) {
+          $.ajax({
+            url: `${endPoint}/ratings?product_id=${productID}`,
+            method: "GET",
+            success: function (ratings) {
+              const usersWithReviews = new Set(
+                reviews.map((review) => review.user.id)
+              );
+              const usersWithRatings = new Set(
+                ratings.map((rating) => rating.user.id)
+              );
+
+              // Display reviews with corresponding ratings
+              reviews.forEach((review) => {
+                const rating = ratings.find(
+                  (item) => item.user.id === review.user.id
+                );
+
+                let productReview = $(`<div>
+            <b>${review.user.first_name}. ${review.user.last_name[0]} 
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              </svg>
+            </b>
+            <div id='d-item-review-stars'>
+              ${Array.from({ length: 5 })
+                .map(
+                  (_, i) => `
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                </svg>
+              `
+                )
+                .join("")}
+            </div>
+            <p>${review.text}</p>
+          </div>`);
+
+                if (rating) {
+                  let productRating = productReview
+                    .find("#d-item-review-stars")
+                    .find("svg");
+                  productRating.each((i, svg) => {
+                    if (i < rating.value) {
+                      $(svg).find("path").css("fill", "#ef4043");
+                    }
+                  });
+                }
+
+                $("#productInfo-adminP-reviews").append(productReview);
+              });
+
+              // Display ratings without corresponding reviews
+              ratings.forEach((rating) => {
+                if (!usersWithReviews.has(rating.user.id)) {
+                  let productRating = $(`<div>
+              <b>${rating.user.first_name}. ${rating.user.last_name[0]} 
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+              </b>
+              <div id='d-item-review-stars'>
+                ${Array.from({ length: 5 })
+                  .map(
+                    (_, i) => `
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                  </svg>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>`);
+
+                  let productRatingStars = productRating
+                    .find("#d-item-review-stars")
+                    .find("svg");
+                  productRatingStars.each((i, svg) => {
+                    if (i < rating.value) {
+                      $(svg).find("path").css("fill", "#ef4043");
+                    }
+                  });
+
+                  $("#productInfo-adminP-reviews").append(productRating);
+                }
+              });
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    }
+  );
+
+  $(document).on("click", "#d-all-users-admin", function () {
+    $("#d-dashboard-EachU-modal").removeClass("d-display-none");
+  });
+
+  // get all users
+  $.ajax({
+    url: `${endPoint}/users`,
+    method: "GET",
+    success: function (res) {
+      let users =
+        JSON.parse(localStorage.getItem("CurrentUser-cartItems")) || [];
+      if (users !== null) {
+        let count = 0;
+        users.forEach((user) => {
+          count++;
+          let userDetails = res.find((eachUser) => {
+            return eachUser._id === user.user_id;
+          });
+          $("#productInfo-adminU-mdetails").append(
+            `<tr>
+        <td>${count}</td>
+        <td class="name">${userDetails.first_name} ${userDetails.last_name}</td>
+        <td>${userDetails.phone}</td>
+        <td>${userDetails.email}</td>
+      </tr>`
+          );
+        });
+
+      }
+    },
+    error: function (err) {
+      console.log(err);
+    },
   });
 });
