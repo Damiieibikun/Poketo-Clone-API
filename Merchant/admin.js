@@ -42,7 +42,7 @@ $(document).ready(() => {
               rating.forEach((val) => {
                 ratingCount += val.value;
               });
-              avgrating = ratingCount / rating.length;
+              avgrating = (ratingCount / rating.length).toFixed(1);
 
               if (avgrating >= 4) {
                 // append top rating and category from here
@@ -186,7 +186,8 @@ $(document).ready(() => {
   });
 
   // show edit and delete categories
-  $(document).on("click", ".bi-three-dots", function () {
+  $(document).on("click", ".bi-three-dots", function (e) {
+    e.stopPropagation()
     $(this).parent().next().toggle();
   });
 
@@ -276,7 +277,8 @@ $(document).ready(() => {
 
   //edit a category
 
-  $(document).on("click", ".bi-pen-fill", function () {
+  $(document).on("click", ".bi-pen-fill", function(event) {
+    event.stopPropagation();
     $("#d-modal-cat").removeClass("d-display-none");
     $("#create-cat").text("Edit Category");
     let catID = $(this).parents(".d-category-item").data("id");
@@ -287,6 +289,7 @@ $(document).ready(() => {
       e.preventDefault();
 
       if (validateCategories()) {
+        $('#add-input-error').addClass('d-display-none')
         let imageCat = $("#categoryImage").val();
         let catName = $("#categoryName").val();
 
@@ -312,7 +315,8 @@ $(document).ready(() => {
 
   // delete a category
 
-  $(document).on("click", ".bi-trash2-fill", function () {
+  $(document).on("click", ".bi-trash2-fill", function (e) {
+    e.stopPropagation()
     let catID = $(this).parents(".d-category-item").data("id");
     $.ajax({
       url: `${endPoint}/products?merchant_id=${merchant.id}&category_id=${catID}`,
@@ -380,7 +384,7 @@ $(document).ready(() => {
                           <div>
                               <span>${i + 1}</span>
                           </div>
-                          <div class="d-flex d-gap-10">
+                          <div>
                               <div class="product-img" style="background-image: url(${
                                 item.image
                               });"></div>
@@ -439,7 +443,7 @@ $(document).ready(() => {
                               <div>
                                   <span>${i + 1}</span>
                               </div>
-                              <div class="d-flex d-gap-10">
+                              <div>
                                   <div class="product-img" style="background-image: url(${
                                     item.image
                                   });"></div>
@@ -1143,7 +1147,7 @@ $(document).ready(() => {
             rating.forEach((val) => {
               ratingCount += val.value;
             });
-            avgrating = ratingCount / rating.length;
+            avgrating = (ratingCount / rating.length).toFixed(1);
           }
           $("#productInfo-adminP-rating").text(` Avg. ${avgrating}`);
           // console.log(avgrating)
@@ -1153,177 +1157,35 @@ $(document).ready(() => {
         },
       });
 
-      // mine
-      // $.ajax({
-      //   url: `${endPoint}/reviews?product_id=${productID}`,
-      //   method: "GET",
-      //   success: function (res) {
-      //     res.forEach((review) => {
-      //       $.ajax({
-      //         url: `${endPoint}/ratings?product_id=${productID}`,
-      //         method: "GET",
-      //         success: function (rating) {
-      //           rating.forEach((item) => {
-      //             let productReview = null
-      //             let reviewIncluded = false
-      //             if (item.user.id === review.user.id) {
-      //               reviewIncluded = true
-      //             productReview = $(`<div>
-      //     <b>${review.user.first_name}. ${review.user.last_name[0]}
-      //       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-      //         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-      //       </svg>
-      //     </b>
-      //     <div id='d-item-review-stars'>
-      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //       </svg>
-      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //       </svg>
-      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //       </svg>
-      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //       </svg>
-      //       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //       </svg>
-      //     </div>
-      //     <p>${review.text}</p>
-      // </div>
-      // `);
-      //                 // Fill the stars based on the rating
-      //                 let productRating = productReview
-      //                 .find("#d-item-review-stars")
-      //                 .find("svg");
-      //                 if (item.value > 0) {
-      //                 productRating.each((i, svg) => {
-      //                   $(svg).find("path").css("fill", "#ef4043");
-      //                   if (i === Math.round(item.value) - 1) {
-      //                     return false;
-      //                   }
-      //                 });
-      //                 }
-      //                 $("#productInfo-adminP-reviews").append(productReview);
-      //             }
-      //             if(!reviewIncluded && item.user.id !== review.user.id){
-      //               productReview = $(`<div>
-      //                 <b>${item.user.first_name}. ${item.user.last_name[0]}
-      //                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-      //                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-      //                   </svg>
-      //                 </b>
-      //                 <div id='d-item-review-stars'>
-      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //                   </svg>
-      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //                   </svg>
-      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //                   </svg>
-      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //                   </svg>
-      //                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-      //                   </svg>
-      //                 </div>
-      //                 <p>${item.text}</p>
-      //             </div>
-      //             `);
-      //              // Fill the stars based on the rating
-      //              let productRating = productReview
-      //              .find("#d-item-review-stars")
-      //              .find("svg");
-      //             if (item.value > 0) {
-      //              productRating.each((i, svg) => {
-      //                $(svg).find("path").css("fill", "#ef4043");
-      //                if (i === Math.round(item.value) - 1) {
-      //                  return false;
-      //                }
-      //              });
-      //             }
-      //             $("#productInfo-adminP-reviews").append(productReview);
-      //             }
-
-      //           });
-      //         },
-      //         error: function (err) {
-      //           console.log(err);
-      //         },
-      //       });
-      //     });
-      //   },
-      //   error: function (err) {
-      //     console.log(err);
-      //   },
-      // });
-
       // get reviews and ratings
       $.ajax({
         url: `${endPoint}/reviews?product_id=${productID}`,
         method: "GET",
         success: function (reviews) {
-          $.ajax({
-            url: `${endPoint}/ratings?product_id=${productID}`,
-            method: "GET",
-            success: function (ratings) {
-              const usersWithReviews = new Set(
-                reviews.map((review) => review.user.id)
-              );
-              const usersWithRatings = new Set(
-                ratings.map((rating) => rating.user.id)
-              );
-
-              // Display reviews with corresponding ratings
-              reviews.forEach((review) => {
-                const rating = ratings.find(
-                  (item) => item.user.id === review.user.id
+          if(reviews.length === 0){
+            $('#productInfo-adminP-reviews').append('No reviews for this product')
+           
+          }
+          else{
+            $.ajax({
+              url: `${endPoint}/ratings?product_id=${productID}`,
+              method: "GET",
+              success: function (ratings) {
+                const usersWithReviews = new Set(
+                  reviews.map((review) => review.user.id)
                 );
-
-                let productReview = $(`<div>
-            <b>${review.user.first_name}. ${review.user.last_name[0]} 
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-              </svg>
-            </b>
-            <div id='d-item-review-stars'>
-              ${Array.from({ length: 5 })
-                .map(
-                  (_, i) => `
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
-                </svg>
-              `
-                )
-                .join("")}
-            </div>
-            <p>${review.text}</p>
-          </div>`);
-
-                if (rating) {
-                  let productRating = productReview
-                    .find("#d-item-review-stars")
-                    .find("svg");
-                  productRating.each((i, svg) => {
-                    if (i < rating.value) {
-                      $(svg).find("path").css("fill", "#ef4043");
-                    }
-                  });
-                }
-
-                $("#productInfo-adminP-reviews").append(productReview);
-              });
-
-              // Display ratings without corresponding reviews
-              ratings.forEach((rating) => {
-                if (!usersWithReviews.has(rating.user.id)) {
-                  let productRating = $(`<div>
-              <b>${rating.user.first_name}. ${rating.user.last_name[0]} 
+                const usersWithRatings = new Set(
+                  ratings.map((rating) => rating.user.id)
+                );
+  
+                // Display reviews with corresponding ratings
+                reviews.forEach((review) => {
+                  const rating = ratings.find(
+                    (item) => item.user.id === review.user.id
+                  );
+  
+                  let productReview = $(`<div>
+              <b>${review.user.first_name}. ${review.user.last_name[0]} 
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                 </svg>
@@ -1339,25 +1201,64 @@ $(document).ready(() => {
                   )
                   .join("")}
               </div>
+              <p>${review.text}</p>
             </div>`);
-
-                  let productRatingStars = productRating
-                    .find("#d-item-review-stars")
-                    .find("svg");
-                  productRatingStars.each((i, svg) => {
-                    if (i < rating.value) {
-                      $(svg).find("path").css("fill", "#ef4043");
-                    }
-                  });
-
-                  $("#productInfo-adminP-reviews").append(productRating);
-                }
-              });
-            },
-            error: function (err) {
-              console.log(err);
-            },
-          });
+  
+                  if (rating) {
+                    let productRating = productReview
+                      .find("#d-item-review-stars")
+                      .find("svg");
+                    productRating.each((i, svg) => {
+                      if (i < rating.value) {
+                        $(svg).find("path").css("fill", "#ef4043");
+                      }
+                    });
+                  }
+  
+                  $("#productInfo-adminP-reviews").append(productReview);
+                });
+  
+                // Display ratings without corresponding reviews
+                ratings.forEach((rating) => {
+                  if (!usersWithReviews.has(rating.user.id)) {
+                    let productRating = $(`<div>
+                <b>${rating.user.first_name}. ${rating.user.last_name[0]} 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#0085ca" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                  </svg>
+                </b>
+                <div id='d-item-review-stars'>
+                  ${Array.from({ length: 5 })
+                    .map(
+                      (_, i) => `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.99998 13.0852L3.28889 15.4762C3.18255 15.5302 3.05189 15.4891 2.99706 15.3844C2.97577 15.3438 2.96832 15.2975 2.97581 15.2523L3.83017 10.103L0.064192 6.43136C-0.0208179 6.34848 -0.0214783 6.21346 0.062717 6.12978C0.0954128 6.09728 0.137856 6.07599 0.183781 6.06906L5.4229 5.27766L7.80648 0.617401C7.86029 0.512205 7.99054 0.469862 8.09741 0.522826C8.13891 0.543393 8.17259 0.57655 8.19349 0.617401L10.5771 5.27766L15.8162 6.06906C15.9345 6.08692 16.0156 6.19578 15.9975 6.31219C15.9904 6.3574 15.9688 6.39918 15.9358 6.43136L12.1698 10.103L13.0242 15.2523C13.0434 15.3686 12.9634 15.4782 12.8453 15.4972C12.7994 15.5045 12.7524 15.4972 12.7111 15.4762L7.99998 13.0852Z" fill="#dedede"></path>
+                    </svg>
+                  `
+                    )
+                    .join("")}
+                </div>
+              </div>`);
+  
+                    let productRatingStars = productRating
+                      .find("#d-item-review-stars")
+                      .find("svg");
+                    productRatingStars.each((i, svg) => {
+                      if (i < rating.value) {
+                        $(svg).find("path").css("fill", "#ef4043");
+                      }
+                    });
+  
+                    $("#productInfo-adminP-reviews").append(productRating);
+                  }
+                });
+              },
+              error: function (err) {
+                console.log(err);
+              },
+            });
+          }
+         
         },
         error: function (err) {
           console.log(err);

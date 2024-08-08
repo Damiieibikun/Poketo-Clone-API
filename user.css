@@ -47,42 +47,42 @@
     font-size: 16px;
 }
 
-#d-userUpdatebtns button{
+#d-userUpdatebtns button, #d-deleteReview-details button{
     font-size: 14px;
     border: none;
     padding: 10px;
-    border-radius: 49px;
+    border-radius: 5px;
     min-width: 80px;
     font-family: sofia proRegular;
     background-color: #0085CA;
     color: white;
-    -webkit-border-radius: 49px;
-    -moz-border-radius: 49px;
-    -ms-border-radius: 49px;
-    -o-border-radius: 49px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
-#d-userUpdatebtns button:hover{
+#d-userUpdatebtns button:hover, #d-deleteReview-details button:hover{
     cursor: pointer;
 }
 
 .d-likedProductIMG{
-   
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 70px;
     width: 70px;
+    position: relative;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    -o-border-radius:3px;
 }
 
 .customerReview{
     margin: 0;
 }
-
-.d-customer-reviewItems-grid{
-    grid-template-columns: repeat(3,1fr);
-}
-
 
 
 #d-createReview-Modal, #d-deleteReview-Modal{
@@ -172,6 +172,48 @@
     cursor: pointer;
 }
 
-.d-listOrders{
+.d-listOrders, .d-customer-reviewItems-grid{
     grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+}
+
+#user-order-historyInfo, #user-order-reviews, #user-order-likes{
+    background-color: #E5F6FF;
+    border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+  }
+  #user-order-reviews{
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+  .OrderQ{
+    position: absolute;
+    background-color: #656C70;
+    color: white;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    right: -5px;
+    top: -10px;
+
+}
+
+#divTotal{
+    background-color: #E5F6FF;
+    width: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-bottom: 10px;
+    padding-top: 30px;
+    font-size: 17px;
 }
