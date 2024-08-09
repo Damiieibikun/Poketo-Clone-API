@@ -451,7 +451,7 @@ select#variation-type {
 
 #d-category-list > div {
   height: 280px;
-  width: 240px;
+  width: 220px;
   background-color: white;
 }
 
@@ -518,7 +518,7 @@ select#variation-type {
 }
 
 #d-DashboardSum {
-  width: 95%;
+  width: 90%;
   margin: auto;
   margin-top: 30px;
 }
@@ -526,8 +526,12 @@ select#variation-type {
 #admin-main-div {
   position: fixed;
   top: 5px;
-  right: 50px;
+  right: 10px;
   z-index: 20;
+}
+
+#admin-main-div p{
+  margin: 0;
 }
 
 #d-dashboard-landingPage {
