@@ -2,11 +2,11 @@ $(document).ready(() => {
   localStorage.removeItem("ProductV");
   //get 4 items
   const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
-  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
+  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
   let loggedUser = JSON.parse(localStorage.getItem("LoggedUser"));
 
   $.ajax({
-    url: `${endPoint}/products?merchant_id=${merchant.id}`,
+    url: `${endPoint}/products?merchant_id=${merchant}`,
     method: "GET",
     success: function (resp) {
       resp.data.forEach((res) => {
@@ -297,6 +297,7 @@ $(document).ready(() => {
 
             // calculate average rating
             avgRating = (totalRating / rating.length).toFixed(1);
+            console.log(avgRating)
           }
 
           let showStars = "flex";
@@ -467,7 +468,7 @@ $(document).ready(() => {
           let isLiked = false;
 
           $.ajax({
-            url: `${endPoint}/users/likes?user_id=${loggedUser.id}`,
+            url: `${endPoint}/users/likes?user_id=${loggedUser?.id}`,
             method: "GET",
             success: function (res) {
               res.forEach((element) => {

@@ -1,7 +1,8 @@
 $(document).ready(function () {
   localStorage.removeItem("ProductV");
   const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
-  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
+  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
+
 
   //slick functions
   $(".slider-nav1").slick({
@@ -71,7 +72,7 @@ $(document).ready(function () {
 
   // get all products posted by merchant
   $.ajax({
-    url: `${endPoint}/products?merchant_id=${merchant.id}&limit=20`,
+    url: `${endPoint}/products?merchant_id=${merchant}&limit=20`,
     method: "GET",
     success: function (resp) {
       resp.data.forEach((res) => {

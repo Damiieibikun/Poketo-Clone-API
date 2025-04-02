@@ -1,7 +1,8 @@
 $(document).ready(() => {
   // get relevent info
   const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
-  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"));
+  let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
+
   let currentUser = JSON.parse(localStorage.getItem("LoggedUser"));
 
   // fixed nav functionality
@@ -114,7 +115,7 @@ $(document).ready(() => {
     $("#d-account-logout").hide();
     // populate cart with some items
     $.ajax({
-      url: `${endPoint}/products?merchant_id=${merchant.id}`,
+      url: `${endPoint}/products?merchant_id=${merchant}`,
       method: "GET",
       success: function (res) {
         // get products for each slider
@@ -163,7 +164,7 @@ $(document).ready(() => {
           $("#d-cart-contents").css("height", "47vh");
           // populate cart with some items
           $.ajax({
-            url: `${endPoint}/products?merchant_id=${merchant.id}`,
+            url: `${endPoint}/products?merchant_id=${merchant}`,
             method: "GET",
             success: function (res) {
               // get products for each slider
