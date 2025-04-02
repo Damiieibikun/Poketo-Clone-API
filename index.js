@@ -1,7 +1,6 @@
 $(document).ready(function () {
   localStorage.removeItem("ProductV");
   const endPoint = "https://corsproxy.io/?http://ecommerce.reworkstaging.name.ng/v2";
-  // const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
 
 
@@ -498,12 +497,6 @@ $(document).ready(function () {
       console.log(err);
     },
   });
-
-  // $(document).find(".d-product-colors").each((index, i) => {
-  //   if ($(i).children()[0]) {
-  //     $(i).children()[0].classList.add("d-selected-color");
-  //   }
-  // });
 
   $(document).on("mouseover", ".d-slider-product-item", function () {
     $(this).find(".d-addCart").show();

@@ -1,6 +1,6 @@
 $(document).ready(() => {
   // get relevent info
-  const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+  const endPoint = "https://corsproxy.io/?http://ecommerce.reworkstaging.name.ng/v2";
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
 
   let currentUser = JSON.parse(localStorage.getItem("LoggedUser"));

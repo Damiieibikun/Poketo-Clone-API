@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
+  const endPoint = "https://corsproxy.io/?http://ecommerce.reworkstaging.name.ng/v2";
   let userDetails = JSON.parse(localStorage.getItem("LoggedUser"));
 
   $("#d-userBioDetails").html(`
@@ -10,7 +10,7 @@ $(document).ready(() => {
 
   // get customer's likes
   $.ajax({
-    url: `${endPoint}/users/likes?user_id=${userDetails.id}`,
+    url: `${endPoint}/users/likes?user_id=${userDetails?.id}`,
     method: "GET",
     success: function (res) {
       if (res.length > 0) {
@@ -41,7 +41,7 @@ $(document).ready(() => {
 
   // customer's reviews
   $.ajax({
-    url: `${endPoint}/users/reviews?user_id=${userDetails.id}`,
+    url: `${endPoint}/users/reviews?user_id=${userDetails?.id}`,
     method: "GET",
     success: function (res) {
       if (res.length > 0) {
@@ -54,7 +54,7 @@ $(document).ready(() => {
               method: "GET",
               success: function (rating) {
                 rating.forEach((item) => {
-                  if (item.user.id === userDetails.id) {
+                  if (item.user.id === userDetails?.id) {
                     let productReview =
                       $(`<div class="d-grid d-align-center d-gap-20 d-customer-reviewItems-grid">
                       <div>
@@ -132,7 +132,7 @@ $(document).ready(() => {
   let cartItems = JSON.parse(localStorage.getItem("CurrentUser-cartItems"));
   if (cartItems !== null) {
     cartItems.forEach((user) => {
-      if (user.user_id === userDetails.id) {
+      if (user.user_id === userDetails?.id) {
         if (user.cartItems.length > 0) {
           $("#no-orders").addClass("d-display-none");
           let total = 0;
@@ -189,7 +189,7 @@ $(document).ready(() => {
       $("#d-ratingValue").text(valuesRating[starID - 1]);
       let data = {
         product_id: productID,
-        user_id: userDetails.id,
+        user_id: userDetails?.id,
         text: valuesRating[starID - 1],
         value: starID,
       };
@@ -229,7 +229,7 @@ $(document).ready(() => {
 
         let reviewText = $("#d-reviewText").val();
         let data = {
-          user_id: userDetails.id,
+          user_id: userDetails?.id,
           text: reviewText,
         };
         console.log(data);
@@ -267,7 +267,7 @@ $(document).ready(() => {
     $("#d-deleteCustomerRating").click(function () {
       let data = {
         product_id: productID,
-        user_id: userDetails.id,
+        user_id: userDetails?.id,
       };
       $.ajax({
         url: `${endPoint}/ratings`,
@@ -287,7 +287,7 @@ $(document).ready(() => {
     $("#d-deleteCustomerReview").click(function () {
       let data = {
         review_id: reviewID,
-        user_id: userDetails.id,
+        user_id: userDetails?.id,
       };
       $.ajax({
         url: `${endPoint}/reviews`,
