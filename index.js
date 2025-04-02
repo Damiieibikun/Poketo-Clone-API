@@ -1,6 +1,6 @@
 $(document).ready(function () {
   localStorage.removeItem("ProductV");
-  const endPoint = "https://thingproxy.freeboard.io/fetch/http://ecommerce.reworkstaging.name.ng/v2";
+  const endPoint = "https://corsproxy.io/?http://ecommerce.reworkstaging.name.ng/v2";
   // const endPoint = "http://ecommerce.reworkstaging.name.ng/v2";
   let merchant = JSON.parse(localStorage.getItem("Merchant-Poketo"))?.id || "669a8e0b6996967a7dad952a";
 
